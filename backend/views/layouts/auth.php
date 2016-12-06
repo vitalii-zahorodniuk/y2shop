@@ -27,33 +27,11 @@ AdminLteAsset::register($this);
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
         </head>
-        <body class="hold-transition skin-blue sidebar-mini">
+        <body class="hold-transition login-page">
             <?php $this->beginBody() ?>
 
-            <div class="wrapper">
-
-                <?= $this->render('@app/views/layouts/_header') ?>
-
-                <?= $this->render('@app/views/layouts/_left_sidebar') ?>
-
-                <div class="content-wrapper">
-                    <?= \xz1mefx\adminlte\widgets\ContentHeader::widget([
-                        'title' => 'Yii2 AdminLTE',
-                        'titleSmall' => '@xZ1mEFx',
-                        'breadcrumbsConfig' => [
-                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                        ],
-                    ]) ?>
-
-                    <section class="content">
-                        <?= $content ?>
-                    </section>
-                </div>
-
-                <?= $this->render('@app/views/layouts/_footer') ?>
-
-                <?= $this->render('@app/views/layouts/_right_sidebar') ?>
-
+            <div class="login-box">
+                <?= $content ?>
             </div>
 
             <?php $this->endBody() ?>
