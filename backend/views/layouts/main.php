@@ -4,13 +4,15 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\adminlte\web\AdminLteAsset;
-use yii\helpers\Html;
+use xz1mefx\adminlte\widgets\Alert;
+use xz1mefx\adminlte\widgets\ContentHeader;
 
 AppAsset::register($this);
 AdminLteAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage(); ?>
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
         <head>
@@ -19,7 +21,7 @@ AdminLteAsset::register($this);
             <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
             <title><?= Html::encode($this->title) ?></title>
             <?= Html::csrfMetaTags() ?>
-            <?php $this->head() ?>
+            <?php $this->head(); ?>
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
@@ -28,7 +30,7 @@ AdminLteAsset::register($this);
             <![endif]-->
         </head>
         <body class="hold-transition skin-blue sidebar-mini">
-            <?php $this->beginBody() ?>
+            <?php $this->beginBody(); ?>
 
             <div class="wrapper">
 
@@ -37,7 +39,7 @@ AdminLteAsset::register($this);
                 <?= $this->render('@app/views/layouts/_left_sidebar') ?>
 
                 <div class="content-wrapper">
-                    <?= \xz1mefx\adminlte\widgets\ContentHeader::widget([
+                    <?= ContentHeader::widget([
                         'title' => 'Yii2 AdminLTE',
                         'titleSmall' => '@xZ1mEFx',
                         'breadcrumbsConfig' => [
@@ -46,6 +48,7 @@ AdminLteAsset::register($this);
                     ]) ?>
 
                     <section class="content">
+                        <?= Alert::widget() ?>
                         <?= $content ?>
                     </section>
                 </div>
@@ -56,10 +59,10 @@ AdminLteAsset::register($this);
 
             </div>
 
-            <?php $this->endBody() ?>
+            <?php $this->endBody(); ?>
         </body>
     </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>
 
 <?php /*
 <div class="wrap">
