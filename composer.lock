@@ -8,46 +8,6 @@
     "content-hash": "667cbed67e7a0f5a63ead7cafc33a928",
     "packages": [
         {
-            "name": "almasaeed2010/adminlte",
-            "version": "v2.3.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "ced14b133daed8c163863a497c43dcf69eea4340"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/ced14b133daed8c163863a497c43dcf69eea4340",
-                "reference": "ced14b133daed8c163863a497c43dcf69eea4340",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Abdullah Almsaeed",
-                    "email": "abdullah@almsaeedstudio.com"
-                }
-            ],
-            "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 3",
-            "homepage": "http://almsaeedstudio.com/",
-            "keywords": [
-                "JS",
-                "admin",
-                "back-end",
-                "css",
-                "less",
-                "responsive",
-                "template",
-                "theme",
-                "web"
-            ],
-            "time": "2016-11-04 14:42:55"
-        },
-        {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.7",
             "source": {
@@ -498,16 +458,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "9cb9fad03b6fed7f575e2662d639c77d52f4258f"
+                "reference": "a589d5efc13fa6dbace195f662ab980d208c95f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/9cb9fad03b6fed7f575e2662d639c77d52f4258f",
-                "reference": "9cb9fad03b6fed7f575e2662d639c77d52f4258f",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/a589d5efc13fa6dbace195f662ab980d208c95f0",
+                "reference": "a589d5efc13fa6dbace195f662ab980d208c95f0",
                 "shasum": ""
             },
             "require": {
-                "almasaeed2010/adminlte": "~2.3",
                 "rmrevin/yii2-fontawesome": "~2.17",
                 "yiisoft/yii2": "*",
                 "yiisoft/yii2-bootstrap": "2.*"
@@ -531,14 +490,13 @@
             "description": "AdminLTE extension for yii2, include admin lte asset, widgets and helpers",
             "keywords": [
                 "AdminLTE",
-                "admin lte",
                 "admin-lte",
                 "asset",
                 "css",
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-06 13:30:01"
+            "time": "2016-12-08 10:31:06"
         },
         {
             "name": "yiisoft/yii2",

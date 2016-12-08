@@ -13,7 +13,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
         <div class="user-panel">
             <div class="pull-left image">
                 <img
-                    src="<?= Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist') ?>/img/user2-160x160.jpg"
+                    src="<?= Yii::$app->assetManager->getPublishedUrl('@vendor/xz1mefx/yii2-adminlte/assets') ?>/adminlte/img/user2-160x160.jpg"
                     class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
@@ -47,7 +47,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                         ['label' => 'Menu level 3', 'items' => [
                             ['label' => 'Menu level 4', 'icon' => 'user', 'items' => [
                                 ['label' => 'Lvl4 page 1', 'url' => ['site/index']],
-                                ['label' => 'Lvl4 page 2', 'url' => ['site/index']],
+                                ['label' => 'Lvl4 page 2', 'url' => ['site/index'], 'active' => true],
                             ]],
                         ]],
                         ['url' => ['site/index'], 'label' => 'Lvl2 page'],
