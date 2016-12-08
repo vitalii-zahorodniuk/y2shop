@@ -24,8 +24,7 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-
-    const MIN_PASSWORD_LENGTH = 5;
+    const MIN_PASSWORD_LENGTH = 4;
     const MAX_PASSWORD_LENGTH = 32;
 
     const ROLE_ROOT = RbacController::ROLE_ROOT;
@@ -33,6 +32,7 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_MANAGER = RbacController::ROLE_MANAGER;
     const ROLE_SELLER = RbacController::ROLE_SELLER;
     const ROLE_BLOGGER = RbacController::ROLE_BLOGGER;
+    const ROLE_CUSTOMER = RbacController::ROLE_CUSTOMER;
 
     /**
      * @inheritdoc
@@ -162,15 +162,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email'], 'required'],
+            [['email', 'name'], 'required'],
             [['email'], 'email'],
             [['is_deleted', 'created_at', 'updated_at'], 'integer'],
             [['is_deleted'], 'default', 'value' => 0],
-            [['password_hash', 'password_reset_token', 'email', 'name', 'phone'], 'string', 'max' => 255],
+            [['img', 'email', 'name', 'phone', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
+            [['config'], 'string'],
             [['auth_key'], 'string', 'max' => 32],
             [['auth_key'], 'default', 'value' => Yii::$app->security->generateRandomString()],
-            [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
+            [['email', 'password_reset_token'], 'unique'],
         ];
     }
 
@@ -181,12 +181,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
+            'img' => 'Аватар',
             'email' => 'Email',
             'name' => 'Имя',
             'phone' => 'Телефон',
+            'config' => 'Настройки',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
             'is_deleted' => 'Удален',
             'created_at' => 'Создан',
             'updated_at' => 'Обновлен',

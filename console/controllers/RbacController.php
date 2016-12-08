@@ -16,6 +16,7 @@ class RbacController extends Controller
     const ROLE_MANAGER = 'manager';
     const ROLE_SELLER = 'seller';
     const ROLE_BLOGGER = 'blogger';
+    const ROLE_CUSTOMER = 'customer';
 
     public function __construct($id, $module, $config = [])
     {
@@ -40,6 +41,14 @@ class RbacController extends Controller
         /*
          * Permissions
          */
+//        $permission = $auth->createPermission('perm');
+
+        /*
+         * Roles
+         */
+        $customer = $auth->createRole(self::ROLE_CUSTOMER);
+        $customer->description = ucfirst(self::ROLE_CUSTOMER);
+        $auth->add($customer);
 
         $blogger = $auth->createRole(self::ROLE_BLOGGER);
         $blogger->description = ucfirst(self::ROLE_BLOGGER);

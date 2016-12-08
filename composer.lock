@@ -458,12 +458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "a589d5efc13fa6dbace195f662ab980d208c95f0"
+                "reference": "66813944af7bd3cabb0f484daa5ebb79535e3820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/a589d5efc13fa6dbace195f662ab980d208c95f0",
-                "reference": "a589d5efc13fa6dbace195f662ab980d208c95f0",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/66813944af7bd3cabb0f484daa5ebb79535e3820",
+                "reference": "66813944af7bd3cabb0f484daa5ebb79535e3820",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +496,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-08 10:31:06"
+            "time": "2016-12-08 14:18:49"
         },
         {
             "name": "yiisoft/yii2",
