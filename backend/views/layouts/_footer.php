@@ -1,7 +1,9 @@
+<?php /* @var $this \yii\web\View */ ?>
+
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.3.8
+        <b>Version</b> alpha
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; <?= date('Y') ?></strong>
+    All rights reserved.
 </footer>

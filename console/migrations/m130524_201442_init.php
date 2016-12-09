@@ -108,6 +108,54 @@ class m130524_201442_init extends Migration
             'updated_at' => time(),
         ]);
         $authManager->assign($authManager->getRole(RbacController::ROLE_ADMIN), 2);
+
+        // Add manager
+        $this->insert('{{%user}}', [
+            'auth_key' => \Yii::$app->security->generateRandomString(),
+            'password_hash' => \Yii::$app->security->generatePasswordHash('manager'),
+            'email' => 'manager@localhost',
+            'name' => 'Manager',
+            'phone' => NULL,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $authManager->assign($authManager->getRole(RbacController::ROLE_MANAGER), 3);
+
+        // Add seller
+        $this->insert('{{%user}}', [
+            'auth_key' => \Yii::$app->security->generateRandomString(),
+            'password_hash' => \Yii::$app->security->generatePasswordHash('seller'),
+            'email' => 'seller@localhost',
+            'name' => 'Seller',
+            'phone' => NULL,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $authManager->assign($authManager->getRole(RbacController::ROLE_SELLER), 4);
+
+        // Add blogger
+        $this->insert('{{%user}}', [
+            'auth_key' => \Yii::$app->security->generateRandomString(),
+            'password_hash' => \Yii::$app->security->generatePasswordHash('blogger'),
+            'email' => 'blogger@localhost',
+            'name' => 'Blogger',
+            'phone' => NULL,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $authManager->assign($authManager->getRole(RbacController::ROLE_BLOGGER), 5);
+
+        // Add customer
+        $this->insert('{{%user}}', [
+            'auth_key' => \Yii::$app->security->generateRandomString(),
+            'password_hash' => \Yii::$app->security->generatePasswordHash('customer'),
+            'email' => 'customer@localhost',
+            'name' => 'Customer',
+            'phone' => NULL,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $authManager->assign($authManager->getRole(RbacController::ROLE_CUSTOMER), 6);
     }
 
     public function down()

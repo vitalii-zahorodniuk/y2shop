@@ -1,14 +1,17 @@
 <?php
 
+use xz1mefx\adminlte\helpers\AdminLTEAssets;
+use xz1mefx\adminlte\helpers\Img;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 
 ?>
+
 <header class="main-header">
     <a href="<?= Yii::$app->homeUrl ?>" class="logo">
-        <span class="logo-mini"><b>A</b>Y2</span>
-        <span class="logo-lg"><b>Admin</b>Y2Shop</span>
+        <span class="logo-mini"><b>Y2</b>S</span>
+        <span class="logo-lg"><b>Y2</b>Shop</span>
     </a>
 
     <nav class="navbar navbar-static-top">
@@ -233,21 +236,21 @@ use yii\helpers\Url;
                 */ ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img
-                            src="<?= Yii::$app->assetManager->getPublishedUrl('@vendor/xz1mefx/yii2-adminlte/assets') ?>/adminlte/img/user2-160x160.jpg"
-                            class="user-image" alt="User Image">
+                        <img src="<?= Img::getImgSrc(Yii::$app->user->identity->img) ?>" class="user-image"
+                             alt="User Image">
                         <span class="hidden-xs">Alexander Pierce</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img
-                                src="<?= Yii::$app->assetManager->getPublishedUrl('@vendor/xz1mefx/yii2-adminlte/assets') ?>/adminlte/img/user2-160x160.jpg"
-                                class="img-circle" alt="User Image">
+                            <img src="<?= Img::getImgSrc(Yii::$app->user->identity->img) ?>" class="img-circle"
+                                 alt="User Image">
 
                             <p>
-                                Alexander Pierce - Web Developer
+                                <?= Yii::$app->user->identity->name ?>
+                                <?php /*
                                 <small>Member since Nov. 2012</small>
+                                */ ?>
                             </p>
                         </li>
                         <?php /*

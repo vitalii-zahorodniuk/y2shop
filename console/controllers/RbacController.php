@@ -61,6 +61,7 @@ class RbacController extends Controller
         $manager = $auth->createRole(self::ROLE_MANAGER);
         $manager->description = ucfirst(self::ROLE_MANAGER);
         $auth->add($manager);
+        $auth->addChild($manager, $customer);
         $auth->addChild($manager, $blogger);
         $auth->addChild($manager, $seller);
 
