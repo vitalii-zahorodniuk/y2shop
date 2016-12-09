@@ -2,6 +2,10 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'assetManager' => [
+            'linkAssets' => true,
+            'appendTimestamp' => true,
+        ],
         'cache' => [
             'class' => \yii\caching\FileCache::className(),
         ],
@@ -12,9 +16,6 @@ return [
         ],
         'security' => [
             'passwordHashCost' => 5,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,

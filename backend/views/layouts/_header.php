@@ -1,7 +1,6 @@
 <?php
 
-use xz1mefx\adminlte\helpers\AdminLTEAssets;
-use xz1mefx\adminlte\helpers\Img;
+use backend\models\User;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
@@ -236,14 +235,14 @@ use yii\helpers\Url;
                 */ ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= Img::getImgSrc(Yii::$app->user->identity->img) ?>" class="user-image"
+                        <img src="<?= User::getImgSrc(Yii::$app->user->identity->img) ?>" class="user-image"
                              alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->name ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= Img::getImgSrc(Yii::$app->user->identity->img) ?>" class="img-circle"
+                            <img src="<?= User::getImgSrc(Yii::$app->user->identity->img) ?>" class="img-circle"
                                  alt="User Image">
 
                             <p>
@@ -270,7 +269,8 @@ use yii\helpers\Url;
                         */ ?>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="<?= Url::to(['user/view', 'id' => Yii::$app->user->id]) ?>"
+                                   class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="<?= Url::to(['auth/logout']) ?>" class="btn btn-default btn-flat">Sign out</a>

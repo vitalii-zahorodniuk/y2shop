@@ -8,6 +8,7 @@ use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\adminlte\web\AdminLteAsset;
 use xz1mefx\adminlte\widgets\Alert;
 use xz1mefx\adminlte\widgets\ContentHeader;
+use yii\helpers\ArrayHelper;
 
 AppAsset::register($this);
 AdminLteAsset::register($this);
@@ -40,10 +41,10 @@ AdminLteAsset::register($this);
 
             <div class="content-wrapper">
                 <?= ContentHeader::widget([
-                    'title' => 'Yii2 AdminLTE',
-                    'titleSmall' => '@xZ1mEFx',
+                    'title' => ArrayHelper::getValue($this->params, 'title', 'Y2 Shop'),
+                    'titleSmall' => ArrayHelper::getValue($this->params, 'titleSmall', ''),
                     'breadcrumbsConfig' => [
-                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        'links' => ArrayHelper::getValue($this->params, 'breadcrumbs', []),
                     ],
                 ]) ?>
 

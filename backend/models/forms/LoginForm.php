@@ -1,7 +1,7 @@
 <?php
 namespace backend\models\forms;
 
-use common\models\User;
+use backend\models\User;
 use Yii;
 use yii\base\Model;
 use yii\behaviors\TimestampBehavior;

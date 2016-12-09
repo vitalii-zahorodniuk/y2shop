@@ -37,24 +37,12 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
         <?= SidebarMenu::widget([
             'headerLabel' => 'My menu',
             'menuItems' => [
-                ['url' => ['site/error'], 'icon' => 'th-list', 'label' => 'Dashboard', 'stickers' => [
-                    ['bgClass' => 'bg-red', 'label' => 'red'],
-                    ['bgClass' => 'label-success', 'label' => 's'],
-                    ['bgClass' => 'label-success', 'label' => 's'],
-                    ['bgClass' => 'bg-purple', 'label' => 'p'],
-                ]],
-                ['label' => 'Menu level 1', 'icon' => 'user', 'items' => [
-                    ['label' => 'Menu level 2', 'items' => [
-                        ['label' => 'Menu level 3', 'items' => [
-                            ['label' => 'Menu level 4', 'icon' => 'user', 'items' => [
-                                ['label' => 'Lvl4 page 1', 'url' => ['site/index']],
-                                ['label' => 'Lvl4 page 2', 'url' => ['site/index']],
-                            ]],
-                        ]],
-                        ['url' => ['site/index'], 'label' => 'Lvl2 page'],
-                    ]],
-                ]],
-                ['url' => '//www.ukr.net', 'label' => 'ukr.net', 'icon' => '', 'iconOptions' => ['prefix' => 'fa fa-']],
+                [
+                    'label' => 'Users',
+                    'url' => ['user/index'],
+                    'icon' => 'user',
+                    'iconOptions' => ['prefix' => 'fa fa-'],
+                ],
             ],
         ]) ?>
     </section>

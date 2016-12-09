@@ -68,6 +68,7 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
+            'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
             'img' => $this->string()->null(),
             'email' => $this->string()->notNull()->unique(),
