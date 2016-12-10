@@ -20,6 +20,11 @@ return [
                 ],
             ],
         ],
+        'request' => [ // override common config
+            'class' => \yii\console\Request::className(),
+        ],
+        'urlManager' => [], // override common config
+        'i18n' => [], // override common config
     ],
     'params' => $params,
 ];

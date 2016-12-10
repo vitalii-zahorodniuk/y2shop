@@ -18,6 +18,7 @@ return [
             'passwordHashCost' => 5,
         ],
         'urlManager' => [
+            'class' => \xz1mefx\multilang\web\UrlManager::className(),
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'normalizer' => [
@@ -30,6 +31,12 @@ return [
                 '<controller:\w+(-\w+)*>/<action:\w+(-\w+)*>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+(-\w+)*>/<action:\w+(-\w+)*>' => '<controller>/<action>',
             ],
+        ],
+        'request' => [
+            'class' => \xz1mefx\multilang\web\Request::className(),
+        ],
+        'lang' => [
+            'class' => \xz1mefx\multilang\components\Lang::className(),
         ],
     ],
 ];

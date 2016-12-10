@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "59c4ddbcd0d0f61fddc0ece1d61ae7b1",
-    "content-hash": "667cbed67e7a0f5a63ead7cafc33a928",
+    "hash": "c54e12662eb8b0faf34421b1c21bf230",
+    "content-hash": "dfd6577ce4e89e21b953e9f4f620441a",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -458,12 +458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "66813944af7bd3cabb0f484daa5ebb79535e3820"
+                "reference": "eeb2b12a7d64024f219dd06e41baf4eda13e13ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/66813944af7bd3cabb0f484daa5ebb79535e3820",
-                "reference": "66813944af7bd3cabb0f484daa5ebb79535e3820",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/eeb2b12a7d64024f219dd06e41baf4eda13e13ce",
+                "reference": "eeb2b12a7d64024f219dd06e41baf4eda13e13ce",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +496,50 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-08 14:18:49"
+            "time": "2016-12-10 14:18:37"
+        },
+        {
+            "name": "xz1mefx/yii2-multilang",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
+                "reference": "1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2",
+                "reference": "1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "xz1mefx\\multilang\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitalii Zagorodniuk",
+                    "email": "vitaliizagorodniuk@gmail.com"
+                }
+            ],
+            "description": "Multilanguage tools package",
+            "keywords": [
+                "lang",
+                "language",
+                "locale",
+                "xZ1mEFx",
+                "yii2"
+            ],
+            "time": "2016-12-10 15:18:34"
         },
         {
             "name": "yiisoft/yii2",
@@ -1114,6 +1157,55 @@
             "time": "2016-06-24 23:00:38"
         },
         {
+            "name": "iiifx-production/yii2-autocomplete-helper",
+            "version": "v0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iiifx-production/yii2-autocomplete-helper.git",
+                "reference": "5159949d8968f88eac97635164283b3be6e507a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iiifx-production/yii2-autocomplete-helper/zipball/5159949d8968f88eac97635164283b3be6e507a4",
+                "reference": "5159949d8968f88eac97635164283b3be6e507a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "bin": [
+                "autocomplete"
+            ],
+            "type": "extension",
+            "autoload": {
+                "psr-4": {
+                    "iiifx\\Yii2\\Autocomplete\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT License"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy IIIFX Khomenko",
+                    "email": "iiifx@yandex.com"
+                }
+            ],
+            "description": "Yii2 Autocomplete Helper",
+            "homepage": "https://github.com/iiifx-production/yii2-autocomplete-helper",
+            "keywords": [
+                "autocomplete",
+                "helper",
+                "ide"
+            ],
+            "time": "2016-06-14 06:17:45"
+        },
+        {
             "name": "phpdocumentor/reflection-common",
             "version": "1.0",
             "source": {
@@ -1605,16 +1697,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.30",
+            "version": "4.8.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a534e04d0bd39c557c2881c341efd06fa6f1292a"
+                "reference": "98b2b39a520766bec663ff5b7ff1b729db9dbfe3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a534e04d0bd39c557c2881c341efd06fa6f1292a",
-                "reference": "a534e04d0bd39c557c2881c341efd06fa6f1292a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/98b2b39a520766bec663ff5b7ff1b729db9dbfe3",
+                "reference": "98b2b39a520766bec663ff5b7ff1b729db9dbfe3",
                 "shasum": ""
             },
             "require": {
@@ -1673,7 +1765,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-01 17:05:48"
+            "time": "2016-12-09 02:45:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2910,7 +3002,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "xz1mefx/yii2-adminlte": 20
+        "xz1mefx/yii2-adminlte": 20,
+        "xz1mefx/yii2-multilang": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
