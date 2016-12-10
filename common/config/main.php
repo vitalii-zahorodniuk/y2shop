@@ -35,6 +35,22 @@ return [
         'request' => [
             'class' => \xz1mefx\multilang\web\Request::className(),
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => \xz1mefx\multilang\i18n\DbMessageSource::className(),
+                    'forceTranslation' => true,
+                    'enableCaching' => true,
+                    'cachingDuration' => 60 * 60, // in sec
+                ],
+                'app' => [
+                    'class' => \xz1mefx\multilang\i18n\DbMessageSource::className(),
+                    'forceTranslation' => true,
+                    'enableCaching' => true,
+                    'cachingDuration' => 60 * 60, // in sec
+                ],
+            ],
+        ],
         'lang' => [
             'class' => \xz1mefx\multilang\components\Lang::className(),
         ],

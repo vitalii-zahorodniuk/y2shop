@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c54e12662eb8b0faf34421b1c21bf230",
-    "content-hash": "dfd6577ce4e89e21b953e9f4f620441a",
+    "hash": "0fdde091edd564869e21e2b6ac07b5cd",
+    "content-hash": "c9b4908cee397c96fb09d98aa7012c09",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -500,16 +500,16 @@
         },
         {
             "name": "xz1mefx/yii2-multilang",
-            "version": "dev-master",
+            "version": "v1.0.0-rc",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2"
+                "reference": "58f7396822fbbb491772771a3d01f1e9659e77e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2",
-                "reference": "1a7be0d75ebc96043ed615a93cde3a8fdf6fa7b2",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/58f7396822fbbb491772771a3d01f1e9659e77e3",
+                "reference": "58f7396822fbbb491772771a3d01f1e9659e77e3",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-10 15:18:34"
+            "time": "2016-12-10 15:27:26"
         },
         {
             "name": "yiisoft/yii2",
@@ -3003,7 +3003,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "xz1mefx/yii2-adminlte": 20,
-        "xz1mefx/yii2-multilang": 20
+        "xz1mefx/yii2-multilang": 5
     },
     "prefer-stable": false,
     "prefer-lowest": false,
