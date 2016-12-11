@@ -43,6 +43,17 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'icon' => 'user',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
+                [
+                    'label' => 'Localization',
+                    'icon' => 'language',
+                    'iconOptions' => ['prefix' => 'fa fa-'],
+                    'items' => [
+                        [
+                            'label' => 'Languages',
+                            'url' => ['lang/index'],
+                        ],
+                    ],
+                ],
             ],
         ]) ?>
     </section>
