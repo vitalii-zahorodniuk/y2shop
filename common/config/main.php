@@ -17,6 +17,10 @@ return [
         'security' => [
             'passwordHashCost' => 5,
         ],
+        'multilangCache' => [
+            'class' => \yii\caching\FileCache::className(),
+            'cachePath' => '@vendor/xz1mefx/yii2-multilang/runtime/cache',
+        ],
         'urlManager' => [
             'class' => \xz1mefx\multilang\web\UrlManager::className(),
             'enablePrettyUrl' => true,
@@ -36,20 +40,7 @@ return [
             'class' => \xz1mefx\multilang\web\Request::className(),
         ],
         'i18n' => [
-            'translations' => [
-                '*' => [
-                    'class' => \xz1mefx\multilang\i18n\DbMessageSource::className(),
-                    'forceTranslation' => true,
-                    'enableCaching' => true,
-                    'cachingDuration' => 60 * 60, // in sec
-                ],
-                'app' => [
-                    'class' => \xz1mefx\multilang\i18n\DbMessageSource::className(),
-                    'forceTranslation' => true,
-                    'enableCaching' => true,
-                    'cachingDuration' => 60 * 60, // in sec
-                ],
-            ],
+            'class' => \xz1mefx\multilang\i18n\I18N::className(),
         ],
         'lang' => [
             'class' => \xz1mefx\multilang\components\Lang::className(),

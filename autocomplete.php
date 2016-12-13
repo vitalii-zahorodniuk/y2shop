@@ -16,24 +16,30 @@ class Yii extends \yii\BaseYii
 
 /**
  * @property yii\caching\FileCache $cache
+ * @property yii\caching\FileCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
+ * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
  */
 abstract class BaseApplication extends \yii\base\Application {}
 
 /**
  * @property yii\caching\FileCache $cache
+ * @property yii\caching\FileCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
+ * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
  */
 class WebApplication extends \yii\web\Application {}
 
 /**
  * @property yii\caching\FileCache $cache
+ * @property yii\caching\FileCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
+ * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
  */
 class ConsoleApplication extends \yii\console\Application {}

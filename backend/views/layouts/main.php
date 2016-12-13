@@ -8,7 +8,7 @@ use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\adminlte\web\AdminLteAsset;
 use xz1mefx\adminlte\widgets\Alert;
 use xz1mefx\adminlte\widgets\ContentHeader;
-use xz1mefx\multilang\widgets\SeoLangs;
+use xz1mefx\multilang\widgets\HrefLangs;
 use yii\helpers\ArrayHelper;
 
 AppAsset::register($this);
@@ -24,7 +24,7 @@ AdminLteAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?= Html::csrfMetaTags() ?>
         <?php $this->head(); ?>
-        <?= SeoLangs::widget() ?>
+        <?= HrefLangs::widget() ?>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

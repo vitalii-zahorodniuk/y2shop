@@ -44,13 +44,17 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
                 [
-                    'label' => 'Localization',
-                    'icon' => 'language',
+                    'label' => 'Settings',
+                    'icon' => 'cogs',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                     'items' => [
                         [
-                            'label' => 'Languages',
-                            'url' => ['lang/index'],
+                            'label' => 'System languages',
+                            'url' => ['language/index'],
+                        ],
+                        [
+                            'label' => 'Interface translations',
+                            'url' => ['translation/index'],
                         ],
                     ],
                 ],
