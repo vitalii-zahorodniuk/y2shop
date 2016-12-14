@@ -1,10 +1,9 @@
 <?php
-
 use backend\models\User;
+use xz1mefx\multilang\widgets\adminlte\HeaderDropDownLangSelector;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
-
 ?>
 
 <header class="main-header">
@@ -19,6 +18,7 @@ use yii\helpers\Url;
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <?= HeaderDropDownLangSelector::widget() ?>
                 <?php /*
                 <!-- Messages -->
                 <li class="dropdown messages-menu">
@@ -270,10 +270,11 @@ use yii\helpers\Url;
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="<?= Url::to(['user/view', 'id' => Yii::$app->user->id]) ?>"
-                                   class="btn btn-default btn-flat">Profile</a>
+                                   class="btn btn-default btn-flat"><?= Yii::t('admin-side', 'Profile') ?></a>
                             </div>
                             <div class="pull-right">
-                                <a href="<?= Url::to(['auth/logout']) ?>" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="<?= Url::to(['auth/logout']) ?>"
+                                   class="btn btn-default btn-flat"><?= Yii::t('admin-side', 'Sign out') ?></a>
                             </div>
                         </li>
                     </ul>

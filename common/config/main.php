@@ -13,6 +13,7 @@ return [
             'dateFormat' => 'yyyy-MM-dd',
             'timeFormat' => 'H:i:ss',
             'datetimeFormat' => 'yyyy-MM-dd H:i:ss',
+            'nullDisplay' => '',
         ],
         'security' => [
             'passwordHashCost' => 5,

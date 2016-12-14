@@ -1,8 +1,4 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use backend\assets\AppAsset;
 use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\adminlte\web\AdminLteAsset;
@@ -10,6 +6,9 @@ use xz1mefx\adminlte\widgets\Alert;
 use xz1mefx\adminlte\widgets\ContentHeader;
 use xz1mefx\multilang\widgets\HrefLangs;
 use yii\helpers\ArrayHelper;
+
+/* @var $this \yii\web\View */
+/* @var $content string */
 
 AppAsset::register($this);
 AdminLteAsset::register($this);

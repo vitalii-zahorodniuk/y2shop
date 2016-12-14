@@ -1,12 +1,11 @@
 <?php
+use xz1mefx\adminlte\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model \backend\models\forms\LoginForm */
 
-use xz1mefx\adminlte\widgets\ActiveForm;
-use yii\helpers\Html;
-
-$this->title = 'Login';
+$this->title = Yii::t('admin-side', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -17,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg"><?= Yii::t('admin-side', 'Sign in to start your session') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 

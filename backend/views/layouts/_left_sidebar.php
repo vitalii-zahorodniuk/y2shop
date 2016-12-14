@@ -1,9 +1,7 @@
 <?php
-
-/* @var $this \yii\web\View */
-
 use xz1mefx\adminlte\widgets\SidebarMenu;
 
+/* @var $this \yii\web\View */
 ?>
 
 <aside class="main-sidebar">
@@ -38,22 +36,22 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
             'headerLabel' => 'My menu',
             'menuItems' => [
                 [
-                    'label' => 'Users',
+                    'label' => Yii::t('admin-side', 'Users'),
                     'url' => ['user/index'],
                     'icon' => 'user',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
                 [
-                    'label' => 'Settings',
+                    'label' => Yii::t('admin-side', 'Settings'),
                     'icon' => 'cogs',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                     'items' => [
                         [
-                            'label' => 'System languages',
+                            'label' => Yii::t('admin-side', 'System languages'),
                             'url' => ['language/index'],
                         ],
                         [
-                            'label' => 'Interface translations',
+                            'label' => Yii::t('admin-side', 'Interface translations'),
                             'url' => ['translation/index'],
                         ],
                     ],

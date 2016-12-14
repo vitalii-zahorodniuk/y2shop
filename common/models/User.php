@@ -130,12 +130,12 @@ class User extends ActiveRecord implements IdentityInterface
     public static function rolesLabels($role = NULL)
     {
         $roles = [
-            self::ROLE_ROOT => 'Root',
-            self::ROLE_ADMIN => 'Админ',
-            self::ROLE_MANAGER => 'Менеджер',
-            self::ROLE_SELLER => 'Продавец',
-            self::ROLE_BLOGGER => 'Блоггер',
-            self::ROLE_BLOGGER => 'Покупатель',
+            self::ROLE_ROOT => Yii::t('common', 'Root'),
+            self::ROLE_ADMIN => Yii::t('common', 'Admin'),
+            self::ROLE_MANAGER => Yii::t('common', 'Manager'),
+            self::ROLE_SELLER => Yii::t('common', 'Seller'),
+            self::ROLE_BLOGGER => Yii::t('common', 'Blogger'),
+            self::ROLE_CUSTOMER => Yii::t('common', 'Customer'),
         ];
         if ($role === NULL) {
             return $roles;
@@ -183,18 +183,18 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'img' => 'Аватар',
-            'email' => 'Email',
-            'name' => 'Имя',
-            'phone' => 'Телефон',
-            'config' => 'Настройки',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
-            'is_deleted' => 'Удален',
-            'created_at' => 'Создан',
-            'updated_at' => 'Обновлен',
+            'id' => Yii::t('common', 'ID'),
+            'img' => Yii::t('common', 'Img'),
+            'email' => Yii::t('common', 'Email'),
+            'name' => Yii::t('common', 'Name'),
+            'phone' => Yii::t('common', 'Phone'),
+            'config' => Yii::t('common', 'Config'),
+            'auth_key' => Yii::t('common', 'Auth Key'),
+            'password_hash' => Yii::t('common', 'Password Hash'),
+            'password_reset_token' => Yii::t('common', 'Password Reset Token'),
+            'is_deleted' => Yii::t('common', 'Is Deleted'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

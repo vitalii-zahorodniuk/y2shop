@@ -1,11 +1,10 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use backend\assets\AppAsset;
 use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\adminlte\web\AdminLteAsset;
+
+/* @var $this \yii\web\View */
+/* @var $content string */
 
 AppAsset::register($this);
 AdminLteAsset::register($this);
