@@ -25,8 +25,11 @@ return [
             'class' => \xz1mefx\multilang\web\UrlManager::className(),
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '/',
             'normalizer' => [
                 'class' => \yii\web\UrlNormalizer::className(),
+                'normalizeTrailingSlash' => false,
+                'action' => \yii\web\UrlNormalizer::ACTION_REDIRECT_PERMANENT,
             ],
             'rules' => [
                 '' => 'site/index',
