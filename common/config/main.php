@@ -18,8 +18,7 @@ return [
             'passwordHashCost' => 5,
         ],
         'multilangCache' => [
-            'class' => \yii\caching\FileCache::className(),
-            'cachePath' => '@vendor/xz1mefx/yii2-multilang/runtime/cache',
+            'class' => \xz1mefx\multilang\caching\MultilangCache::className(),
         ],
         'urlManager' => [
             'class' => \xz1mefx\multilang\web\UrlManager::className(),
