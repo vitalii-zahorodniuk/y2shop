@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -22,9 +23,15 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property array $rolesArray
+ * @property boolean $youCanEdit
  */
 class User extends ActiveRecord implements IdentityInterface, UserInterface
 {
+
+    protected $_youCanEdit;
+    protected $_rolesArray;
 
     /**
      * @inheritdoc
@@ -148,6 +155,21 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
+     * @param $attribute
+     * @param $params
+     */
+    public function validateStatusAvailability($attribute, $params)
+    {
+        foreach ($this->_rolesArray as $role) {
+            if (!Yii::$app->user->can($role)) {
+                $this->addError($attribute, Yii::t('common', 'You do not have permission to assign such rights'));
+                // TODO: Inform admin?
+                break;
+            }
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -164,7 +186,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             ['email', 'email'],
             ['email', 'unique'],
             // name
-            ['name', 'string', 'max' => 255],
+            ['name', 'string', 'min' => 2, 'max' => 255],
             // phone
             ['phone', 'string', 'max' => 255],
             // config
@@ -179,6 +201,10 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             ['password_reset_token', 'unique'],
             // created-updated timestamps
             [['created_at', 'updated_at'], 'integer'],
+
+            // virtual
+            [['rolesArray'], 'safe'],
+            [['rolesArray'], 'validateStatusAvailability'],
         ];
     }
 
@@ -218,6 +244,8 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             'password_reset_token' => Yii::t('common', 'Password Reset Token'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
+            // virtual
+            'rolesArray' => Yii::t('common', 'Roles'),
         ];
     }
 
@@ -226,11 +254,6 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      */
     public function beforeValidate()
     {
-        foreach ($this->attributes as $key => $value) {
-            if (empty($value)) {
-                $this->setAttribute($key, NULL);
-            }
-        }
         return parent::beforeValidate();
     }
 
@@ -244,11 +267,80 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
+     * @return string[]
+     */
+    private function getCurrentUserRoles()
+    {
+        return ArrayHelper::getColumn(
+            Yii::$app->authManager->getRolesByUser(
+                $this->id
+            ),
+            'name'
+        );
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function afterSave($insert, $changedAttributes)
     {
+        // Refresh user roles
+        if (is_array($this->_rolesArray)) {
+            // Add new roles
+            foreach ($this->_rolesArray as $role) {
+                if (in_array($role, $this->getCurrentUserRoles())) {
+                    continue;
+                }
+                Yii::$app->authManager->assign(Yii::$app->authManager->getRole($role), $this->id);
+            }
+            // Remove other roles
+            foreach ($this->getCurrentUserRoles() as $role) {
+                if (in_array($role, $this->_rolesArray)) {
+                    continue;
+                }
+                Yii::$app->authManager->revoke(Yii::$app->authManager->getRole($role), $this->id);
+            }
+        }
+
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getYouCanEdit()
+    {
+        if (isset($this->_youCanEdit)) {
+            return $this->_youCanEdit;
+        }
+        if (!Yii::$app->user->isGuest) {
+            foreach ($this->getCurrentUserRoles() as $role) {
+                if (!Yii::$app->user->can($role)) {
+                    return $this->_youCanEdit = false;
+                }
+            }
+        }
+        return $this->_youCanEdit = true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesArray()
+    {
+        if (isset($this->_rolesArray)) {
+            return $this->_rolesArray;
+        }
+        return $this->_rolesArray = $this->getCurrentUserRoles();
+    }
+
+    /**
+     * @param string[] $value
+     */
+    public function setRolesArray(array $value)
+    {
+        $this->_rolesArray = $value;
     }
 
     /**

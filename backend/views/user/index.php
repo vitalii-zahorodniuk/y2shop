@@ -1,5 +1,7 @@
 <?php
+use common\models\User;
 use xz1mefx\adminlte\helpers\Html;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
@@ -39,18 +41,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'email:email',
                     'name',
                     'phone',
-                    // 'config:ntext',
-                    // 'auth_key',
-                    // 'password_hash',
-                    // 'password_reset_token',
-                    // 'is_deleted',
-                    // 'created_at',
-                    // 'updated_at',
 
                     [
-                        'class' => \yii\grid\ActionColumn::className(),
+                        'class' => ActionColumn::className(),
                         'headerOptions' => ['class' => 'text-center col-md-1'],
                         'contentOptions' => ['class' => 'text-center col-md-1'],
+                        'template' => '{view} {update}',
+                        'visibleButtons' => [
+                            'update' => function ($model, $key, $index) {
+                                /* @var $model User */
+                                return
+                                    in_array($model->status, [User::STATUS_ACTIVE, User::STATUS_ON_HOLD])
+                                    && $model->youCanEdit;
+                            },
+                        ],
                     ],
                 ],
             ]); ?>

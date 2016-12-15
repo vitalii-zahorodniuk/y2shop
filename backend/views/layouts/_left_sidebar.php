@@ -37,9 +37,16 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
             'menuItems' => [
                 [
                     'label' => Yii::t('admin-side', 'Users'),
-                    'url' => ['user/index'],
-                    'icon' => 'user',
+                    'icon' => 'users',
                     'iconOptions' => ['prefix' => 'fa fa-'],
+                    'items' => [
+                        [
+                            'label' => Yii::t('admin-side', 'Users'),
+                            'url' => ['user/index'],
+                            'icon' => 'user',
+                            'iconOptions' => ['prefix' => 'fa fa-'],
+                        ],
+                    ],
                 ],
                 [
                     'label' => Yii::t('admin-side', 'Settings'),
