@@ -1,7 +1,6 @@
 <?php
 namespace common\models;
 
-use console\controllers\RbacController;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -12,6 +11,7 @@ use yii\web\IdentityInterface;
  * This is the model class for table "{{%user}}".
  *
  * @property integer $id
+ * @property integer $status
  * @property string $img
  * @property string $email
  * @property string $name
@@ -20,21 +20,11 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
- * @property integer $is_deleted
  * @property integer $created_at
  * @property integer $updated_at
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface, UserInterface
 {
-    const MIN_PASSWORD_LENGTH = 4;
-    const MAX_PASSWORD_LENGTH = 32;
-
-    const ROLE_ROOT = RbacController::ROLE_ROOT;
-    const ROLE_ADMIN = RbacController::ROLE_ADMIN;
-    const ROLE_MANAGER = RbacController::ROLE_MANAGER;
-    const ROLE_SELLER = RbacController::ROLE_SELLER;
-    const ROLE_BLOGGER = RbacController::ROLE_BLOGGER;
-    const ROLE_CUSTOMER = RbacController::ROLE_CUSTOMER;
 
     /**
      * @inheritdoc
@@ -49,7 +39,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'is_deleted' => 0]);
+        return static::findOne(['id' => $id]);
     }
 
     /**
@@ -68,7 +58,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'is_deleted' => 0]);
+        return static::findOne(['email' => $email]);
     }
 
     /**
@@ -85,7 +75,6 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'is_deleted' => 0,
         ]);
     }
 
@@ -130,12 +119,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function rolesLabels($role = NULL)
     {
         $roles = [
-            self::ROLE_ROOT => Yii::t('common', 'Root'),
-            self::ROLE_ADMIN => Yii::t('common', 'Admin'),
-            self::ROLE_MANAGER => Yii::t('common', 'Manager'),
-            self::ROLE_SELLER => Yii::t('common', 'Seller'),
-            self::ROLE_BLOGGER => Yii::t('common', 'Blogger'),
-            self::ROLE_CUSTOMER => Yii::t('common', 'Customer'),
+            self::ROLE_ROOT => Yii::t('common', 'Root role'),
+            self::ROLE_ADMIN => Yii::t('common', 'Admin role'),
+            self::ROLE_MANAGER => Yii::t('common', 'Manager role'),
+            self::ROLE_SELLER => Yii::t('common', 'Seller role'),
+            self::ROLE_CUSTOMER => Yii::t('common', 'Customer role'),
         ];
         if ($role === NULL) {
             return $roles;
@@ -165,16 +153,51 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'name'], 'required'],
-            [['email'], 'email'],
-            [['status', 'is_deleted', 'created_at', 'updated_at'], 'integer'],
-            [['is_deleted'], 'default', 'value' => 0],
-            [['img', 'email', 'name', 'phone', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
-            [['config'], 'string'],
-            [['auth_key'], 'string', 'max' => 32],
-            [['auth_key'], 'default', 'value' => Yii::$app->security->generateRandomString()],
-            [['email', 'password_reset_token'], 'unique'],
+            // status
+            ['status', 'integer'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => array_keys(self::statusesLabels())],
+            // image
+            ['img', 'string', 'max' => 255],
+            // email
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'unique'],
+            // name
+            ['name', 'string', 'max' => 255],
+            // phone
+            ['phone', 'string', 'max' => 255],
+            // config
+            ['config', 'string'],
+            // auth key
+            ['auth_key', 'string', 'max' => 32],
+            ['auth_key', 'default', 'value' => Yii::$app->security->generateRandomString()],
+            // password hash
+            ['password_hash', 'string', 'max' => 255],
+            // password reset token
+            ['password_reset_token', 'string', 'max' => 255],
+            ['password_reset_token', 'unique'],
+            // created-updated timestamps
+            [['created_at', 'updated_at'], 'integer'],
         ];
+    }
+
+    /**
+     * @param null $status
+     * @return array|string
+     */
+    public static function statusesLabels($status = NULL)
+    {
+        $statuses = [
+            self::STATUS_DELETED => Yii::t('common', 'User deleted'),
+            self::STATUS_ACTIVE => Yii::t('common', 'User active'),
+            self::STATUS_ON_HOLD => Yii::t('common', 'User on hold'),
+        ];
+        if ($status === NULL) {
+            return $statuses;
+        }
+
+        return isset($statuses[$status]) ? $statuses[$status] : '';
     }
 
     /**
@@ -184,6 +207,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('common', 'ID'),
+            'status' => Yii::t('common', 'Status'),
             'img' => Yii::t('common', 'Img'),
             'email' => Yii::t('common', 'Email'),
             'name' => Yii::t('common', 'Name'),
@@ -192,7 +216,6 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => Yii::t('common', 'Auth Key'),
             'password_hash' => Yii::t('common', 'Password Hash'),
             'password_reset_token' => Yii::t('common', 'Password Reset Token'),
-            'is_deleted' => Yii::t('common', 'Is Deleted'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
         ];

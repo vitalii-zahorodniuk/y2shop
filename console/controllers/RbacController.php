@@ -1,22 +1,16 @@
 <?php
-
 namespace console\controllers;
 
+use common\models\UserInterface;
 use yii\console\Controller;
 use yii\rbac\DbManager;
 
 /**
- * RBAC console controller.
+ * Class RbacController
+ * @package console\controllers
  */
-class RbacController extends Controller
+class RbacController extends Controller implements UserInterface
 {
-
-    const ROLE_ROOT = 'root';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_MANAGER = 'manager';
-    const ROLE_SELLER = 'seller';
-    const ROLE_BLOGGER = 'blogger';
-    const ROLE_CUSTOMER = 'customer';
 
     public function __construct($id, $module, $config = [])
     {
@@ -50,10 +44,6 @@ class RbacController extends Controller
         $customer->description = ucfirst(self::ROLE_CUSTOMER);
         $auth->add($customer);
 
-        $blogger = $auth->createRole(self::ROLE_BLOGGER);
-        $blogger->description = ucfirst(self::ROLE_BLOGGER);
-        $auth->add($blogger);
-
         $seller = $auth->createRole(self::ROLE_SELLER);
         $seller->description = ucfirst(self::ROLE_SELLER);
         $auth->add($seller);
@@ -62,7 +52,6 @@ class RbacController extends Controller
         $manager->description = ucfirst(self::ROLE_MANAGER);
         $auth->add($manager);
         $auth->addChild($manager, $customer);
-        $auth->addChild($manager, $blogger);
         $auth->addChild($manager, $seller);
 
         $admin = $auth->createRole(self::ROLE_ADMIN);

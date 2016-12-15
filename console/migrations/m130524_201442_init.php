@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use console\controllers\RbacController;
 use yii\db\Migration;
 
@@ -68,7 +69,7 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
+            'status' => $this->smallInteger(1)->notNull()->defaultValue(User::STATUS_ACTIVE),
 
             'img' => $this->string()->null(),
             'email' => $this->string()->notNull()->unique(),
@@ -81,7 +82,6 @@ class m130524_201442_init extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
 
-            'is_deleted' => $this->smallInteger()->notNull()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -133,18 +133,6 @@ class m130524_201442_init extends Migration
             'updated_at' => time(),
         ]);
         $authManager->assign($authManager->getRole(RbacController::ROLE_SELLER), 4);
-
-        // Add blogger
-        $this->insert('{{%user}}', [
-            'auth_key' => \Yii::$app->security->generateRandomString(),
-            'password_hash' => \Yii::$app->security->generatePasswordHash('blogger'),
-            'email' => 'blogger@localhost',
-            'name' => 'Blogger',
-            'phone' => NULL,
-            'created_at' => time(),
-            'updated_at' => time(),
-        ]);
-        $authManager->assign($authManager->getRole(RbacController::ROLE_BLOGGER), 5);
 
         // Add customer
         $this->insert('{{%user}}', [

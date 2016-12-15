@@ -47,12 +47,19 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'iconOptions' => ['prefix' => 'fa fa-'],
                     'items' => [
                         [
-                            'label' => Yii::t('admin-side', 'System languages'),
-                            'url' => ['language/index'],
-                        ],
-                        [
-                            'label' => Yii::t('admin-side', 'Interface translations'),
-                            'url' => ['translation/index'],
+                            'label' => Yii::t('admin-side', 'Languages'),
+                            'icon' => 'language',
+                            'iconOptions' => ['prefix' => 'fa fa-'],
+                            'items' => [
+                                [
+                                    'label' => Yii::t('admin-side', 'System languages'),
+                                    'url' => ['language/index'],
+                                ],
+                                [
+                                    'label' => Yii::t('admin-side', 'Interface translations'),
+                                    'url' => ['translation/index'],
+                                ],
+                            ],
                         ],
                     ],
                 ],

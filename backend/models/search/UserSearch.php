@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\models\search;
 
 use backend\models\User;
@@ -17,7 +16,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'is_deleted', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['img', 'email', 'name', 'phone', 'config', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
         ];
     }
@@ -59,7 +58,7 @@ class UserSearch extends User
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'is_deleted' => $this->is_deleted,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
