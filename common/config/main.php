@@ -26,11 +26,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'suffix' => '/',
-            'normalizer' => [
-                'class' => \yii\web\UrlNormalizer::className(),
-                'normalizeTrailingSlash' => false,
-                'action' => \yii\web\UrlNormalizer::ACTION_REDIRECT_PERMANENT,
-            ],
+            'normalizer' => false,
             'rules' => [
                 '' => 'site/index',
                 '<controller:\w+(-\w+)*>' => '<controller>/index',
