@@ -458,12 +458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "eeb2b12a7d64024f219dd06e41baf4eda13e13ce"
+                "reference": "ad0333d4f066c6dcff0a31ee06fe160750525c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/eeb2b12a7d64024f219dd06e41baf4eda13e13ce",
-                "reference": "eeb2b12a7d64024f219dd06e41baf4eda13e13ce",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/ad0333d4f066c6dcff0a31ee06fe160750525c4b",
+                "reference": "ad0333d4f066c6dcff0a31ee06fe160750525c4b",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +496,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-10 14:18:37"
+            "time": "2016-12-13 17:24:49"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -504,12 +504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "8667902b821e74aa1b1f68cffd52de967b50a809"
+                "reference": "fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/8667902b821e74aa1b1f68cffd52de967b50a809",
-                "reference": "8667902b821e74aa1b1f68cffd52de967b50a809",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b",
+                "reference": "fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-13 17:14:53"
+            "time": "2016-12-14 14:47:38"
         },
         {
             "name": "yiisoft/yii2",

@@ -144,7 +144,7 @@ class m130524_201442_init extends Migration
             'created_at' => time(),
             'updated_at' => time(),
         ]);
-        $authManager->assign($authManager->getRole(RbacController::ROLE_CUSTOMER), 6);
+        $authManager->assign($authManager->getRole(RbacController::ROLE_CUSTOMER), 5);
     }
 
     public function down()

@@ -10,9 +10,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="error-page">
-    <h2 class="headline text-yellow"><?= $exception->statusCode ?></h2>
+    <h2 class="headline text-yellow" style="float: none;"><?= $exception->statusCode ?></h2>
 
-    <div class="error-content" style="margin-left: 50px; display: block; float: left; margin-top: 45px;">
+    <div class="error-content" style="margin: 0;">
         <h3><i class="fa fa-warning text-yellow"></i> Oops! <?= $message ?></h3>
 
         <?php /*

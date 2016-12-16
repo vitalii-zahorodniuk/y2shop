@@ -10,6 +10,8 @@ use yii\data\ActiveDataProvider;
  */
 class UserSearch extends User
 {
+    public $roles;
+
     /**
      * @inheritdoc
      */
@@ -17,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['img', 'email', 'name', 'phone', 'config', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
+            [['roles', 'img', 'email', 'name', 'phone', 'config', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
         ];
     }
 
@@ -39,13 +41,19 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->joinWith('authAssignments');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['roles'] = [
+            'asc' => ['auth_assignment.item_name' => SORT_ASC],
+            'desc' => ['auth_assignment.item_name' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
 
         $this->load($params);
 
@@ -61,6 +69,7 @@ class UserSearch extends User
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'auth_assignment.item_name' => $this->roles,
         ]);
 
         $query->andFilterWhere(['like', 'img', $this->img])

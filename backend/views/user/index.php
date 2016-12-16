@@ -34,18 +34,38 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute' => 'id',
-                        'headerOptions' => ['class' => 'text-center col-md-1'],
-                        'contentOptions' => ['class' => 'text-center col-md-1'],
+                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                     ],
                     'img',
                     'email:email',
                     'name',
                     'phone',
+                    [
+                        'attribute' => 'roles',
+                        'filter' => User::rolesLabels(),
+                        'headerOptions' => ['class' => 'col-md-2 col-sm-2'],
+                        'contentOptions' => ['class' => 'col-md-2 col-sm-2'],
+                        'content' => function ($model) {
+                            /* @var $model User */
+                            $res = '';
+                            foreach ($model->rolesArray as $role) {
+                                $res .= empty($res) ? '' : '&nbsp;';
+                                $res .= Html::tag('span', User::rolesLabels($role), ['class' => 'label label-primary']);
+                            }
+//                            foreach ($model->childrenRolesArray as $role) {
+//                                $res .= empty($res) ? '' : '&nbsp;';
+//                                $res .= Html::tag('span', User::rolesLabels($role), ['class' => 'label label-info', 'title' => 'Унаследованное право']);
+//                            }
+
+                            return $res;
+                        },
+                    ],
 
                     [
                         'class' => ActionColumn::className(),
-                        'headerOptions' => ['class' => 'text-center col-md-1'],
-                        'contentOptions' => ['class' => 'text-center col-md-1'],
+                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                         'template' => '{view} {update}',
                         'visibleButtons' => [
                             'update' => function ($model, $key, $index) {

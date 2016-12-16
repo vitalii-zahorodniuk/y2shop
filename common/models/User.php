@@ -25,6 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  *
  * @property array $rolesArray
+ * @property array $childrenRolesArray
  * @property boolean $youCanEdit
  */
 class User extends ActiveRecord implements IdentityInterface, UserInterface
@@ -32,6 +33,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
 
     protected $_youCanEdit;
     protected $_rolesArray;
+    protected $_childrenRolesArray;
 
     /**
      * @inheritdoc
@@ -333,6 +335,23 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             return $this->_rolesArray;
         }
         return $this->_rolesArray = $this->getCurrentUserRoles();
+    }
+
+    /**
+     * @return array
+     */
+    public function getChildrenRolesArray()
+    {
+        if (isset($this->_childrenRolesArray)) {
+            return $this->_childrenRolesArray;
+        }
+        $this->_childrenRolesArray = [];
+        foreach (array_keys(self::rolesLabels()) as $role) {
+            if (!in_array($role, $this->getRolesArray()) && Yii::$app->authManager->checkAccess($this->id, $role)) {
+                $this->_childrenRolesArray[] = $role;
+            }
+        }
+        return $this->_childrenRolesArray;
     }
 
     /**

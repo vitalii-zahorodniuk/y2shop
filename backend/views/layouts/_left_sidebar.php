@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\widgets\SidebarMenu;
 
 /* @var $this \yii\web\View */
@@ -33,20 +34,14 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
         */ ?>
 
         <?= SidebarMenu::widget([
-            'headerLabel' => 'My menu',
+//            'headerLabel' => 'My menu',
             'menuItems' => [
                 [
                     'label' => Yii::t('admin-side', 'Users'),
-                    'icon' => 'users',
+                    'url' => ['user/index'],
+                    'visible' => Yii::$app->user->can(User::PERMISSION_CAN_VIEW_ALL_USERS_LIST),
+                    'icon' => 'user',
                     'iconOptions' => ['prefix' => 'fa fa-'],
-                    'items' => [
-                        [
-                            'label' => Yii::t('admin-side', 'Users'),
-                            'url' => ['user/index'],
-                            'icon' => 'user',
-                            'iconOptions' => ['prefix' => 'fa fa-'],
-                        ],
-                    ],
                 ],
                 [
                     'label' => Yii::t('admin-side', 'Settings'),

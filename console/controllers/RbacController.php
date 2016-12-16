@@ -35,34 +35,40 @@ class RbacController extends Controller implements UserInterface
         /*
          * Permissions
          */
-//        $permission = $auth->createPermission('perm');
+        ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST} = $auth->createPermission(self::PERMISSION_CAN_VIEW_ALL_USERS_LIST);
+        $auth->add(${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
 
         /*
          * Roles
          */
-        $customer = $auth->createRole(self::ROLE_CUSTOMER);
-        $customer->description = ucfirst(self::ROLE_CUSTOMER);
-        $auth->add($customer);
+        ${self::ROLE_CUSTOMER} = $auth->createRole(self::ROLE_CUSTOMER);
+        ${self::ROLE_CUSTOMER}->description = ucfirst(self::ROLE_CUSTOMER);
+        $auth->add(${self::ROLE_CUSTOMER});
 
-        $seller = $auth->createRole(self::ROLE_SELLER);
-        $seller->description = ucfirst(self::ROLE_SELLER);
-        $auth->add($seller);
+        ${self::ROLE_SELLER} = $auth->createRole(self::ROLE_SELLER);
+        ${self::ROLE_SELLER}->description = ucfirst(self::ROLE_SELLER);
+        $auth->add(${self::ROLE_SELLER});
 
-        $manager = $auth->createRole(self::ROLE_MANAGER);
-        $manager->description = ucfirst(self::ROLE_MANAGER);
-        $auth->add($manager);
-        $auth->addChild($manager, $customer);
-        $auth->addChild($manager, $seller);
+        ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);
+        ${self::ROLE_MANAGER}->description = ucfirst(self::ROLE_MANAGER);
+        $auth->add(${self::ROLE_MANAGER});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::ROLE_CUSTOMER});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::ROLE_SELLER});
 
-        $admin = $auth->createRole(self::ROLE_ADMIN);
-        $admin->description = ucfirst(self::ROLE_ADMIN);
-        $auth->add($admin);
-        $auth->addChild($admin, $manager);
+        ${self::ROLE_ADMIN} = $auth->createRole(self::ROLE_ADMIN);
+        ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
+        $auth->add(${self::ROLE_ADMIN});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_MANAGER});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
 
-        $root = $auth->createRole(self::ROLE_ROOT);
-        $root->description = ucfirst(self::ROLE_ROOT);
-        $auth->add($root);
-        $auth->addChild($root, $admin);
+        ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
+        ${self::ROLE_ROOT}->description = ucfirst(self::ROLE_ROOT);
+        $auth->add(${self::ROLE_ROOT});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_ADMIN});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_MANAGER});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_SELLER});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_CUSTOMER});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
     }
 
 }
