@@ -458,12 +458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "ad0333d4f066c6dcff0a31ee06fe160750525c4b"
+                "reference": "92130b146525ac2109552873a24056751e36a6fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/ad0333d4f066c6dcff0a31ee06fe160750525c4b",
-                "reference": "ad0333d4f066c6dcff0a31ee06fe160750525c4b",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/92130b146525ac2109552873a24056751e36a6fe",
+                "reference": "92130b146525ac2109552873a24056751e36a6fe",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +496,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-13 17:24:49"
+            "time": "2016-12-16 15:54:40"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -504,16 +504,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b"
+                "reference": "0524497eb7f67a1626d2beeaa80468bf48af97e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b",
-                "reference": "fa41db3b18bfa5e1793a9b3e2fc529cc32f0071b",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/0524497eb7f67a1626d2beeaa80468bf48af97e1",
+                "reference": "0524497eb7f67a1626d2beeaa80468bf48af97e1",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "*"
+                "yiisoft/yii2": "~2.0"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -539,7 +539,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-14 14:47:38"
+            "time": "2016-12-17 16:49:01"
         },
         {
             "name": "yiisoft/yii2",
