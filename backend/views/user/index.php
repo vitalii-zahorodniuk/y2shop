@@ -37,9 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                         'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                     ],
-                    'img',
+                    [
+                        'attribute' => 'name',
+                        'content' => function ($model) {
+                            /* @var $model User */
+                            return $model->name . ($model->id == Yii::$app->user->id ? ' ' . Html::infoLabel('bg-yellow-gradient', Yii::t('admin-side', 'It\'s you')) : '');
+                        },
+                    ],
                     'email:email',
-                    'name',
                     'phone',
                     [
                         'attribute' => 'roles',
@@ -51,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $res = '';
                             foreach ($model->rolesArray as $role) {
                                 $res .= empty($res) ? '' : '&nbsp;';
-                                $res .= Html::tag('span', User::rolesLabels($role), ['class' => 'label label-primary']);
+                                $res .= Html::infoLabel('bg-light-blue-gradient', User::rolesLabels($role));
                             }
 //                            foreach ($model->childrenRolesArray as $role) {
 //                                $res .= empty($res) ? '' : '&nbsp;';

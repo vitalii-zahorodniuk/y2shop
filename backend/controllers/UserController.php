@@ -1,13 +1,18 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\forms\ChangeUserPasswordForm;
+use backend\models\forms\CreateUserForm;
 use backend\models\search\UserSearch;
 use backend\models\User;
 use Yii;
+use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -28,10 +33,17 @@ class UserController extends Controller
                         'roles' => ['?'],
                     ],
                     [
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::ROLE_ADMIN,
+                        ],
+                    ],
+                    [
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => [
-                            User::PERMISSION_CAN_VIEW_ALL_USERS_LIST,
+                            User::PERMISSION_VIEW_ALL_USERS_LIST,
                         ],
                     ],
                 ],
@@ -95,7 +107,12 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new CreateUserForm();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,24 +133,82 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'changePasswordModel' => new ChangeUserPasswordForm($id),
             ]);
         }
     }
 
     /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+     * @param $id
+     * @return array|Response
+     * @throws ForbiddenHttpException
+     */
+    public function actionUpdatePassword($id)
+    {
+        $model = new ChangeUserPasswordForm($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        // Check rights
+        foreach ($this->findModel($id)->rolesArray as $role) {
+            if (!Yii::$app->user->can($role)) {
+                throw new ForbiddenHttpException(Yii::t('admin-side', "You have no rights to change this user!"));
+            }
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->change()) {
+            Yii::$app->session->setFlash('success', Yii::t('admin-side', 'Password changed successfully'));
+        } else {
+            $errors = '';
+            foreach ($model->errors as $field) {
+                foreach ($field as $error) {
+                    $errors .= empty($errors) ? '' : '<br>';
+                    $errors .= $error;
+                }
+            }
+            if (!empty($errors)) {
+                Yii::$app->session->setFlash('danger', Yii::t('admin-side', "The password is not changed!<br>{errors}", ['errors' => $errors]));
+            }
+        }
+
+        return $this->redirect(['update', 'id' => $id]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if ($id == Yii::$app->user->id) {
+            Yii::$app->session->setFlash('error', Yii::t('admin-side', "You have no rights to delete yourself!"));
+            return $this->redirect(['index']);
+        }
+
+        $model = $this->findModel($id);
+
+        // Check rights
+        foreach ($this->findModel($id)->rolesArray as $role) {
+            if (!Yii::$app->user->can($role)) {
+                throw new ForbiddenHttpException(Yii::t('admin-side', "You have no rights to delete this user!"));
+            }
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

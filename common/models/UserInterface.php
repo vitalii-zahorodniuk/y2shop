@@ -8,7 +8,7 @@ namespace common\models;
 interface UserInterface
 {
 
-    const PERMISSION_CAN_VIEW_ALL_USERS_LIST = 'can_view_all_users_list';
+    const PERMISSION_VIEW_ALL_USERS_LIST = 'view_all_users_list';
 
     const ROLE_ROOT = 'root';
     const ROLE_ADMIN = 'admin';

@@ -35,8 +35,8 @@ class RbacController extends Controller implements UserInterface
         /*
          * Permissions
          */
-        ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST} = $auth->createPermission(self::PERMISSION_CAN_VIEW_ALL_USERS_LIST);
-        $auth->add(${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
+        ${self::PERMISSION_VIEW_ALL_USERS_LIST} = $auth->createPermission(self::PERMISSION_VIEW_ALL_USERS_LIST);
+        $auth->add(${self::PERMISSION_VIEW_ALL_USERS_LIST});
 
         /*
          * Roles
@@ -59,7 +59,7 @@ class RbacController extends Controller implements UserInterface
         ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
         $auth->add(${self::ROLE_ADMIN});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_MANAGER});
-        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
 
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
         ${self::ROLE_ROOT}->description = ucfirst(self::ROLE_ROOT);
@@ -68,7 +68,7 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_MANAGER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_SELLER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_CUSTOMER});
-        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_CAN_VIEW_ALL_USERS_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
     }
 
 }

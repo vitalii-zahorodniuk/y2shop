@@ -25,7 +25,6 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  *
  * @property array $rolesArray
- * @property array $childrenRolesArray
  * @property boolean $youCanEdit
  */
 class User extends ActiveRecord implements IdentityInterface, UserInterface
@@ -160,13 +159,15 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      * @param $attribute
      * @param $params
      */
-    public function validateStatusAvailability($attribute, $params)
+    public function validateRolesArray($attribute, $params)
     {
-        foreach ($this->_rolesArray as $role) {
-            if (!Yii::$app->user->can($role)) {
-                $this->addError($attribute, Yii::t('common', 'You do not have permission to assign such rights'));
-                // TODO: Inform admin?
-                break;
+        if (is_array($this->_rolesArray)) {
+            foreach ($this->_rolesArray as $role) {
+                if (!Yii::$app->user->can($role)) {
+                    $this->addError($attribute, Yii::t('common', 'You do not have permission to assign such rights'));
+                    // TODO: Inform admin?
+                    break;
+                }
             }
         }
     }
@@ -188,6 +189,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             ['email', 'email'],
             ['email', 'unique'],
             // name
+            ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
             // phone
             ['phone', 'string', 'max' => 255],
@@ -206,7 +208,8 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
 
             // virtual
             [['rolesArray'], 'safe'],
-            [['rolesArray'], 'validateStatusAvailability'],
+            [['rolesArray'], 'required'],
+            [['rolesArray'], 'validateRolesArray'],
         ];
     }
 
@@ -280,7 +283,6 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             'name'
         );
     }
-
 
     /**
      * @inheritdoc
@@ -357,7 +359,8 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     /**
      * @param string[] $value
      */
-    public function setRolesArray(array $value)
+    public function setRolesArray(/*array*/
+        $value)
     {
         $this->_rolesArray = $value;
     }

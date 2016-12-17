@@ -39,7 +39,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                 [
                     'label' => Yii::t('admin-side', 'Users'),
                     'url' => ['user/index'],
-                    'visible' => Yii::$app->user->can(User::PERMISSION_CAN_VIEW_ALL_USERS_LIST),
+                    'visible' => Yii::$app->user->can(User::PERMISSION_VIEW_ALL_USERS_LIST),
                     'icon' => 'user',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
