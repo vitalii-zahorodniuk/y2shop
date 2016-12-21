@@ -22,15 +22,17 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="box-body">
         <div class="box-body-overflow">
-            <?php $form = ActiveForm::begin(['enableAjaxValidation' => true, 'validateOnType' => true]); ?>
+            <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
-            <!--            --><? //= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
+            <?php /*
+            <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
+            */ ?>
 
-            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => TRUE]) ?>
 
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => TRUE]) ?>
 
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => TRUE]) ?>
 
             <?php if ($model->isNewRecord): ?>
                 <hr>
@@ -64,12 +66,12 @@ use yii\widgets\ActiveForm;
     Modal::begin([
         'id' => 'cp-modal',
         'header' => '<b>' . Yii::t('admin-side', 'Change user password') . '</b>',
-        'clientOptions' => false,
+        'clientOptions' => FALSE,
     ]);
     ?>
     <?php $form = ActiveForm::begin([
-        'enableAjaxValidation' => true,
-        'validateOnType' => true,
+        'enableAjaxValidation' => TRUE,
+        'validateOnType' => TRUE,
         'action' => Url::toRoute(['user/update-password/', 'id' => $model->id]),
         'options' => ['role' => 'form'],
     ]); ?>

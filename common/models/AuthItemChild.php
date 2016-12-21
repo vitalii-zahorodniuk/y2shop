@@ -8,8 +8,8 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "{{%auth_item_child}}".
  *
- * @property string $parent
- * @property string $child
+ * @property string   $parent
+ * @property string   $child
  *
  * @property AuthItem $parent0
  * @property AuthItem $child0
@@ -47,8 +47,8 @@ class AuthItemChild extends ActiveRecord
         return [
             [['parent', 'child'], 'required'],
             [['parent', 'child'], 'string', 'max' => 64],
-            [['parent'], 'exist', 'skipOnError' => true, 'targetClass' => AuthItem::className(), 'targetAttribute' => ['parent' => 'name']],
-            [['child'], 'exist', 'skipOnError' => true, 'targetClass' => AuthItem::className(), 'targetAttribute' => ['child' => 'name']],
+            [['parent'], 'exist', 'skipOnError' => TRUE, 'targetClass' => AuthItem::className(), 'targetAttribute' => ['parent' => 'name']],
+            [['child'], 'exist', 'skipOnError' => TRUE, 'targetClass' => AuthItem::className(), 'targetAttribute' => ['child' => 'name']],
         ];
     }
 

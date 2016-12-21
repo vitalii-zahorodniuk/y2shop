@@ -22,7 +22,8 @@ class ChangeUserPasswordForm extends Model
 
     /**
      * ChangeUserPasswordForm constructor.
-     * @param int $id
+     *
+     * @param int   $id
      * @param array $config
      */
     public function __construct($id, $config = [])
@@ -67,8 +68,8 @@ class ChangeUserPasswordForm extends Model
     {
         if ($this->validate()) {
             $this->_user->setPassword($this->newPassword);
-            return $this->_user->save(false);
+            return $this->_user->save(FALSE);
         }
-        return false;
+        return FALSE;
     }
 }

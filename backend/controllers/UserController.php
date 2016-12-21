@@ -29,11 +29,11 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
+                        'allow' => FALSE,
                         'roles' => ['?'],
                     ],
                     [
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => [
                             User::ROLE_ROOT,
                             User::ROLE_ADMIN,
@@ -41,7 +41,7 @@ class UserController extends Controller
                     ],
                     [
                         'actions' => ['index'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => [
                             User::PERMISSION_VIEW_ALL_USERS_LIST,
                         ],
@@ -74,7 +74,9 @@ class UserController extends Controller
 
     /**
      * Displays a single User model.
+     *
      * @param integer $id
+     *
      * @return mixed
      */
     public function actionView($id)
@@ -87,7 +89,9 @@ class UserController extends Controller
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -126,7 +130,9 @@ class UserController extends Controller
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      */
     public function actionUpdate($id)
@@ -150,6 +156,7 @@ class UserController extends Controller
 
     /**
      * @param $id
+     *
      * @return array|Response
      * @throws ForbiddenHttpException
      */
@@ -189,6 +196,7 @@ class UserController extends Controller
 
     /**
      * @param $id
+     *
      * @return \yii\web\Response
      * @throws ForbiddenHttpException
      */

@@ -23,12 +23,12 @@ class AuthController extends Controller
                 'rules' => [
                     [
                         'actions' => ['login'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => ['@'],
                     ],
                 ],

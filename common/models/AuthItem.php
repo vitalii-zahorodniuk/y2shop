@@ -8,20 +8,20 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "{{%auth_item}}".
  *
- * @property string $name
- * @property integer $type
- * @property string $description
- * @property string $rule_name
- * @property string $data
- * @property integer $created_at
- * @property integer $updated_at
+ * @property string           $name
+ * @property integer          $type
+ * @property string           $description
+ * @property string           $rule_name
+ * @property string           $data
+ * @property integer          $created_at
+ * @property integer          $updated_at
  *
  * @property AuthAssignment[] $authAssignments
- * @property AuthRule $ruleName
- * @property AuthItemChild[] $authItemChildren
- * @property AuthItemChild[] $authItemChildren0
- * @property AuthItem[] $children
- * @property AuthItem[] $parents
+ * @property AuthRule         $ruleName
+ * @property AuthItemChild[]  $authItemChildren
+ * @property AuthItemChild[]  $authItemChildren0
+ * @property AuthItem[]       $children
+ * @property AuthItem[]       $parents
  */
 class AuthItem extends ActiveRecord
 {
@@ -58,7 +58,7 @@ class AuthItem extends ActiveRecord
             [['type', 'created_at', 'updated_at'], 'integer'],
             [['description', 'data'], 'string'],
             [['name', 'rule_name'], 'string', 'max' => 64],
-            [['rule_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthRule::className(), 'targetAttribute' => ['rule_name' => 'name']],
+            [['rule_name'], 'exist', 'skipOnError' => TRUE, 'targetClass' => AuthRule::className(), 'targetAttribute' => ['rule_name' => 'name']],
         ];
     }
 

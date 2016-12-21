@@ -10,6 +10,7 @@ class User extends \common\models\User
 {
     /**
      * @param $src
+     *
      * @return string
      */
     public static function getImgSrc($src)

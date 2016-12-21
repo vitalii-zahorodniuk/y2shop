@@ -13,18 +13,18 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property integer $status
- * @property string $img
- * @property string $email
- * @property string $name
- * @property string $phone
- * @property string $config
- * @property string $auth_key
- * @property string $password_hash
- * @property string $password_reset_token
+ * @property string  $img
+ * @property string  $email
+ * @property string  $name
+ * @property string  $phone
+ * @property string  $config
+ * @property string  $auth_key
+ * @property string  $password_hash
+ * @property string  $password_reset_token
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property array $rolesArray
+ * @property array   $rolesArray
  * @property boolean $youCanEdit
  */
 class User extends ActiveRecord implements IdentityInterface, UserInterface
@@ -62,6 +62,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      * Finds user by email
      *
      * @param string $email
+     *
      * @return static|null
      */
     public static function findByEmail($email)
@@ -73,6 +74,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      * Finds user by password reset token
      *
      * @param string $token password reset token
+     *
      * @return static|null
      */
     public static function findByPasswordResetToken($token)
@@ -90,12 +92,13 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      * Finds out if password reset token is valid
      *
      * @param string $token password reset token
+     *
      * @return boolean
      */
     public static function isPasswordResetTokenValid($token)
     {
         if (empty($token)) {
-            return false;
+            return FALSE;
         }
 
         $timestamp = (int)substr($token, strrpos($token, '_') + 1);
@@ -122,6 +125,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
 
     /**
      * @param null $role
+     *
      * @return array|string
      */
     public static function rolesLabels($role = NULL)
@@ -215,6 +219,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
 
     /**
      * @param null $status
+     *
      * @return array|string
      */
     public static function statusesLabels($status = NULL)
@@ -272,19 +277,6 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
-     * @return string[]
-     */
-    private function getCurrentUserRoles()
-    {
-        return ArrayHelper::getColumn(
-            Yii::$app->authManager->getRolesByUser(
-                $this->id
-            ),
-            'name'
-        );
-    }
-
-    /**
      * @inheritdoc
      */
     public function afterSave($insert, $changedAttributes)
@@ -311,6 +303,19 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
+     * @return string[]
+     */
+    private function getCurrentUserRoles()
+    {
+        return ArrayHelper::getColumn(
+            Yii::$app->authManager->getRolesByUser(
+                $this->id
+            ),
+            'name'
+        );
+    }
+
+    /**
      * @return bool
      */
     public function getYouCanEdit()
@@ -321,22 +326,11 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
         if (!Yii::$app->user->isGuest) {
             foreach ($this->getCurrentUserRoles() as $role) {
                 if (!Yii::$app->user->can($role)) {
-                    return $this->_youCanEdit = false;
+                    return $this->_youCanEdit = FALSE;
                 }
             }
         }
-        return $this->_youCanEdit = true;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRolesArray()
-    {
-        if (isset($this->_rolesArray)) {
-            return $this->_rolesArray;
-        }
-        return $this->_rolesArray = $this->getCurrentUserRoles();
+        return $this->_youCanEdit = TRUE;
     }
 
     /**
@@ -354,6 +348,17 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             }
         }
         return $this->_childrenRolesArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesArray()
+    {
+        if (isset($this->_rolesArray)) {
+            return $this->_rolesArray;
+        }
+        return $this->_rolesArray = $this->getCurrentUserRoles();
     }
 
     /**
@@ -393,6 +398,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      * Validates password
      *
      * @param string $password password to validate
+     *
      * @return boolean if password provided is valid for current user
      */
     public function validatePassword($password)

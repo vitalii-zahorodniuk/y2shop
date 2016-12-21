@@ -21,11 +21,11 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'actions' => ['error'],
-                        'allow' => true,
+                        'allow' => TRUE,
                     ],
                     [
                         'actions' => ['index'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => ['@'],
                     ],
                 ],

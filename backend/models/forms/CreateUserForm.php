@@ -53,8 +53,8 @@ class CreateUserForm extends User
             if (!empty($this->newPassword) && empty($this->password_hash)) {
                 $this->setPassword($this->newPassword);
             }
-            return true;
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 }

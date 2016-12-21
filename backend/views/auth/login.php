@@ -27,14 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'placeholder' => $model->getAttributeLabel('email'),
             ])
             ->glyphIcon('user')
-            ->label(false)
+            ->label(FALSE)
         ?>
 
         <?= $form
             ->field($model, 'password')
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')])
             ->glyphIcon('lock')
-            ->label(false)
+            ->label(FALSE)
         ?>
 
         <div class="row">
