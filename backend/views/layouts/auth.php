@@ -29,9 +29,7 @@ AdminLteAsset::register($this);
     <body class="hold-transition login-page">
         <?php $this->beginBody() ?>
 
-        <div class="login-box">
-            <?= $content ?>
-        </div>
+        <?= $content ?>
 
         <?php $this->endBody() ?>
     </body>

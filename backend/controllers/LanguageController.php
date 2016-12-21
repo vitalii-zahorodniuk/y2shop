@@ -1,10 +1,13 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\User;
 use xz1mefx\multilang\actions\language\CreateAction;
 use xz1mefx\multilang\actions\language\DeleteAction;
 use xz1mefx\multilang\actions\language\IndexAction;
 use xz1mefx\multilang\actions\language\UpdateAction;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
@@ -13,6 +16,38 @@ use yii\web\Controller;
  */
 class LanguageController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => TRUE,
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::PERMISSION_EDIT_LANGUAGES,
+                        ],
+                    ],
+                    [
+                        'allow' => FALSE,
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'index' => ['get'],
+                    'create' => ['get', 'post'],
+                    'update' => ['get', 'put', 'post'],
+                    'delete' => ['post', 'delete'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc

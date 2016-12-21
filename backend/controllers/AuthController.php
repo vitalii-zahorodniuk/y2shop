@@ -24,12 +24,14 @@ class AuthController extends Controller
                     [
                         'actions' => ['login'],
                         'allow' => TRUE,
-                        'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout'],
                         'allow' => TRUE,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => FALSE,
                     ],
                 ],
             ],
@@ -53,7 +55,7 @@ class AuthController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         } else {
             return $this->render('login', [
                 'model' => $model,

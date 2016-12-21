@@ -1,8 +1,11 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\User;
 use xz1mefx\multilang\actions\translation\IndexAction;
 use xz1mefx\multilang\actions\translation\UpdateAction;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
@@ -11,6 +14,36 @@ use yii\web\Controller;
  */
 class TranslationController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => TRUE,
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::PERMISSION_EDIT_TRANSLATES,
+                        ],
+                    ],
+                    [
+                        'allow' => FALSE,
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'index' => ['get'],
+                    'update' => ['get', 'put', 'post'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc

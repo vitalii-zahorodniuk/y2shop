@@ -1,5 +1,5 @@
 <?php
-use common\models\User;
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -66,6 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $res;
                         },
                     ],
+                    [
+                        'attribute' => 'status',
+                        'filter' => User::statusesLabels(),
+                        'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'content' => function ($model) {
+                            /* @var $model User */
+                            return $model->statusHtmlLabel;
+                        },
+                    ],
 
                     [
                         'class' => ActionColumn::className(),
@@ -78,6 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return
                                     in_array($model->status, [User::STATUS_ACTIVE, User::STATUS_ON_HOLD])
                                     && $model->youCanEdit;
+                                // TODO: ?!?!?!?!?
                             },
                         ],
                     ],

@@ -218,7 +218,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
-     * @param null $status
+     * @param null|string $status
      *
      * @return array|string
      */
@@ -226,8 +226,8 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     {
         $statuses = [
             self::STATUS_DELETED => Yii::t('common', 'User deleted'),
-            self::STATUS_ACTIVE => Yii::t('common', 'User active'),
             self::STATUS_ON_HOLD => Yii::t('common', 'User on hold'),
+            self::STATUS_ACTIVE => Yii::t('common', 'User active'),
         ];
         if ($status === NULL) {
             return $statuses;

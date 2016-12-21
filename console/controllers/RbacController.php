@@ -29,14 +29,21 @@ class RbacController extends Controller implements UserInterface
     {
         $auth = new DbManager;
         $auth->init();
-
         $auth->removeAll();
+
 
         /*
          * Permissions
          */
+        ${self::PERMISSION_EDIT_LANGUAGES} = $auth->createPermission(self::PERMISSION_EDIT_LANGUAGES);
+        $auth->add(${self::PERMISSION_EDIT_LANGUAGES});
+
+        ${self::PERMISSION_EDIT_TRANSLATES} = $auth->createPermission(self::PERMISSION_EDIT_TRANSLATES);
+        $auth->add(${self::PERMISSION_EDIT_TRANSLATES});
+
         ${self::PERMISSION_VIEW_ALL_USERS_LIST} = $auth->createPermission(self::PERMISSION_VIEW_ALL_USERS_LIST);
         $auth->add(${self::PERMISSION_VIEW_ALL_USERS_LIST});
+
 
         /*
          * Roles
@@ -48,6 +55,7 @@ class RbacController extends Controller implements UserInterface
         ${self::ROLE_SELLER} = $auth->createRole(self::ROLE_SELLER);
         ${self::ROLE_SELLER}->description = ucfirst(self::ROLE_SELLER);
         $auth->add(${self::ROLE_SELLER});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::ROLE_CUSTOMER});
 
         ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);
         ${self::ROLE_MANAGER}->description = ucfirst(self::ROLE_MANAGER);
@@ -59,6 +67,8 @@ class RbacController extends Controller implements UserInterface
         ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
         $auth->add(${self::ROLE_ADMIN});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_MANAGER});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_CUSTOMER});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_EDIT_TRANSLATES});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
 
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
@@ -68,6 +78,8 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_MANAGER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_SELLER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_CUSTOMER});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_EDIT_LANGUAGES});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_EDIT_TRANSLATES});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
     }
 

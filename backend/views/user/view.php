@@ -47,6 +47,11 @@ foreach ($model->rolesArray as $role) {
                 'model' => $model,
                 'attributes' => [
                     'id',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'value' => $model->statusHtmlLabel,
+                    ],
 //                  'img',
                     'email:email',
                     'name',

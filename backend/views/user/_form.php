@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
         <div class="box-body-overflow">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
+            <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
+
             <?php /*
             <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
             */ ?>

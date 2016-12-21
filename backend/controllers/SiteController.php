@@ -1,9 +1,12 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\User;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ErrorAction;
+
 
 /**
  * Site controller
@@ -22,17 +25,28 @@ class SiteController extends Controller
                     [
                         'actions' => ['error'],
                         'allow' => TRUE,
+                        'roles' => ['@'],
                     ],
                     [
                         'actions' => ['index'],
                         'allow' => TRUE,
-                        'roles' => ['@'],
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_SELLER,
+                        ],
+                    ],
+                    [
+                        'allow' => FALSE,
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'index' => ['get'],
+                    'error' => ['get'],
                 ],
             ],
         ];
@@ -45,7 +59,7 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => ErrorAction::className(),
             ],
         ];
     }

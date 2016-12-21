@@ -29,10 +29,6 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => FALSE,
-                        'roles' => ['?'],
-                    ],
-                    [
                         'allow' => TRUE,
                         'roles' => [
                             User::ROLE_ROOT,
@@ -46,12 +42,19 @@ class UserController extends Controller
                             User::PERMISSION_VIEW_ALL_USERS_LIST,
                         ],
                     ],
+                    [
+                        'allow' => FALSE,
+                    ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'index' => ['get'],
+                    'view' => ['get'],
+                    'create' => ['get', 'post'],
+                    'update' => ['get', 'put', 'post'],
+                    'delete' => ['post', 'delete'],
                 ],
             ],
         ];
@@ -216,7 +219,8 @@ class UserController extends Controller
             }
         }
 
-        $model->delete();
+        $model->status = User::STATUS_DELETED;
+        $model->save();
 
         return $this->redirect(['index']);
     }
