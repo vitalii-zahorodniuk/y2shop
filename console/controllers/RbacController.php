@@ -35,14 +35,26 @@ class RbacController extends Controller implements UserInterface
         /*
          * Permissions
          */
-        ${self::PERMISSION_EDIT_LANGUAGES} = $auth->createPermission(self::PERMISSION_EDIT_LANGUAGES);
-        $auth->add(${self::PERMISSION_EDIT_LANGUAGES});
+        ${self::PERM_USER_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_USER_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_USER_CAN_VIEW_LIST});
 
-        ${self::PERMISSION_EDIT_TRANSLATES} = $auth->createPermission(self::PERMISSION_EDIT_TRANSLATES);
-        $auth->add(${self::PERMISSION_EDIT_TRANSLATES});
+        ${self::PERM_USER_CAN_UPDATE} = $auth->createPermission(self::PERM_USER_CAN_UPDATE);
+        $auth->add(${self::PERM_USER_CAN_UPDATE});
+        $auth->addChild(${self::PERM_USER_CAN_UPDATE}, ${self::PERM_USER_CAN_VIEW_LIST});
 
-        ${self::PERMISSION_VIEW_ALL_USERS_LIST} = $auth->createPermission(self::PERMISSION_VIEW_ALL_USERS_LIST);
-        $auth->add(${self::PERMISSION_VIEW_ALL_USERS_LIST});
+        ${self::PERM_LANGUAGE_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_LANGUAGE_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+
+        ${self::PERM_LANGUAGE_CAN_UPDATE} = $auth->createPermission(self::PERM_LANGUAGE_CAN_UPDATE);
+        $auth->add(${self::PERM_LANGUAGE_CAN_UPDATE});
+        $auth->addChild(${self::PERM_LANGUAGE_CAN_UPDATE}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+
+        ${self::PERM_TRANSLATE_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_TRANSLATE_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_TRANSLATE_CAN_VIEW_LIST});
+
+        ${self::PERM_TRANSLATE_CAN_UPDATE} = $auth->createPermission(self::PERM_TRANSLATE_CAN_UPDATE);
+        $auth->add(${self::PERM_TRANSLATE_CAN_UPDATE});
+        $auth->addChild(${self::PERM_TRANSLATE_CAN_UPDATE}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 
 
         /*
@@ -62,14 +74,24 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::ROLE_MANAGER});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::ROLE_CUSTOMER});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::ROLE_SELLER});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_USER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_USER_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_LANGUAGE_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
 
         ${self::ROLE_ADMIN} = $auth->createRole(self::ROLE_ADMIN);
         ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
         $auth->add(${self::ROLE_ADMIN});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_MANAGER});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::ROLE_CUSTOMER});
-        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_EDIT_TRANSLATES});
-        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_USER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_USER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_LANGUAGE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_TRANSLATE_CAN_UPDATE});
 
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
         ${self::ROLE_ROOT}->description = ucfirst(self::ROLE_ROOT);
@@ -78,9 +100,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_MANAGER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_SELLER});
         $auth->addChild(${self::ROLE_ROOT}, ${self::ROLE_CUSTOMER});
-        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_EDIT_LANGUAGES});
-        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_EDIT_TRANSLATES});
-        $auth->addChild(${self::ROLE_ROOT}, ${self::PERMISSION_VIEW_ALL_USERS_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_USER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_USER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_LANGUAGE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_TRANSLATE_CAN_UPDATE});
     }
 
 }

@@ -30,19 +30,12 @@ class LanguageController extends BaseController
                     [
                         'actions' => ['index'],
                         'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::ROLE_ADMIN,
-                            User::ROLE_MANAGER,
-                        ],
+                        'roles' => [User::PERM_LANGUAGE_CAN_VIEW_LIST],
                     ],
                     [
                         'actions' => ['create', 'update', 'delete'],
                         'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::PERMISSION_EDIT_LANGUAGES,
-                        ],
+                        'roles' => [User::PERM_LANGUAGE_CAN_UPDATE],
                     ],
                     ['allow' => FALSE], // default rule
                 ],
@@ -66,7 +59,7 @@ class LanguageController extends BaseController
     {
         $canEdit = Yii::$app->user->can([
             User::ROLE_ROOT,
-            User::PERMISSION_EDIT_LANGUAGES,
+            User::PERM_LANGUAGE_CAN_UPDATE,
         ]);
         return [
             'index' => [

@@ -8,15 +8,18 @@ namespace common\models;
 interface UserInterface
 {
 
-    const PERMISSION_VIEW_ALL_USERS_LIST = 'permission_view_all_users_list';
-    const PERMISSION_EDIT_LANGUAGES = 'permission_edit_languages';
-    const PERMISSION_EDIT_TRANSLATES = 'permission_edit_translates';
+    const PERM_USER_CAN_VIEW_LIST = 'PERM_USER_CAN_VIEW_LIST';
+    const PERM_USER_CAN_UPDATE = 'PERM_USER_CAN_UPDATE';
+    const PERM_LANGUAGE_CAN_VIEW_LIST = 'PERM_LANGUAGE_CAN_VIEW_LIST';
+    const PERM_LANGUAGE_CAN_UPDATE = 'PERM_LANGUAGE_CAN_UPDATE';
+    const PERM_TRANSLATE_CAN_VIEW_LIST = 'PERM_TRANSLATE_CAN_VIEW_LIST';
+    const PERM_TRANSLATE_CAN_UPDATE = 'PERM_TRANSLATE_CAN_UPDATE';
 
-    const ROLE_ROOT = 'role_root';
-    const ROLE_ADMIN = 'role_admin';
-    const ROLE_MANAGER = 'role_manager';
-    const ROLE_SELLER = 'role_seller';
-    const ROLE_CUSTOMER = 'role_customer';
+    const ROLE_ROOT = 'ROLE_ROOT';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_MANAGER = 'ROLE_MANAGER';
+    const ROLE_SELLER = 'ROLE_SELLER';
+    const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
 
     const STATUS_DELETED = -1;
     const STATUS_ON_HOLD = 0;

@@ -28,18 +28,12 @@ class TranslationController extends BaseController
                     [
                         'actions' => ['index'],
                         'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::ROLE_ADMIN,
-                        ],
+                        'roles' => [User::PERM_TRANSLATE_CAN_VIEW_LIST],
                     ],
                     [
                         'actions' => ['update'],
                         'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::PERMISSION_EDIT_TRANSLATES,
-                        ],
+                        'roles' => [User::PERM_TRANSLATE_CAN_UPDATE],
                     ],
                     ['allow' => FALSE], // default rule
                 ],
@@ -63,7 +57,10 @@ class TranslationController extends BaseController
             'index' => [
                 'class' => IndexAction::className(),
                 'theme' => IndexAction::THEME_ADMINLTE,
-                'canUpdate' => Yii::$app->user->can(User::PERMISSION_EDIT_TRANSLATES),
+                'canUpdate' => Yii::$app->user->can([
+                    User::ROLE_ROOT,
+                    User::PERM_TRANSLATE_CAN_UPDATE,
+                ]),
             ],
             'update' => [
                 'class' => UpdateAction::className(),

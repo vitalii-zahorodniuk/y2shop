@@ -39,27 +39,48 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                 [
                     'label' => Yii::t('admin-side', 'Users'),
                     'url' => ['user/index'],
-                    'visible' => Yii::$app->user->can(User::PERMISSION_VIEW_ALL_USERS_LIST),
+                    'visible' => Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                        User::PERM_USER_CAN_VIEW_LIST,
+                    ]),
                     'icon' => 'user',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
                 [
                     'label' => Yii::t('admin-side', 'Settings'),
+                    'visible' => Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                        User::PERM_LANGUAGE_CAN_VIEW_LIST,
+                        User::PERM_TRANSLATE_CAN_VIEW_LIST,
+                    ]),
                     'icon' => 'cogs',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                     'items' => [
                         [
                             'label' => Yii::t('admin-side', 'Languages'),
+                            'visible' => Yii::$app->user->can([
+                                User::ROLE_ROOT,
+                                User::PERM_LANGUAGE_CAN_VIEW_LIST,
+                                User::PERM_TRANSLATE_CAN_VIEW_LIST,
+                            ]),
                             'icon' => 'language',
                             'iconOptions' => ['prefix' => 'fa fa-'],
                             'items' => [
                                 [
                                     'label' => Yii::t('admin-side', 'System languages'),
                                     'url' => ['language/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_LANGUAGE_CAN_VIEW_LIST,
+                                    ]),
                                 ],
                                 [
                                     'label' => Yii::t('admin-side', 'Interface translations'),
                                     'url' => ['translation/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_TRANSLATE_CAN_VIEW_LIST,
+                                    ]),
                                 ],
                             ],
                         ],

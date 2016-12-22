@@ -31,18 +31,14 @@ class UserController extends BaseController
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::ROLE_ADMIN,
-                        ],
-                    ],
-                    [
                         'actions' => ['index'],
                         'allow' => TRUE,
-                        'roles' => [
-                            User::PERMISSION_VIEW_ALL_USERS_LIST,
-                        ],
+                        'roles' => [User::PERM_USER_CAN_VIEW_LIST],
+                    ],
+                    [
+                        'actions' => ['view', 'create', 'update', 'delete'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_USER_CAN_UPDATE],
                     ],
                     ['allow' => FALSE], // default rule
                 ],
