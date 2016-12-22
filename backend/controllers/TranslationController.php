@@ -4,16 +4,17 @@ namespace backend\controllers;
 use backend\models\User;
 use xz1mefx\multilang\actions\translation\IndexAction;
 use xz1mefx\multilang\actions\translation\UpdateAction;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 
 /**
  * Class TranslationController
  * @package backend\controllers
  */
-class TranslationController extends Controller
+class TranslationController extends BaseController
 {
+
     /**
      * @inheritdoc
      */
@@ -23,16 +24,24 @@ class TranslationController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
+                        'actions' => ['index'],
+                        'allow' => TRUE,
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::ROLE_ADMIN,
+                        ],
+                    ],
+                    [
+                        'actions' => ['update'],
                         'allow' => TRUE,
                         'roles' => [
                             User::ROLE_ROOT,
                             User::PERMISSION_EDIT_TRANSLATES,
                         ],
                     ],
-                    [
-                        'allow' => FALSE,
-                    ],
+                    ['allow' => FALSE], // default rule
                 ],
             ],
             'verbs' => [
@@ -54,7 +63,7 @@ class TranslationController extends Controller
             'index' => [
                 'class' => IndexAction::className(),
                 'theme' => IndexAction::THEME_ADMINLTE,
-//                'canUpdate' => false,
+                'canUpdate' => Yii::$app->user->can(User::PERMISSION_EDIT_TRANSLATES),
             ],
             'update' => [
                 'class' => UpdateAction::className(),

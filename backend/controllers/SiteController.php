@@ -4,15 +4,16 @@ namespace backend\controllers;
 use backend\models\User;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\ErrorAction;
 
 
 /**
- * Site controller
+ * Class SiteController
+ * @package backend\controllers
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
+
     /**
      * @inheritdoc
      */
@@ -22,24 +23,13 @@ class SiteController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'actions' => ['error'],
+                        'actions' => ['error', 'index'],
                         'allow' => TRUE,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['index'],
-                        'allow' => TRUE,
-                        'roles' => [
-                            User::ROLE_ROOT,
-                            User::ROLE_ADMIN,
-                            User::ROLE_MANAGER,
-                            User::ROLE_SELLER,
-                        ],
-                    ],
-                    [
-                        'allow' => FALSE,
-                    ],
+                    ['allow' => FALSE], // default rule
                 ],
             ],
             'verbs' => [
@@ -65,12 +55,11 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
      * @return string
      */
     public function actionIndex()
     {
         return $this->render('index');
     }
+
 }

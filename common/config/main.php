@@ -2,12 +2,15 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'user' => [
+            'class' => \xz1mefx\base\web\User::className(),
+        ],
         'authManager' => [
             'class' => \yii\rbac\DbManager::className(),
         ],
         'assetManager' => [
-            'linkAssets' => true,
-            'appendTimestamp' => true,
+            'linkAssets' => TRUE,
+            'appendTimestamp' => TRUE,
         ],
         'cache' => [
             'class' => \yii\caching\FileCache::className(),
@@ -26,10 +29,10 @@ return [
         ],
         'urlManager' => [
             'class' => \xz1mefx\multilang\web\UrlManager::className(),
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'enablePrettyUrl' => TRUE,
+            'showScriptName' => FALSE,
             'suffix' => '/',
-            'normalizer' => false,
+            'normalizer' => FALSE,
             'rules' => [
                 '' => 'site/index',
                 '<controller:\w+(-\w+)*>' => '<controller>/index',

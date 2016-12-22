@@ -6,16 +6,17 @@ use xz1mefx\multilang\actions\language\CreateAction;
 use xz1mefx\multilang\actions\language\DeleteAction;
 use xz1mefx\multilang\actions\language\IndexAction;
 use xz1mefx\multilang\actions\language\UpdateAction;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 
 /**
  * Class LanguageController
  * @package backend\controllers
  */
-class LanguageController extends Controller
+class LanguageController extends BaseController
 {
+
     /**
      * @inheritdoc
      */
@@ -25,16 +26,25 @@ class LanguageController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
+                        'actions' => ['index'],
+                        'allow' => TRUE,
+                        'roles' => [
+                            User::ROLE_ROOT,
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                        ],
+                    ],
+                    [
+                        'actions' => ['create', 'update', 'delete'],
                         'allow' => TRUE,
                         'roles' => [
                             User::ROLE_ROOT,
                             User::PERMISSION_EDIT_LANGUAGES,
                         ],
                     ],
-                    [
-                        'allow' => FALSE,
-                    ],
+                    ['allow' => FALSE], // default rule
                 ],
             ],
             'verbs' => [
@@ -54,13 +64,17 @@ class LanguageController extends Controller
      */
     public function actions()
     {
+        $canEdit = Yii::$app->user->can([
+            User::ROLE_ROOT,
+            User::PERMISSION_EDIT_LANGUAGES,
+        ]);
         return [
             'index' => [
                 'class' => IndexAction::className(),
                 'theme' => IndexAction::THEME_ADMINLTE,
-//                'canAdd' => false,
-//                'canUpdate' => false,
-//                'canDelete' => false,
+                'canAdd' => $canEdit,
+                'canUpdate' => $canEdit,
+                'canDelete' => $canEdit,
             ],
             'create' => [
                 'class' => CreateAction::className(),

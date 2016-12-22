@@ -9,16 +9,17 @@ use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * Class UserController
+ * @package backend\controllers
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
+
     /**
      * @inheritdoc
      */
@@ -28,6 +29,7 @@ class UserController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
                         'allow' => TRUE,
                         'roles' => [
@@ -42,9 +44,7 @@ class UserController extends Controller
                             User::PERMISSION_VIEW_ALL_USERS_LIST,
                         ],
                     ],
-                    [
-                        'allow' => FALSE,
-                    ],
+                    ['allow' => FALSE], // default rule
                 ],
             ],
             'verbs' => [
@@ -61,8 +61,7 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
-     * @return mixed
+     * @return string
      */
     public function actionIndex()
     {
@@ -76,11 +75,9 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * @param $id
      *
-     * @param integer $id
-     *
-     * @return mixed
+     * @return string
      */
     public function actionView($id)
     {
@@ -90,13 +87,10 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param $id
      *
-     * @param integer $id
-     *
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return User
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
@@ -108,9 +102,7 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return array|string|Response
      */
     public function actionCreate()
     {
@@ -131,12 +123,9 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param $id
      *
-     * @param integer $id
-     *
-     * @return mixed
+     * @return array|string|Response
      */
     public function actionUpdate($id)
     {
@@ -200,7 +189,7 @@ class UserController extends Controller
     /**
      * @param $id
      *
-     * @return \yii\web\Response
+     * @return Response
      * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
@@ -224,4 +213,5 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
+
 }

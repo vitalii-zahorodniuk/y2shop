@@ -6,12 +6,15 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
- * Site controller
+ * Class AuthController
+ * @package backend\controllers
  */
 class AuthController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -22,17 +25,10 @@ class AuthController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login'],
+                        'actions' => ['login', 'logout'],
                         'allow' => TRUE,
                     ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => TRUE,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => FALSE,
-                    ],
+                    ['allow' => FALSE], // default rule
                 ],
             ],
             'verbs' => [
@@ -45,6 +41,9 @@ class AuthController extends Controller
         ];
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionLogin()
     {
         $this->layout = 'auth';
@@ -56,17 +55,21 @@ class AuthController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goHome();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
+    /**
+     * @return Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
 
         return Yii::$app->getResponse()->redirect(['auth/login']);
     }
+
 }

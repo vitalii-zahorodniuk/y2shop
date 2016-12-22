@@ -15,8 +15,10 @@ class Yii extends \yii\BaseYii
 }
 
 /**
+ * @property xz1mefx\base\web\User $user
+ * @property yii\rbac\DbManager $authManager
  * @property yii\caching\FileCache $cache
- * @property yii\caching\FileCache $multilangCache
+ * @property xz1mefx\multilang\caching\MultilangCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n
@@ -25,8 +27,10 @@ class Yii extends \yii\BaseYii
 abstract class BaseApplication extends \yii\base\Application {}
 
 /**
+ * @property xz1mefx\base\web\User $user
+ * @property yii\rbac\DbManager $authManager
  * @property yii\caching\FileCache $cache
- * @property yii\caching\FileCache $multilangCache
+ * @property xz1mefx\multilang\caching\MultilangCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n
@@ -35,8 +39,10 @@ abstract class BaseApplication extends \yii\base\Application {}
 class WebApplication extends \yii\web\Application {}
 
 /**
+ * @property xz1mefx\base\web\User $user
+ * @property yii\rbac\DbManager $authManager
  * @property yii\caching\FileCache $cache
- * @property yii\caching\FileCache $multilangCache
+ * @property xz1mefx\multilang\caching\MultilangCache $multilangCache
  * @property xz1mefx\multilang\web\UrlManager $urlManager
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n

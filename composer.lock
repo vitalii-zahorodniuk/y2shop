@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c54e12662eb8b0faf34421b1c21bf230",
-    "content-hash": "dfd6577ce4e89e21b953e9f4f620441a",
+    "hash": "e8e95bd06fae2cf1e3e2c25d2cb68693",
+    "content-hash": "1271203547e30b85a7d4db3ef3a520ba",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -497,6 +497,49 @@
                 "yii2"
             ],
             "time": "2016-12-16 15:54:40"
+        },
+        {
+            "name": "xz1mefx/yii2-base",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xZ1mEFx/yii2-base.git",
+                "reference": "8a81010b091046ab6bbadbca2846f945cd66411a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/8a81010b091046ab6bbadbca2846f945cd66411a",
+                "reference": "8a81010b091046ab6bbadbca2846f945cd66411a",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "xz1mefx\\base\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitalii Zagorodniuk",
+                    "email": "vitaliizagorodniuk@gmail.com"
+                }
+            ],
+            "description": "Base tools package",
+            "keywords": [
+                "base",
+                "helpers",
+                "tool",
+                "xZ1mEFx",
+                "yii2"
+            ],
+            "time": "2016-12-22 09:24:20"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -3006,7 +3049,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "xz1mefx/yii2-adminlte": 20,
-        "xz1mefx/yii2-multilang": 20
+        "xz1mefx/yii2-multilang": 20,
+        "xz1mefx/yii2-base": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

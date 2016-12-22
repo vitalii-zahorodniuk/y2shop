@@ -71,7 +71,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('admin-side', 'Icorrect login or password'));
+                $this->addError($attribute, Yii::t('admin-side', 'Incorrect login or password'));
             }
         }
     }
@@ -98,9 +98,22 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return FALSE;
+            if (Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0)) {
+                if (
+                Yii::$app->user->cannot([
+                    User::ROLE_ROOT,
+                    User::ROLE_ADMIN,
+                    User::ROLE_MANAGER,
+                    User::ROLE_SELLER,
+                ])
+                ) {
+                    Yii::$app->user->logout();
+                    Yii::$app->session->addFlash('error', Yii::t('admin-side', 'You have insufficient privileges!'));
+                    return FALSE;
+                }
+                return TRUE;
+            }
         }
+        return FALSE;
     }
 }
