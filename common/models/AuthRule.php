@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  */
 class AuthRule extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */

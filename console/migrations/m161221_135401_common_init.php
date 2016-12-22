@@ -7,6 +7,7 @@ use yii\db\Migration;
  */
 class m161221_135401_common_init extends Migration
 {
+
     public function up()
     {
         $this->down();
@@ -27,8 +28,8 @@ class m161221_135401_common_init extends Migration
         $this->createTable($authManager->ruleTable, [
             'name' => $this->string(64)->notNull(),
             'data' => $this->text(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'PRIMARY KEY (name)',
         ], $tableOptions);
 
@@ -38,8 +39,8 @@ class m161221_135401_common_init extends Migration
             'description' => $this->text(),
             'rule_name' => $this->string(64),
             'data' => $this->text(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'PRIMARY KEY (name)',
             'FOREIGN KEY (rule_name) REFERENCES ' . $authManager->ruleTable . ' (name) ON DELETE SET NULL ON UPDATE CASCADE',
         ], $tableOptions);
@@ -56,7 +57,7 @@ class m161221_135401_common_init extends Migration
         $this->createTable($authManager->assignmentTable, [
             'item_name' => $this->string(64)->notNull(),
             'user_id' => $this->string(64)->notNull(),
-            'created_at' => $this->integer(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'PRIMARY KEY (item_name, user_id)',
             'FOREIGN KEY (item_name) REFERENCES ' . $authManager->itemTable . ' (name) ON DELETE CASCADE ON UPDATE CASCADE',
         ], $tableOptions);
@@ -84,9 +85,16 @@ class m161221_135401_common_init extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
+
+        $this->createIndex('user_created_by', '{{%user}}', 'created_by');
+        $this->createIndex('user_updated_by', '{{%user}}', 'updated_by');
+        $this->addForeignKey('user_created_by_fk', '{{%user}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('user_updated_by_fk', '{{%user}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
         // Add root
         $this->insert('{{%user}}', [
@@ -150,20 +158,50 @@ class m161221_135401_common_init extends Migration
 
 
         // -------------------------------------------
-        // Create currency table
+        // Create currency tables
         // -------------------------------------------
 
         $this->createTable('{{%currency}}', [
             'id' => $this->primaryKey()->unsigned(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
-            'name' => $this->string()->notNull(),
             'code' => $this->string()->notNull(),
             'value' => $this->decimal(15, 8)->notNull()->defaultValue(0),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
+
+        $this->createIndex('currency_created_by', '{{%currency}}', 'created_by');
+        $this->createIndex('currency_updated_by', '{{%currency}}', 'updated_by');
+        $this->addForeignKey('currency_created_by_fk', '{{%currency}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_updated_by_fk', '{{%currency}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+
+        $this->createTable('{{%currency_translate}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'currency_id' => $this->integer()->unsigned()->notNull(),
+            'language_id' => $this->integer()->unsigned()->notNull(),
+
+            'name' => $this->string()->notNull(),
+            'symbol_left' => $this->string(16)->notNull(),
+            'symbol_right' => $this->string(16)->notNull(),
+
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createIndex('currency_translate_currency_id', '{{%currency_translate}}', 'currency_id');
+        $this->createIndex('currency_translate_language_id', '{{%currency_translate}}', 'language_id');
+        $this->createIndex('currency_translate_created_by', '{{%currency_translate}}', 'created_by');
+        $this->createIndex('currency_translate_updated_by', '{{%currency_translate}}', 'updated_by');
+        $this->addForeignKey('currency_translate_currency_id_fk', '{{%currency_translate}}', 'currency_id', '{{%currency}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_translate_language_id_fk', '{{%currency_translate}}', 'language_id', \xz1mefx\multilang\models\Language::TABLE_NAME, 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_translate_created_by_fk', '{{%currency_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_translate_updated_by_fk', '{{%currency_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
 
         // -------------------------------------------
@@ -182,15 +220,20 @@ class m161221_135401_common_init extends Migration
             'viewed_count' => $this->integer()->unsigned()->defaultValue(0),
             'viewed_date' => $this->dateTime()->null(),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
         $this->createIndex('product_currency_id', '{{%product}}', 'currency_id');
-        $this->addForeignKey('product_currency_id_fk', '{{%product}}', 'currency_id', '{{%currency}}', 'id', 'RESTRICT', 'RESTRICT');
-
         $this->createIndex('product_seller_id', '{{%product}}', 'seller_id');
+        $this->createIndex('product_created_by', '{{%product}}', 'created_by');
+        $this->createIndex('product_updated_by', '{{%product}}', 'updated_by');
+        $this->addForeignKey('product_currency_id_fk', '{{%product}}', 'currency_id', '{{%currency}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('product_seller_id_fk', '{{%product}}', 'seller_id', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_created_by_fk', '{{%product}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_updated_by_fk', '{{%product}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
         $this->createTable('{{%product_translate}}', [
             'id' => $this->primaryKey()->unsigned(),
@@ -200,15 +243,20 @@ class m161221_135401_common_init extends Migration
             'name' => $this->string()->notNull(),
             'description' => $this->text()->null(),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
         $this->createIndex('product_translate_product_id', '{{%product_translate}}', 'product_id');
-        $this->addForeignKey('product_translate_product_id_fk', '{{%product_translate}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
-
         $this->createIndex('product_translate_language_id', '{{%product_translate}}', 'language_id');
+        $this->createIndex('product_translate_created_by', '{{%product_translate}}', 'created_by');
+        $this->createIndex('product_translate_updated_by', '{{%product_translate}}', 'updated_by');
+        $this->addForeignKey('product_translate_product_id_fk', '{{%product_translate}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('product_translate_language_id_fk', '{{%product_translate}}', 'language_id', \xz1mefx\multilang\models\Language::TABLE_NAME, 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_translate_created_by_fk', '{{%product_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_translate_updated_by_fk', '{{%product_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
         $this->createTable('{{%product_image}}', [
             'id' => $this->primaryKey()->unsigned(),
@@ -217,16 +265,94 @@ class m161221_135401_common_init extends Migration
             'image_src' => $this->string()->null(),
 
             'sort_order' => $this->smallInteger()->notNull()->defaultValue(0),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
         $this->createIndex('product_image_product_id', '{{%product_image}}', 'product_id');
+        $this->createIndex('product_image_created_by', '{{%product_image}}', 'created_by');
+        $this->createIndex('product_image_updated_by', '{{%product_image}}', 'updated_by');
         $this->addForeignKey('product_image_product_id_fk', '{{%product_image}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_image_created_by_fk', '{{%product_image}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_image_updated_by_fk', '{{%product_image}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+
+
+        // -------------------------------------------
+        // Create category tables
+        // -------------------------------------------
+
+        $this->createTable('{{%category}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'parent_id' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createIndex('category_created_by', '{{%category}}', 'created_by');
+        $this->createIndex('category_updated_by', '{{%category}}', 'updated_by');
+        $this->addForeignKey('category_created_by_fk', '{{%category}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_updated_by_fk', '{{%category}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+
+        $this->createTable('{{%category_translate}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'category_id' => $this->integer()->unsigned()->notNull(),
+            'language_id' => $this->integer()->unsigned()->notNull(),
+
+            'name' => $this->string()->notNull(),
+
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createIndex('category_translate_category_id', '{{%category_translate}}', 'category_id');
+        $this->createIndex('category_translate_language_id', '{{%category_translate}}', 'language_id');
+        $this->createIndex('category_translate_created_by', '{{%category_translate}}', 'created_by');
+        $this->createIndex('category_translate_updated_by', '{{%category_translate}}', 'updated_by');
+        $this->addForeignKey('category_translate_category_id_fk', '{{%category_translate}}', 'category_id', '{{%category}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_translate_language_id_fk', '{{%category_translate}}', 'language_id', \xz1mefx\multilang\models\Language::TABLE_NAME, 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_translate_created_by_fk', '{{%category_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_translate_updated_by_fk', '{{%category_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+
+        $this->createTable('{{%category_product}}', [
+            'id' => $this->primaryKey()->unsigned(),
+
+            'category_id' => $this->integer()->unsigned()->notNull(),
+            'product_id' => $this->integer()->unsigned()->notNull(),
+
+            'created_by' => $this->integer()->unsigned()->null(),
+            'updated_by' => $this->integer()->unsigned()->null(),
+            'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createIndex('category_product_category_id_product_id', '{{%category_product}}', ['category_id', 'product_id'], TRUE);
+        $this->createIndex('category_product_created_by', '{{%category_product}}', 'created_by');
+        $this->createIndex('category_product_updated_by', '{{%category_product}}', 'updated_by');
+        $this->addForeignKey('category_product_category_id_fk', '{{%category_product}}', 'category_id', '{{%category}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_product_product_id_fk', '{{%category_product}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_product_created_by_fk', '{{%category_product}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('category_product_updated_by_fk', '{{%category_product}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
     }
 
     public function down()
     {
+        if (Yii::$app->db->schema->getTableSchema('{{%category_product}}') !== NULL) {
+            $this->dropTable('{{%category_product}}');
+        }
+        if (Yii::$app->db->schema->getTableSchema('{{%category_translate}}') !== NULL) {
+            $this->dropTable('{{%category_translate}}');
+        }
+        if (Yii::$app->db->schema->getTableSchema('{{%category}}') !== NULL) {
+            $this->dropTable('{{%category}}');
+        }
+
         if (Yii::$app->db->schema->getTableSchema('{{%product_image}}') !== NULL) {
             $this->dropTable('{{%product_image}}');
         }
@@ -237,6 +363,9 @@ class m161221_135401_common_init extends Migration
             $this->dropTable('{{%product}}');
         }
 
+        if (Yii::$app->db->schema->getTableSchema('{{%currency_translate}}') !== NULL) {
+            $this->dropTable('{{%currency_translate}}');
+        }
         if (Yii::$app->db->schema->getTableSchema('{{%currency}}') !== NULL) {
             $this->dropTable('{{%currency}}');
         }

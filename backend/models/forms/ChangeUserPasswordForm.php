@@ -15,6 +15,7 @@ use yii\base\Model;
  */
 class ChangeUserPasswordForm extends Model
 {
+
     public $newPassword;
     public $newPasswordConfirm;
 

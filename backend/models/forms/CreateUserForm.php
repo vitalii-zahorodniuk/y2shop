@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  */
 class CreateUserForm extends User
 {
+
     public $newPassword;
     public $newPasswordConfirm;
 

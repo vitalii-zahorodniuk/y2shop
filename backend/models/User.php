@@ -10,6 +10,7 @@ use Yii;
  */
 class User extends \common\models\User
 {
+
     /**
      * @param $src
      *

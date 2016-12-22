@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class LoginForm extends Model
 {
+
     public $email;
     public $password;
     public $rememberMe = TRUE;

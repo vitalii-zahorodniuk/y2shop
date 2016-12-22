@@ -458,12 +458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "92130b146525ac2109552873a24056751e36a6fe"
+                "reference": "729dc463945546c03db099ed5f307ee748b42f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/92130b146525ac2109552873a24056751e36a6fe",
-                "reference": "92130b146525ac2109552873a24056751e36a6fe",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/729dc463945546c03db099ed5f307ee748b42f49",
+                "reference": "729dc463945546c03db099ed5f307ee748b42f49",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +496,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-16 15:54:40"
+            "time": "2016-12-22 13:18:46"
         },
         {
             "name": "xz1mefx/yii2-base",
@@ -504,12 +504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-base.git",
-                "reference": "8a81010b091046ab6bbadbca2846f945cd66411a"
+                "reference": "e96ada0d8a1efbfa27d46c9ca0c1f699773edd73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/8a81010b091046ab6bbadbca2846f945cd66411a",
-                "reference": "8a81010b091046ab6bbadbca2846f945cd66411a",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/e96ada0d8a1efbfa27d46c9ca0c1f699773edd73",
+                "reference": "e96ada0d8a1efbfa27d46c9ca0c1f699773edd73",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-22 09:24:20"
+            "time": "2016-12-22 13:17:11"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -547,12 +547,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "8a25ef6f387d986c011f43b30dd2000d1121aee7"
+                "reference": "404971ac85321b2b68a705b708547b2a01b3ce33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/8a25ef6f387d986c011f43b30dd2000d1121aee7",
-                "reference": "8a25ef6f387d986c011f43b30dd2000d1121aee7",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/404971ac85321b2b68a705b708547b2a01b3ce33",
+                "reference": "404971ac85321b2b68a705b708547b2a01b3ce33",
                 "shasum": ""
             },
             "require": {
@@ -582,7 +582,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-21 13:21:29"
+            "time": "2016-12-22 13:18:08"
         },
         {
             "name": "yiisoft/yii2",
