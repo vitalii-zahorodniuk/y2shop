@@ -24,8 +24,9 @@
     "yiisoft/yii2-bootstrap": "~2.0.0",
     "yiisoft/yii2-swiftmailer": "~2.0.0",
     "xz1mefx/yii2-adminlte": "dev-master",
-    "xz1mefx/yii2-multilang": "dev-master",
-    "xz1mefx/yii2-base": "dev-master"
+    "xz1mefx/yii2-multilang": "~1",
+    "xz1mefx/yii2-base": "dev-master",
+    "xz1mefx/yii2-hfu": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

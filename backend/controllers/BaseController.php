@@ -46,12 +46,14 @@ class BaseController extends Controller
     public function beforeAction($action)
     {
         if (
-        Yii::$app->user->cannot([
-            User::ROLE_ROOT,
-            User::ROLE_ADMIN,
-            User::ROLE_MANAGER,
-            User::ROLE_SELLER,
-        ])
+            !Yii::$app->user->isGuest
+            &&
+            Yii::$app->user->cannot([
+                User::ROLE_ROOT,
+                User::ROLE_ADMIN,
+                User::ROLE_MANAGER,
+                User::ROLE_SELLER,
+            ])
         ) {
             Yii::$app->user->logout();
             Yii::$app->session->addFlash('error', Yii::t('admin-side', 'You have insufficient privileges!'));
