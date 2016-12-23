@@ -22,8 +22,6 @@ use yii\db\ActiveRecord;
  * @property integer            $created_at
  * @property integer            $updated_at
  *
- * @property CategoryProduct[]  $categoryProducts
- * @property Category[]         $categories
  * @property User               $updatedBy
  * @property User               $createdBy
  * @property Currency           $currency
@@ -78,6 +76,19 @@ class Product extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->created_by = Yii::$app->user->id;
+        } else {
+            $this->updated_by = Yii::$app->user->id;
+        }
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -94,22 +105,6 @@ class Product extends ActiveRecord
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategoryProducts()
-    {
-        return $this->hasMany(CategoryProduct::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategories()
-    {
-        return $this->hasMany(Category::className(), ['id' => 'category_id'])->viaTable('{{%category_product}}', ['product_id' => 'id']);
     }
 
     /**

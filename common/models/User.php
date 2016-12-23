@@ -21,9 +21,13 @@ use yii\web\IdentityInterface;
  * @property string  $auth_key
  * @property string  $password_hash
  * @property string  $password_reset_token
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property User    $updatedBy
+ * @property User    $createdBy
  * @property array   $rolesArray
  * @property boolean $youCanEdit
  */
@@ -208,6 +212,10 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             ['password_reset_token', 'string', 'max' => 255],
             ['password_reset_token', 'unique'],
             // created-updated timestamps
+            [['created_by', 'updated_by'], 'integer'],
+            [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            // created-updated timestamps
             [['created_at', 'updated_at'], 'integer'],
 
             // virtual
@@ -215,6 +223,19 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             [['rolesArray'], 'required'],
             [['rolesArray'], 'validateRolesArray'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->created_by = Yii::$app->user->id;
+        } else {
+            $this->updated_by = Yii::$app->user->id;
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -252,11 +273,29 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             'auth_key' => Yii::t('common', 'Auth Key'),
             'password_hash' => Yii::t('common', 'Password Hash'),
             'password_reset_token' => Yii::t('common', 'Password Reset Token'),
+            'created_by' => Yii::t('common', 'Created By'),
+            'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
             // virtual
             'rolesArray' => Yii::t('common', 'Roles'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     /**

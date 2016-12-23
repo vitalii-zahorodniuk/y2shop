@@ -62,6 +62,16 @@ foreach ($model->rolesArray as $role) {
                         'format' => 'raw',
                         'value' => $userRoles,
                     ],
+                    [
+                        'attribute' => 'created_by',
+                        'format' => 'raw',
+                        'value' => $model->createdBy ? Html::a($model->createdBy->name, ['user/view', 'id' => $model->createdBy->id]) : '',
+                    ],
+                    [
+                        'attribute' => 'updated_by',
+                        'format' => 'raw',
+                        'value' => $model->updatedBy ? Html::a($model->updatedBy->name, ['user/view', 'id' => $model->updatedBy->id]) : '',
+                    ],
                     'created_at:datetime',
                     'updated_at:datetime',
                 ],
