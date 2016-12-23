@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\search\CurrencySearch */
+/* @var $model backend\models\search\ProductSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="currency-search">
+<div class="product-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,11 +19,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status') ?>
 
-    <?= $form->field($model, 'code') ?>
+    <?= $form->field($model, 'currency_id') ?>
 
-    <?= $form->field($model, 'value') ?>
+    <?= $form->field($model, 'seller_id') ?>
 
-    <?= $form->field($model, 'created_by') ?>
+    <?= $form->field($model, 'image_src') ?>
+
+    <?php // echo $form->field($model, 'price') ?>
+
+    <?php // echo $form->field($model, 'viewed_count') ?>
+
+    <?php // echo $form->field($model, 'viewed_date') ?>
+
+    <?php // echo $form->field($model, 'created_by') ?>
 
     <?php // echo $form->field($model, 'updated_by') ?>
 

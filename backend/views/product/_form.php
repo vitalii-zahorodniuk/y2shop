@@ -4,19 +4,27 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Currency */
+/* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="currency-form">
+<div class="product-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE]) ?>
+    <?= $form->field($model, 'currency_id')->textInput() ?>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => TRUE]) ?>
+    <?= $form->field($model, 'seller_id')->textInput() ?>
+
+    <?= $form->field($model, 'image_src')->textInput(['maxlength' => TRUE]) ?>
+
+    <?= $form->field($model, 'price')->textInput(['maxlength' => TRUE]) ?>
+
+    <?= $form->field($model, 'viewed_count')->textInput() ?>
+
+    <?= $form->field($model, 'viewed_date')->textInput() ?>
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 

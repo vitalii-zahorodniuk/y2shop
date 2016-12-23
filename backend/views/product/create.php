@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Currency */
+/* @var $model common\models\Product */
 
-$this->title = Yii::t('admin-side', 'Create Currency');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Currencies'), 'url' => ['index']];
+$this->title = Yii::t('admin-side', 'Create Product');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="currency-create">
+<div class="product-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

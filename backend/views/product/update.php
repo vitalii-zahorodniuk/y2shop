@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Currency */
+/* @var $model common\models\Product */
 
 $this->title = Yii::t('admin-side', 'Update {modelClass}: ', [
-        'modelClass' => 'Currency',
+        'modelClass' => 'Product',
     ]) . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Currencies'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('admin-side', 'Update');
 ?>
-<div class="currency-update">
+<div class="product-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

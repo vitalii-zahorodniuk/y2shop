@@ -226,19 +226,6 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        if ($insert) {
-            $this->created_by = Yii::$app->user->id;
-        } else {
-            $this->updated_by = Yii::$app->user->id;
-        }
-        return parent::beforeSave($insert);
-    }
-
-    /**
      * @param null|string $status
      *
      * @return array|string
@@ -255,6 +242,19 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
         }
 
         return isset($statuses[$status]) ? $statuses[$status] : '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->created_by = Yii::$app->user->id;
+        } else {
+            $this->updated_by = Yii::$app->user->id;
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
