@@ -1,16 +1,18 @@
 <?php
-
 namespace backend\controllers;
 
 use backend\models\search\CurrencySearch;
 use common\models\Currency;
 use Yii;
+use yii\bootstrap\ActiveForm;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
- * CurrencyController implements the CRUD actions for Currency model.
+ * Class CurrencyController
+ * @package backend\controllers
  */
 class CurrencyController extends Controller
 {
@@ -31,8 +33,7 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Lists all Currency models.
-     * @return mixed
+     * @return string
      */
     public function actionIndex()
     {
@@ -46,11 +47,9 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Displays a single Currency model.
+     * @param $id
      *
-     * @param integer $id
-     *
-     * @return mixed
+     * @return string
      */
     public function actionView($id)
     {
@@ -60,13 +59,10 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Finds the Currency model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param $id
      *
-     * @param integer $id
-     *
-     * @return Currency the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Currency
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
@@ -78,13 +74,16 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Creates a new Currency model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new Currency();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -106,6 +105,11 @@ class CurrencyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 /* @var $changePasswordModel \backend\models\forms\ChangeUserPasswordForm */

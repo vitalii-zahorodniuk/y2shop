@@ -37,6 +37,24 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
 //            'headerLabel' => 'My menu',
             'menuItems' => [
                 [
+                    'label' => Yii::t('admin-side', 'Products'),
+                    'url' => ['product/index'],
+                    'visible' => Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                    ]),
+                    'icon' => 'cubes',
+                    'iconOptions' => ['prefix' => 'fa fa-'],
+                ],
+                [
+                    'label' => Yii::t('admin-side', 'Currencies'),
+                    'url' => ['currency/index'],
+                    'visible' => Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                    ]),
+                    'icon' => 'dollar',
+                    'iconOptions' => ['prefix' => 'fa fa-'],
+                ],
+                [
                     'label' => Yii::t('admin-side', 'Users'),
                     'url' => ['user/index'],
                     'visible' => Yii::$app->user->can([
