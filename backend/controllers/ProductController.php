@@ -2,11 +2,12 @@
 namespace backend\controllers;
 
 use backend\models\search\ProductSearch;
+use backend\models\User;
 use common\models\Product;
 use Yii;
 use yii\bootstrap\ActiveForm;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -14,7 +15,7 @@ use yii\web\Response;
  * Class ProductController
  * @package backend\controllers
  */
-class ProductController extends Controller
+class ProductController extends BaseController
 {
 
     /**
@@ -23,10 +24,21 @@ class ProductController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
+                    ['allow' => FALSE], // default rule
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'index' => ['get'],
+                    'view' => ['get'],
+                    'create' => ['get', 'post'],
+                    'update' => ['get', 'put', 'post'],
+                    'delete' => ['post', 'delete'],
                 ],
             ],
         ];
