@@ -6,6 +6,7 @@ use xz1mefx\ufu\actions\category\CreateAction;
 use xz1mefx\ufu\actions\category\DeleteAction;
 use xz1mefx\ufu\actions\category\IndexAction;
 use xz1mefx\ufu\actions\category\UpdateAction;
+use xz1mefx\ufu\actions\category\ViewAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -80,6 +81,12 @@ class CategoryController extends BaseController
             'delete' => [
                 'class' => DeleteAction::className(),
 //                'theme' => DeleteAction::THEME_ADMINLTE,
+            ],
+            'view' => [
+                'class' => ViewAction::className(),
+//                'theme' => DeleteAction::THEME_ADMINLTE,
+                'canUpdate' => $canEdit,
+                'canDelete' => $canEdit,
             ],
         ];
     }
