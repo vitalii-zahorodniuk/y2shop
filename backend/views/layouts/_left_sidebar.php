@@ -37,6 +37,16 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
 //            'headerLabel' => 'My menu',
             'menuItems' => [
                 [
+                    'label' => Yii::t('admin-side', 'Categories'),
+                    'url' => ['category/index'],
+                    'visible' => Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                        User::PERM_CATEGORY_CAN_VIEW_LIST,
+                    ]),
+                    'icon' => 'sitemap',
+                    'iconOptions' => ['prefix' => 'fa fa-'],
+                ],
+                [
                     'label' => Yii::t('admin-side', 'Products'),
                     'url' => ['product/index'],
                     'visible' => Yii::$app->user->can([

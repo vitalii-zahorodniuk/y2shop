@@ -56,6 +56,13 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_TRANSLATE_CAN_UPDATE});
         $auth->addChild(${self::PERM_TRANSLATE_CAN_UPDATE}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 
+        ${self::PERM_CATEGORY_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_CATEGORY_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_CATEGORY_CAN_VIEW_LIST});
+
+        ${self::PERM_CATEGORY_CAN_UPDATE} = $auth->createPermission(self::PERM_CATEGORY_CAN_UPDATE);
+        $auth->add(${self::PERM_CATEGORY_CAN_UPDATE});
+        $auth->addChild(${self::PERM_CATEGORY_CAN_UPDATE}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+
 
         /*
          * Roles
@@ -68,6 +75,14 @@ class RbacController extends Controller implements UserInterface
         ${self::ROLE_SELLER}->description = ucfirst(self::ROLE_SELLER);
         $auth->add(${self::ROLE_SELLER});
         $auth->addChild(${self::ROLE_SELLER}, ${self::ROLE_CUSTOMER});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_USER_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_USER_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_LANGUAGE_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_UPDATE});
 
         ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);
         ${self::ROLE_MANAGER}->description = ucfirst(self::ROLE_MANAGER);
@@ -80,6 +95,8 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_LANGUAGE_CAN_UPDATE});
 //        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CATEGORY_CAN_UPDATE});
 
         ${self::ROLE_ADMIN} = $auth->createRole(self::ROLE_ADMIN);
         ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
@@ -92,6 +109,8 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_LANGUAGE_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_TRANSLATE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CATEGORY_CAN_UPDATE});
 
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
         ${self::ROLE_ROOT}->description = ucfirst(self::ROLE_ROOT);
@@ -106,6 +125,8 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_LANGUAGE_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_TRANSLATE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CATEGORY_CAN_UPDATE});
     }
 
 }
