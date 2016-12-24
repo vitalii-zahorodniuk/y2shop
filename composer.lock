@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "84d86cf574c52c1b5e09a49d5f37f696",
-    "content-hash": "1b5bb49693f33e1f69fd3c8faeeb5aa6",
+    "hash": "1cbcdff61bd770b5ca9789c74c917e46",
+    "content-hash": "656afafbf516a31fa396c0688557f73c",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -542,61 +542,17 @@
             "time": "2016-12-22 13:17:11"
         },
         {
-            "name": "xz1mefx/yii2-hfu",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/xZ1mEFx/yii2-hfu.git",
-                "reference": "9fc61c7ccdab806a80dd3ae7049ff20faac9b8e9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-hfu/zipball/9fc61c7ccdab806a80dd3ae7049ff20faac9b8e9",
-                "reference": "9fc61c7ccdab806a80dd3ae7049ff20faac9b8e9",
-                "shasum": ""
-            },
-            "require": {
-                "xz1mefx/yii2-multilang": "dev-master",
-                "yiisoft/yii2": "~2.0"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "xz1mefx\\hfu\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii Zagorodniuk",
-                    "email": "vitaliizagorodniuk@gmail.com"
-                }
-            ],
-            "description": "Human friendly URLs tools package",
-            "keywords": [
-                "human-friendly",
-                "language",
-                "url",
-                "xZ1mEFx",
-                "yii2"
-            ],
-            "time": "2016-12-23 15:48:58"
-        },
-        {
             "name": "xz1mefx/yii2-multilang",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "192d8a9944c38285127cc25da13c8fc78815a7f1"
+                "reference": "7fc8f617cb031b123cc575767b9a6ee2e2c65391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/192d8a9944c38285127cc25da13c8fc78815a7f1",
-                "reference": "192d8a9944c38285127cc25da13c8fc78815a7f1",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/7fc8f617cb031b123cc575767b9a6ee2e2c65391",
+                "reference": "7fc8f617cb031b123cc575767b9a6ee2e2c65391",
                 "shasum": ""
             },
             "require": {
@@ -626,7 +582,51 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-23 11:42:53"
+            "time": "2016-12-23 15:56:16"
+        },
+        {
+            "name": "xz1mefx/yii2-ufu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
+                "reference": "12578a53018a7c1b180056d5affa284683f3c54f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/12578a53018a7c1b180056d5affa284683f3c54f",
+                "reference": "12578a53018a7c1b180056d5affa284683f3c54f",
+                "shasum": ""
+            },
+            "require": {
+                "xz1mefx/yii2-multilang": "dev-master",
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "xz1mefx\\ufu\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitalii Zagorodniuk",
+                    "email": "vitaliizagorodniuk@gmail.com"
+                }
+            ],
+            "description": "User friendly URLs tools package",
+            "keywords": [
+                "language",
+                "url",
+                "user friendly",
+                "xZ1mEFx",
+                "yii2"
+            ],
+            "time": "2016-12-24 12:30:27"
         },
         {
             "name": "yiisoft/yii2",
@@ -3095,7 +3095,7 @@
         "xz1mefx/yii2-adminlte": 20,
         "xz1mefx/yii2-multilang": 20,
         "xz1mefx/yii2-base": 20,
-        "xz1mefx/yii2-hfu": 20
+        "xz1mefx/yii2-ufu": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
