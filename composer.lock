@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1cbcdff61bd770b5ca9789c74c917e46",
-    "content-hash": "656afafbf516a31fa396c0688557f73c",
+    "hash": "da04afcc7d6c9c5e7af92c9f76fd2959",
+    "content-hash": "69c43076c7cf8bb1ca0684c126ed4b3d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -458,17 +458,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-adminlte.git",
-                "reference": "729dc463945546c03db099ed5f307ee748b42f49"
+                "reference": "f47e8a7c976dc2dcc6ea7e2de648ab385ed9c3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/729dc463945546c03db099ed5f307ee748b42f49",
-                "reference": "729dc463945546c03db099ed5f307ee748b42f49",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-adminlte/zipball/f47e8a7c976dc2dcc6ea7e2de648ab385ed9c3b3",
+                "reference": "f47e8a7c976dc2dcc6ea7e2de648ab385ed9c3b3",
                 "shasum": ""
             },
             "require": {
                 "rmrevin/yii2-fontawesome": "~2.17",
-                "yiisoft/yii2": "*",
+                "xz1mefx/yii2-base": "*",
                 "yiisoft/yii2-bootstrap": "2.*"
             },
             "type": "yii2-extension",
@@ -496,7 +496,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-22 13:18:46"
+            "time": "2016-12-25 16:05:03"
         },
         {
             "name": "xz1mefx/yii2-base",
@@ -504,12 +504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-base.git",
-                "reference": "e96ada0d8a1efbfa27d46c9ca0c1f699773edd73"
+                "reference": "74104df755bb1864367c1ccb5c6853c2cad76637"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/e96ada0d8a1efbfa27d46c9ca0c1f699773edd73",
-                "reference": "e96ada0d8a1efbfa27d46c9ca0c1f699773edd73",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/74104df755bb1864367c1ccb5c6853c2cad76637",
+                "reference": "74104df755bb1864367c1ccb5c6853c2cad76637",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-22 13:17:11"
+            "time": "2016-12-25 16:15:31"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -547,16 +547,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "7fc8f617cb031b123cc575767b9a6ee2e2c65391"
+                "reference": "91d9f8cafd56f763fb43e2bca81c4aba0939b8ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/7fc8f617cb031b123cc575767b9a6ee2e2c65391",
-                "reference": "7fc8f617cb031b123cc575767b9a6ee2e2c65391",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/91d9f8cafd56f763fb43e2bca81c4aba0939b8ad",
+                "reference": "91d9f8cafd56f763fb43e2bca81c4aba0939b8ad",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "~2.0"
+                "xz1mefx/yii2-base": "*"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -582,7 +582,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-23 15:56:16"
+            "time": "2016-12-25 16:11:24"
         },
         {
             "name": "xz1mefx/yii2-ufu",
@@ -590,17 +590,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "12578a53018a7c1b180056d5affa284683f3c54f"
+                "reference": "9a5a3e10744d80868b319940c5108d2858c40ad8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/12578a53018a7c1b180056d5affa284683f3c54f",
-                "reference": "12578a53018a7c1b180056d5affa284683f3c54f",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/9a5a3e10744d80868b319940c5108d2858c40ad8",
+                "reference": "9a5a3e10744d80868b319940c5108d2858c40ad8",
                 "shasum": ""
             },
             "require": {
-                "xz1mefx/yii2-multilang": "dev-master",
-                "yiisoft/yii2": "~2.0"
+                "xz1mefx/yii2-multilang": "@dev",
+                "xz1mefx/yii2-widgets": "*"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -626,7 +626,48 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-24 12:30:27"
+            "time": "2016-12-27 18:08:34"
+        },
+        {
+            "name": "xz1mefx/yii2-widgets",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xZ1mEFx/yii2-widgets.git",
+                "reference": "8a46339fe936a39f9b77550056069a141465b8d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-widgets/zipball/8a46339fe936a39f9b77550056069a141465b8d3",
+                "reference": "8a46339fe936a39f9b77550056069a141465b8d3",
+                "shasum": ""
+            },
+            "require": {
+                "xz1mefx/yii2-base": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "xz1mefx\\widgets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitalii Zagorodniuk",
+                    "email": "vitaliizagorodniuk@gmail.com"
+                }
+            ],
+            "description": "Yii2 widgets",
+            "keywords": [
+                "widget",
+                "xZ1mEFx",
+                "yii2"
+            ],
+            "time": "2016-12-28 06:10:05"
         },
         {
             "name": "yiisoft/yii2",
@@ -3094,8 +3135,9 @@
     "stability-flags": {
         "xz1mefx/yii2-adminlte": 20,
         "xz1mefx/yii2-multilang": 20,
-        "xz1mefx/yii2-base": 20,
-        "xz1mefx/yii2-ufu": 20
+        "xz1mefx/yii2-ufu": 20,
+        "xz1mefx/yii2-widgets": 20,
+        "xz1mefx/yii2-base": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

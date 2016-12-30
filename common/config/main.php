@@ -50,5 +50,13 @@ return [
         'lang' => [
             'class' => \xz1mefx\multilang\components\Lang::className(),
         ],
+        'ufu' => [
+            'class' => \xz1mefx\ufu\components\UFU::className(),
+            'categoryTypes' => [
+                'Product',
+                'Blog',
+                'Page',
+            ],
+        ],
     ],
 ];

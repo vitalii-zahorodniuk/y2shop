@@ -23,6 +23,7 @@ class Yii extends \yii\BaseYii
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
+ * @property xz1mefx\ufu\components\UFU $ufu
  */
 abstract class BaseApplication extends \yii\base\Application {}
 
@@ -35,6 +36,7 @@ abstract class BaseApplication extends \yii\base\Application {}
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
+ * @property xz1mefx\ufu\components\UFU $ufu
  */
 class WebApplication extends \yii\web\Application {}
 
@@ -47,5 +49,6 @@ class WebApplication extends \yii\web\Application {}
  * @property xz1mefx\multilang\web\Request|yii\console\Request $request
  * @property xz1mefx\multilang\i18n\I18N $i18n
  * @property xz1mefx\multilang\components\Lang $lang
+ * @property xz1mefx\ufu\components\UFU $ufu
  */
 class ConsoleApplication extends \yii\console\Application {}
