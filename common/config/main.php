@@ -53,9 +53,14 @@ return [
         'ufu' => [
             'class' => \xz1mefx\ufu\components\UFU::className(),
             'categoryTypes' => [
-                'Product',
-                'Blog',
-                'Page',
+                [
+                    'id' => 1,
+                    'name' => 'Product',
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Blog',
+                ],
             ],
         ],
     ],

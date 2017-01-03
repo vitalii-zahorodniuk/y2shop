@@ -505,12 +505,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-base.git",
-                "reference": "e2ff6b8add838cceeca8d390c73644ecf7e3f3ef"
+                "reference": "88793e38f7b5bb6c0cbacf12c98c894e4d5312a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/e2ff6b8add838cceeca8d390c73644ecf7e3f3ef",
-                "reference": "e2ff6b8add838cceeca8d390c73644ecf7e3f3ef",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/88793e38f7b5bb6c0cbacf12c98c894e4d5312a5",
+                "reference": "88793e38f7b5bb6c0cbacf12c98c894e4d5312a5",
                 "shasum": ""
             },
             "require": {
@@ -540,7 +540,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-30 18:27:04"
+            "time": "2017-01-03 10:58:32"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -591,12 +591,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "378a56e1443abc690ec289d5d586c290b8765750"
+                "reference": "c67215a26c3f02be2cbdcb1c9cc1e462e35bcc83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/378a56e1443abc690ec289d5d586c290b8765750",
-                "reference": "378a56e1443abc690ec289d5d586c290b8765750",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/c67215a26c3f02be2cbdcb1c9cc1e462e35bcc83",
+                "reference": "c67215a26c3f02be2cbdcb1c9cc1e462e35bcc83",
                 "shasum": ""
             },
             "require": {
@@ -627,7 +627,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-30 18:27:34"
+            "time": "2017-01-03 16:29:23"
         },
         {
             "name": "xz1mefx/yii2-widgets",
@@ -1290,21 +1290,21 @@
         },
         {
             "name": "iiifx-production/yii2-autocomplete-helper",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iiifx-production/yii2-autocomplete-helper.git",
-                "reference": "d299837a65489265ab55929dd3f7a43e56b5ca52"
+                "reference": "cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iiifx-production/yii2-autocomplete-helper/zipball/d299837a65489265ab55929dd3f7a43e56b5ca52",
-                "reference": "d299837a65489265ab55929dd3f7a43e56b5ca52",
+                "url": "https://api.github.com/repos/iiifx-production/yii2-autocomplete-helper/zipball/cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd",
+                "reference": "cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
-                "yiisoft/yii2": "~2.0.6"
+                "yiisoft/yii2": "~2.0.8"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1312,7 +1312,7 @@
             "type": "extension",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "v1.0.x-dev"
+                    "dev-develop": "v1.x-dev"
                 }
             },
             "autoload": {
@@ -1340,7 +1340,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-12-29 17:12:53"
+            "time": "2016-12-31 14:50:20"
         },
         {
             "name": "phpdocumentor/reflection-common",
