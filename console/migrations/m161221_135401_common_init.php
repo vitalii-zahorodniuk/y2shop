@@ -200,7 +200,7 @@ class m161221_135401_common_init extends Migration
         $this->createIndex('currency_translate_created_by', '{{%currency_translate}}', 'created_by');
         $this->createIndex('currency_translate_updated_by', '{{%currency_translate}}', 'updated_by');
         $this->addForeignKey('currency_translate_currency_id_fk', '{{%currency_translate}}', 'currency_id', '{{%currency}}', 'id', 'RESTRICT', 'RESTRICT');
-        $this->addForeignKey('currency_translate_language_id_fk', '{{%currency_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_translate_language_id_fk', '{{%currency_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('currency_translate_created_by_fk', '{{%currency_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('currency_translate_updated_by_fk', '{{%currency_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
@@ -255,7 +255,7 @@ class m161221_135401_common_init extends Migration
         $this->createIndex('product_translate_created_by', '{{%product_translate}}', 'created_by');
         $this->createIndex('product_translate_updated_by', '{{%product_translate}}', 'updated_by');
         $this->addForeignKey('product_translate_product_id_fk', '{{%product_translate}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
-        $this->addForeignKey('product_translate_language_id_fk', '{{%product_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_translate_language_id_fk', '{{%product_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('product_translate_created_by_fk', '{{%product_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('product_translate_updated_by_fk', '{{%product_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
