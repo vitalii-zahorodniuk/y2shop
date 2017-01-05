@@ -65,7 +65,7 @@ class CategoryController extends BaseController
         return [
             'index' => [
                 'class' => IndexAction::className(),
-//                'theme' => IndexAction::THEME_ADMINLTE,
+                'theme' => IndexAction::THEME_ADMINLTE,
 //                'type' => NULL,
                 'canAdd' => $canEdit,
                 'canUpdate' => $canEdit,
@@ -73,22 +73,22 @@ class CategoryController extends BaseController
             ],
             'create' => [
                 'class' => CreateAction::className(),
-//                'theme' => CreateAction::THEME_ADMINLTE,
+                'theme' => CreateAction::THEME_ADMINLTE,
 //                'type' => NULL,
             ],
             'update' => [
                 'class' => UpdateAction::className(),
-//                'theme' => UpdateAction::THEME_ADMINLTE,
+                'theme' => UpdateAction::THEME_ADMINLTE,
 //                'type' => NULL,
             ],
             'delete' => [
                 'class' => DeleteAction::className(),
-//                'theme' => DeleteAction::THEME_ADMINLTE,
+                'theme' => DeleteAction::THEME_ADMINLTE,
 //                'type' => NULL,
             ],
             'view' => [
                 'class' => ViewAction::className(),
-//                'theme' => DeleteAction::THEME_ADMINLTE,
+                'theme' => DeleteAction::THEME_ADMINLTE,
 //                'type' => NULL,
                 'canUpdate' => $canEdit,
                 'canDelete' => $canEdit,
