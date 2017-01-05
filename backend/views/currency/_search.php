@@ -21,8 +21,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'code') ?>
 
-    <?= $form->field($model, 'value') ?>
-
     <?= $form->field($model, 'created_by') ?>
 
     <?php // echo $form->field($model, 'updated_by') ?>

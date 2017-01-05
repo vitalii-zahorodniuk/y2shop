@@ -17,17 +17,51 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="box-body">
-        <div class="box-body-overflow">
+        <div class="<!--box-body-overflow-->">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
-
-            <?= $form->field($model, 'status')->textInput() ?>
 
             <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE]) ?>
 
-            <?= $form->field($model, 'value')->textInput(['maxlength' => TRUE]) ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput()->label($lang['name']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <h5><strong><?= $model->getAttributeLabel('symbol_left') ?></strong></h5>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][symbol_left]")->textInput()->label($lang['name']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <h5><strong><?= $model->getAttributeLabel('symbol_right') ?></strong></h5>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][symbol_right]")->textInput()->label($lang['name']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('admin-side', 'Create') : Yii::t('admin-side', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton(
+                    $model->isNewRecord ? Yii::t('admin-side', 'Create') : Yii::t('admin-side', 'Update'),
+                    ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+                ) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

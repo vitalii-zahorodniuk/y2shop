@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%currency}}".
@@ -12,19 +13,27 @@ use yii\db\ActiveRecord;
  * @property integer             $id
  * @property integer             $status
  * @property string              $code
- * @property string              $value
  * @property integer             $created_by
  * @property integer             $updated_by
  * @property integer             $created_at
  * @property integer             $updated_at
  *
+ * @property array               $translates
+ *
+ * @property string               $name
+ * @property string               $symbolLeft
+ * @property string               $symbolRight
+ *
  * @property User                $updatedBy
  * @property User                $createdBy
  * @property CurrencyTranslate[] $currencyTranslates
+ * @property CurrencyTranslate   $currencyTranslate
  * @property Product[]           $products
  */
 class Currency extends ActiveRecord
 {
+
+    private $_translates;
 
     /**
      * @inheritdoc
@@ -52,15 +61,60 @@ class Currency extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeValidate()
+    {
+        // validate translate fields in their models
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            if (isset($this->_translates[$lang['id']])) {
+                $translateModel = new CurrencyTranslate();
+                $translateModel->setAttributes($this->_translates[$lang['id']]);
+                if (!$translateModel->validate(array_keys($this->_translates[$lang['id']]))) {
+                    foreach ($translateModel->errors as $field => $error) {
+                        $this->addError("translates[{$lang['id']}][{$field}]", $error);
+                    }
+                }
+            }
+        }
+        return parent::beforeValidate();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        // save or update translates
+        /* @var $indexedTranslates CurrencyTranslate[] */
+        $indexedTranslates = ArrayHelper::index($this->currencyTranslates, 'language_id');
+        foreach ($this->translates as $langId => $fields) {
+            if (isset($indexedTranslates[$langId])) { // update translate
+                $indexedTranslates[$langId]->setAttributes($fields);
+                $indexedTranslates[$langId]->save();
+            } else { // insert new translate
+                $translateModel = new CurrencyTranslate();
+                $translateModel->currency_id = $this->id;
+                $translateModel->language_id = $langId;
+                $translateModel->setAttributes($fields);
+                $translateModel->save();
+            }
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['code'], 'required'],
-            [['value'], 'number'],
             [['code'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            // virtual multilang fields
+            ['translates', 'safe'],
         ];
     }
 
@@ -85,13 +139,75 @@ class Currency extends ActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'status' => Yii::t('common', 'Status'),
-            'code' => Yii::t('common', 'Code'),
-            'value' => Yii::t('common', 'Value'),
+            'code' => Yii::t('common', 'Code (ISO 4217)'),
             'created_by' => Yii::t('common', 'Created By'),
             'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
+            'name' => Yii::t('common', 'Name'),
+            'symbol_left' => Yii::t('common', 'Symbol Left'),
+            'symbol_right' => Yii::t('common', 'Symbol Right'),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslates()
+    {
+        if (isset($this->_translates)) {
+            return $this->_translates;
+        }
+        $this->_translates = [];
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            $this->_translates[$lang['id']] = [
+                'name' => NULL,
+                'symbol_left' => NULL,
+                'symbol_right' => NULL,
+            ];
+        }
+        foreach ($this->currencyTranslates as $currencyTranslate) {
+            if (isset($this->_translates[$currencyTranslate->language_id])) {
+                $this->_translates[$currencyTranslate->language_id] = [
+                    'name' => $currencyTranslate->name,
+                    'symbol_left' => $currencyTranslate->symbol_left,
+                    'symbol_right' => $currencyTranslate->symbol_right,
+                ];
+            }
+        }
+        return $this->_translates;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setTranslates($value)
+    {
+        $this->_translates = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return empty($this->currencyTranslate->name) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSymbolLeft()
+    {
+        return empty($this->currencyTranslate->symbol_left) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_left;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSymbolRight()
+    {
+        return empty($this->currencyTranslate->symbol_right) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_right;
     }
 
     /**
@@ -121,8 +237,19 @@ class Currency extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCurrencyTranslate()
+    {
+        return $this
+            ->hasOne(CurrencyTranslate::className(), ['currency_id' => 'id'])
+            ->andOnCondition(['language_id' => Yii::$app->lang->id]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['currency_id' => 'id']);
     }
+
 }

@@ -167,7 +167,6 @@ class m161221_135401_common_init extends Migration
             'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
             'code' => $this->string()->notNull(),
-            'value' => $this->decimal(15, 8)->notNull()->defaultValue(0),
 
             'created_by' => $this->integer()->unsigned()->null(),
             'updated_by' => $this->integer()->unsigned()->null(),

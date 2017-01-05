@@ -7,10 +7,16 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CurrencySearch represents the model behind the search form about `common\models\Currency`.
+ * Class CurrencySearch
+ *
+ * @property string $name
+ *
+ * @package backend\models\search
  */
 class CurrencySearch extends Currency
 {
+
+    public $name;
 
     /**
      * @inheritdoc
@@ -19,8 +25,7 @@ class CurrencySearch extends Currency
     {
         return [
             [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['code'], 'safe'],
-            [['value'], 'number'],
+            [['name', 'code'], 'safe'],
         ];
     }
 
@@ -42,13 +47,18 @@ class CurrencySearch extends Currency
      */
     public function search($params)
     {
-        $query = Currency::find();
+        $query = Currency::find()->joinWith(['currencyTranslate',]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['name'] = [
+            'asc' => ['name' => SORT_ASC],
+            'desc' => ['name' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -62,14 +72,15 @@ class CurrencySearch extends Currency
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'value' => $this->value,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code]);
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }
