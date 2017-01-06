@@ -52,7 +52,7 @@ return [
         ],
         'ufu' => [
             'class' => \xz1mefx\ufu\components\UFU::className(),
-            'categoryTypes' => [
+            'urlTypes' => [
                 [
                     'id' => 1,
                     'name' => 'Product',

@@ -2,9 +2,10 @@
 
 namespace common\models;
 
+use xz1mefx\ufu\models\UfuUrl;
+use xz1mefx\ufu\models\UrlActiveRecord;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%product}}".
@@ -29,7 +30,7 @@ use yii\db\ActiveRecord;
  * @property ProductImage[]     $productImages
  * @property ProductTranslate[] $productTranslates
  */
-class Product extends ActiveRecord
+class Product extends UrlActiveRecord
 {
 
     /**
@@ -70,6 +71,8 @@ class Product extends ActiveRecord
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['currency_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
             [['seller_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['seller_id' => 'id']],
+            // virtual url field
+            ['url', 'validateUfuUrl'],
         ];
     }
 
@@ -153,5 +156,14 @@ class Product extends ActiveRecord
     public function getProductTranslates()
     {
         return $this->hasMany(ProductTranslate::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUfuUrl()
+    {
+        return $this->hasOne(UfuUrl::className(), ['item_id' => 'id'])
+            ->andOnCondition(['is_category' => 0, 'type' => 1]);
     }
 }

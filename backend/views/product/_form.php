@@ -1,5 +1,6 @@
 <?php
 use xz1mefx\adminlte\helpers\Html;
+use xz1mefx\ufu\widgets\UfuWidget;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -19,6 +20,12 @@ use yii\widgets\ActiveForm;
     <div class="box-body">
         <div class="box-body-overflow">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
+
+            <!--<?= UfuWidget::widget([
+                'model' => $model,
+                'form' => $form,
+                'type' => 1,
+            ]) ?>-->
 
             <?= $form->field($model, 'status')->textInput() ?>
 
