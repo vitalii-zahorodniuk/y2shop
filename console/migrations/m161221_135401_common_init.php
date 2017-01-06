@@ -179,6 +179,23 @@ class m161221_135401_common_init extends Migration
         $this->addForeignKey('currency_created_by_fk', '{{%currency}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('currency_updated_by_fk', '{{%currency}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
+        // Add currencies
+        $this->insert('{{%currency}}', [
+            'code' => 'UAH',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency}}', [
+            'code' => 'USD',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency}}', [
+            'code' => 'EUR',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+
         $this->createTable('{{%currency_translate}}', [
             'id' => $this->primaryKey()->unsigned(),
             'currency_id' => $this->integer()->unsigned()->notNull(),
@@ -198,11 +215,95 @@ class m161221_135401_common_init extends Migration
         $this->createIndex('currency_translate_language_id', '{{%currency_translate}}', 'language_id');
         $this->createIndex('currency_translate_created_by', '{{%currency_translate}}', 'created_by');
         $this->createIndex('currency_translate_updated_by', '{{%currency_translate}}', 'updated_by');
-        $this->addForeignKey('currency_translate_currency_id_fk', '{{%currency_translate}}', 'currency_id', '{{%currency}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('currency_translate_currency_id_fk', '{{%currency_translate}}', 'currency_id', '{{%currency}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('currency_translate_language_id_fk', '{{%currency_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('currency_translate_created_by_fk', '{{%currency_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('currency_translate_updated_by_fk', '{{%currency_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
 
+        // Add UAH translates
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 1, // UAH
+            'language_id' => 1, // ru
+            'name' => 'Украинская гривна',
+            'symbol_left' => '',
+            'symbol_right' => 'UAH',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 1, // UAH
+            'language_id' => 2, // uk
+            'name' => 'Українська гривня',
+            'symbol_left' => '',
+            'symbol_right' => 'UAH',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 1, // UAH
+            'language_id' => 3, // en
+            'name' => 'Ukrainian hryvnia',
+            'symbol_left' => '',
+            'symbol_right' => 'UAH',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        // Add USD translates
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 2, // USD
+            'language_id' => 1, // ru
+            'name' => 'Доллар США',
+            'symbol_left' => '',
+            'symbol_right' => 'USD',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 2, // USD
+            'language_id' => 2, // uk
+            'name' => 'Долар США',
+            'symbol_left' => '',
+            'symbol_right' => 'USD',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 2, // USD
+            'language_id' => 3, // en
+            'name' => 'United States dollar',
+            'symbol_left' => '',
+            'symbol_right' => 'USD',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        // Add EUR translates
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 3, // EUR
+            'language_id' => 1, // ru
+            'name' => 'Евро',
+            'symbol_left' => '',
+            'symbol_right' => 'EUR',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 3, // EUR
+            'language_id' => 2, // uk
+            'name' => 'Євро',
+            'symbol_left' => '',
+            'symbol_right' => 'EUR',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_translate}}', [
+            'currency_id' => 3, // EUR
+            'language_id' => 3, // en
+            'name' => 'Euro',
+            'symbol_left' => '',
+            'symbol_right' => 'EUR',
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
 
         // -------------------------------------------
         // Create products tables
@@ -253,7 +354,7 @@ class m161221_135401_common_init extends Migration
         $this->createIndex('product_translate_language_id', '{{%product_translate}}', 'language_id');
         $this->createIndex('product_translate_created_by', '{{%product_translate}}', 'created_by');
         $this->createIndex('product_translate_updated_by', '{{%product_translate}}', 'updated_by');
-        $this->addForeignKey('product_translate_product_id_fk', '{{%product_translate}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'RESTRICT');
+        $this->addForeignKey('product_translate_product_id_fk', '{{%product_translate}}', 'product_id', '{{%product}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('product_translate_language_id_fk', '{{%product_translate}}', 'language_id', Language::TABLE_NAME, 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('product_translate_created_by_fk', '{{%product_translate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('product_translate_updated_by_fk', '{{%product_translate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');

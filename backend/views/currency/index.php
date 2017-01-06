@@ -25,6 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="box-body">
+        <p class="text-info">
+            <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Warning:') ?></strong>
+            <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>
+        </p>
         <div class="box-body-overflow">
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
@@ -43,11 +47,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'datetime',
                         'filter' => FALSE,
                     ],
+                    [
+                        'attribute' => 'relationsCount',
+                        'filter' => FALSE,
+                        'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                    ],
 
                     [
                         'class' => ActionColumn::className(),
                         'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                         'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'template' => '{view} {update} {delete}',
+                        'visibleButtons' => [
+                            'delete' => function ($model, $key, $index) {
+                                /* @var $model \common\models\Currency */
+                                return $model->canDelete;
+                            },
+                        ],
                     ],
                 ],
             ]); ?>

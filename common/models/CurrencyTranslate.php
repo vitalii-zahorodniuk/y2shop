@@ -58,10 +58,10 @@ class CurrencyTranslate extends ActiveRecord
     public function rules()
     {
         return [
-            [['currency_id', 'language_id', 'name', 'symbol_left', 'symbol_right'], 'required'],
+            [['currency_id', 'language_id', 'name'], 'required'],
             [['currency_id', 'language_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['symbol_left', 'symbol_right'], 'string', 'max' => 16],
+            [['symbol_left', 'symbol_right'], 'string', 'min' => 1, 'max' => 16],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['currency_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],

@@ -18,11 +18,14 @@ use yii\helpers\ArrayHelper;
  * @property integer             $created_at
  * @property integer             $updated_at
  *
+ * @property bool                $canDelete
+ * @property integer             $relationsCount
+ *
  * @property array               $translates
  *
- * @property string               $name
- * @property string               $symbolLeft
- * @property string               $symbolRight
+ * @property string              $name
+ * @property string              $symbolLeft
+ * @property string              $symbolRight
  *
  * @property User                $updatedBy
  * @property User                $createdBy
@@ -34,6 +37,7 @@ class Currency extends ActiveRecord
 {
 
     private $_translates;
+    private $_canDelete;
 
     /**
      * @inheritdoc
@@ -76,6 +80,20 @@ class Currency extends ActiveRecord
             }
         }
         return parent::beforeValidate();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            if ($this->canDelete) {
+                return TRUE;
+            }
+            Yii::$app->session->setFlash('error', Yii::t('admin-side', 'You can delete the currency only without relations'));
+        }
+        return FALSE;
     }
 
     /**
@@ -147,7 +165,27 @@ class Currency extends ActiveRecord
             'name' => Yii::t('common', 'Name'),
             'symbol_left' => Yii::t('common', 'Symbol Left'),
             'symbol_right' => Yii::t('common', 'Symbol Right'),
+            'relationsCount' => Yii::t('common', 'Product relations count'),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getRelationsCount()
+    {
+        return $this->isNewRecord ? 0 : Product::find()->where(['currency_id' => $this->id])->count('id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCanDelete()
+    {
+        if (isset($this->_canDelete)) {
+            return $this->_canDelete;
+        }
+        return $this->_canDelete = $this->relationsCount == 0;
     }
 
     /**
@@ -199,7 +237,7 @@ class Currency extends ActiveRecord
      */
     public function getSymbolLeft()
     {
-        return empty($this->currencyTranslate->symbol_left) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_left;
+        return empty($this->currencyTranslate) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_left;
     }
 
     /**
@@ -207,7 +245,7 @@ class Currency extends ActiveRecord
      */
     public function getSymbolRight()
     {
-        return empty($this->currencyTranslate->symbol_right) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_right;
+        return empty($this->currencyTranslate) ? Yii::t('common', '<i>(has no translation)</i>') : $this->currencyTranslate->symbol_right;
     }
 
     /**

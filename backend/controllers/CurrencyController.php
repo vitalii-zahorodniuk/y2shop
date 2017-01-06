@@ -98,6 +98,7 @@ class CurrencyController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('admin-side', 'Currency created successfully!'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -124,6 +125,7 @@ class CurrencyController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('admin-side', 'Currency updated successfully!'));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -142,7 +144,11 @@ class CurrencyController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->delete() != FALSE) {
+            Yii::$app->session->setFlash('success', Yii::t('admin-side', 'Currency deleted successfully!'));
+        }
 
         return $this->redirect(['index']);
     }
