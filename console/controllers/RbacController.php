@@ -35,6 +35,8 @@ class RbacController extends Controller implements UserInterface
         /*
          * Permissions
          */
+
+        // user
         ${self::PERM_USER_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_USER_CAN_VIEW_LIST);
         $auth->add(${self::PERM_USER_CAN_VIEW_LIST});
 
@@ -42,6 +44,7 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_USER_CAN_UPDATE});
         $auth->addChild(${self::PERM_USER_CAN_UPDATE}, ${self::PERM_USER_CAN_VIEW_LIST});
 
+        // language
         ${self::PERM_LANGUAGE_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_LANGUAGE_CAN_VIEW_LIST);
         $auth->add(${self::PERM_LANGUAGE_CAN_VIEW_LIST});
 
@@ -49,6 +52,7 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_LANGUAGE_CAN_UPDATE});
         $auth->addChild(${self::PERM_LANGUAGE_CAN_UPDATE}, ${self::PERM_LANGUAGE_CAN_VIEW_LIST});
 
+        // translate
         ${self::PERM_TRANSLATE_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_TRANSLATE_CAN_VIEW_LIST);
         $auth->add(${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 
@@ -56,6 +60,7 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_TRANSLATE_CAN_UPDATE});
         $auth->addChild(${self::PERM_TRANSLATE_CAN_UPDATE}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 
+        // category
         ${self::PERM_CATEGORY_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_CATEGORY_CAN_VIEW_LIST);
         $auth->add(${self::PERM_CATEGORY_CAN_VIEW_LIST});
 
@@ -63,14 +68,33 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_CATEGORY_CAN_UPDATE});
         $auth->addChild(${self::PERM_CATEGORY_CAN_UPDATE}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
 
+        // currency
+        ${self::PERM_CURRENCY_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_CURRENCY_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_CURRENCY_CAN_VIEW_LIST});
+
+        ${self::PERM_CURRENCY_CAN_UPDATE} = $auth->createPermission(self::PERM_CURRENCY_CAN_UPDATE);
+        $auth->add(${self::PERM_CURRENCY_CAN_UPDATE});
+        $auth->addChild(${self::PERM_CURRENCY_CAN_UPDATE}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+
+        // product
+        ${self::PERM_PRODUCT_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_PRODUCT_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_PRODUCT_CAN_VIEW_LIST});
+
+        ${self::PERM_PRODUCT_CAN_UPDATE} = $auth->createPermission(self::PERM_PRODUCT_CAN_UPDATE);
+        $auth->add(${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::PERM_PRODUCT_CAN_UPDATE}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+
 
         /*
          * Roles
          */
+
+        // customer
         ${self::ROLE_CUSTOMER} = $auth->createRole(self::ROLE_CUSTOMER);
         ${self::ROLE_CUSTOMER}->description = ucfirst(self::ROLE_CUSTOMER);
         $auth->add(${self::ROLE_CUSTOMER});
 
+        // seller
         ${self::ROLE_SELLER} = $auth->createRole(self::ROLE_SELLER);
         ${self::ROLE_SELLER}->description = ucfirst(self::ROLE_SELLER);
         $auth->add(${self::ROLE_SELLER});
@@ -83,7 +107,12 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_UPDATE});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_UPDATE});
 
+        // manager
         ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);
         ${self::ROLE_MANAGER}->description = ucfirst(self::ROLE_MANAGER);
         $auth->add(${self::ROLE_MANAGER});
@@ -97,7 +126,12 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CATEGORY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CURRENCY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_PRODUCT_CAN_UPDATE});
 
+        // admin
         ${self::ROLE_ADMIN} = $auth->createRole(self::ROLE_ADMIN);
         ${self::ROLE_ADMIN}->description = ucfirst(self::ROLE_ADMIN);
         $auth->add(${self::ROLE_ADMIN});
@@ -111,7 +145,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_TRANSLATE_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CATEGORY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CURRENCY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_PRODUCT_CAN_UPDATE});
 
+        // root
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
         ${self::ROLE_ROOT}->description = ucfirst(self::ROLE_ROOT);
         $auth->add(${self::ROLE_ROOT});
@@ -127,6 +166,10 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_TRANSLATE_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CATEGORY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CURRENCY_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_PRODUCT_CAN_UPDATE});
     }
 
 }

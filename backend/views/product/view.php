@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -15,15 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box">
     <div class="box-header">
-        <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('admin-side', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-        &nbsp;
+        <?php if (Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)): ?>
+            <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('admin-side', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php else: ?>
+            &nbsp;
+        <?php endif; ?>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <?= Html::icon('minus', ['prefix' => 'fa fa-']) ?>

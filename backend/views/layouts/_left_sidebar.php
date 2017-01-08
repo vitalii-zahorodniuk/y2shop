@@ -51,6 +51,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'url' => ['product/index'],
                     'visible' => Yii::$app->user->can([
                         User::ROLE_ROOT,
+                        User::PERM_PRODUCT_CAN_VIEW_LIST,
                     ]),
                     'icon' => 'cubes',
                     'iconOptions' => ['prefix' => 'fa fa-'],
@@ -60,6 +61,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'url' => ['currency/index'],
                     'visible' => Yii::$app->user->can([
                         User::ROLE_ROOT,
+                        User::PERM_CURRENCY_CAN_VIEW_LIST,
                     ]),
                     'icon' => 'dollar',
                     'iconOptions' => ['prefix' => 'fa fa-'],

@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -15,15 +16,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box">
     <div class="box-header">
-        <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php if ($model->canDelete): ?>
-            <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('ufu-tools', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
+        <?php if (Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
+            <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?php if ($model->canDelete): ?>
+                <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('ufu-tools', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            <?php endif; ?>
+        <?php else: ?>
+            &nbsp;
         <?php endif; ?>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -32,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="box-body">
-        <?php if (!$model->canDelete): ?>
+        <?php if (Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && !$model->canDelete): ?>
             <p class="text-info">
                 <strong><?= Html::icon('info-sign') ?> <?= Yii::t('admin-side', 'Warning:') ?></strong>
                 <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>
