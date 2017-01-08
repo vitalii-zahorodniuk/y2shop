@@ -2,8 +2,7 @@
 
 namespace common\models;
 
-use xz1mefx\ufu\models\UfuUrl;
-use xz1mefx\ufu\models\UrlActiveRecord;
+use xz1mefx\ufu\models\UfuActiveRecord;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -30,8 +29,10 @@ use yii\behaviors\TimestampBehavior;
  * @property ProductImage[]     $productImages
  * @property ProductTranslate[] $productTranslates
  */
-class Product extends UrlActiveRecord
+class Product extends UfuActiveRecord
 {
+
+    const TYPE_ID = 1;
 
     /**
      * @inheritdoc
@@ -71,7 +72,12 @@ class Product extends UrlActiveRecord
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['currency_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
             [['seller_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['seller_id' => 'id']],
-            // virtual url field
+            // virtual UFU fields
+            ['type', 'required'],
+            ['type', 'integer'],
+            ['type', 'in', 'range' => [self::TYPE_ID]],
+            ['categories', 'required'],
+            ['url', 'required'],
             ['url', 'validateUfuUrl'],
         ];
     }
@@ -87,6 +93,20 @@ class Product extends UrlActiveRecord
             $this->updated_by = Yii::$app->user->id;
         }
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterDelete()
+    {
+        if ($this->ufuUrl) {
+            $this->ufuUrl->delete();
+        }
+        foreach ($this->ufuCategoryRelations as $ufuCategoryRelation) {
+            $ufuCategoryRelation->delete();
+        }
+        parent::afterDelete();
     }
 
     /**
@@ -163,7 +183,15 @@ class Product extends UrlActiveRecord
      */
     public function getUfuUrl()
     {
-        return $this->hasOne(UfuUrl::className(), ['item_id' => 'id'])
-            ->andOnCondition(['is_category' => 0, 'type' => 1]);
+        return $this->getUfuUrlByType(self::TYPE_ID);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUfuCategoryRelations()
+    {
+        return $this->getUfuCategoryRelationsByType(self::TYPE_ID);
+    }
+
 }

@@ -416,5 +416,7 @@ class m161221_135401_common_init extends Migration
         if (Yii::$app->db->schema->getTableSchema($authManager->ruleTable) !== NULL) {
             $this->dropTable($authManager->ruleTable);
         }
+
+        Yii::$app->cache->flush();
     }
 }

@@ -21,13 +21,12 @@ use yii\widgets\ActiveForm;
         <div class="box-body-overflow">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
-            <!--<?= UfuWidget::widget([
+            <?= UfuWidget::widget([
                 'model' => $model,
                 'form' => $form,
-                'type' => 1,
-            ]) ?>-->
-
-            <?= $form->field($model, 'status')->textInput() ?>
+                'type' => $model::TYPE_ID,
+                'categoryMultiselect' => TRUE,
+            ]) ?>
 
             <?= $form->field($model, 'currency_id')->textInput() ?>
 

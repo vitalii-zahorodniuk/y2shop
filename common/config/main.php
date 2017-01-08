@@ -7,6 +7,7 @@ return [
         ],
         'authManager' => [
             'class' => \yii\rbac\DbManager::className(),
+            'cache' => \yii\caching\FileCache::className(),
         ],
         'assetManager' => [
             'linkAssets' => TRUE,
@@ -54,7 +55,7 @@ return [
             'class' => \xz1mefx\ufu\components\UFU::className(),
             'urlTypes' => [
                 [
-                    'id' => 1,
+                    'id' => \common\models\Product::TYPE_ID,
                     'name' => 'Product',
                 ],
                 [
