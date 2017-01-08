@@ -48,6 +48,14 @@ class Currency extends ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public static function getDrDownList()
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()

@@ -1,4 +1,5 @@
 <?php
+use common\models\Currency;
 use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\ufu\widgets\UfuWidget;
 use yii\widgets\ActiveForm;
@@ -18,29 +19,26 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="box-body">
-        <div class="box-body-overflow">
-            <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
-            <?= UfuWidget::widget([
-                'model' => $model,
-                'form' => $form,
-                'type' => $model::TYPE_ID,
-                'categoryMultiselect' => TRUE,
-            ]) ?>
+        <?= UfuWidget::widget([
+            'model' => $model,
+            'form' => $form,
+            'type' => $model::TYPE_ID,
+            'categoryMultiselect' => TRUE,
+        ]) ?>
 
-            <?= $form->field($model, 'currency_id')->textInput() ?>
-
-            <?= $form->field($model, 'seller_id')->textInput() ?>
-
-            <?= $form->field($model, 'image_src')->textInput(['maxlength' => TRUE]) ?>
-
-            <?= $form->field($model, 'price')->textInput(['maxlength' => TRUE]) ?>
-
-            <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('admin-side', 'Create') : Yii::t('admin-side', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
+        <div class="row">
+            <?= $form->field($model, 'price', ['options' => ['class' => 'col-md-6']])->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'currency_id', ['options' => ['class' => 'col-md-6']])->dropDownList(Currency::getDrDownList()) ?>
         </div>
+
+        <?= $form->field($model, 'image_src')->textInput(['maxlength' => TRUE]) ?>
+
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('admin-side', 'Create') : Yii::t('admin-side', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

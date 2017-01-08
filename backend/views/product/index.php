@@ -32,21 +32,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
-                    'status',
-                    'currency_id',
-                    'seller_id',
-                    'image_src',
-                    // 'price',
-                    // 'viewed_count',
-                    // 'viewed_date',
-                    // 'created_by',
-                    // 'updated_by',
-                    // 'created_at',
-                    // 'updated_at',
-
+                    [
+                        'attribute' => 'id',
+                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                    ],
+//                    'status',
+                    'currency.code',
+//                    'seller_id',
+//                    'image_src',
+//                    'price',
+//                    'viewed_count',
+//                    'viewed_date',
+//                    'created_by',
+//                    'updated_by',
+//                    'created_at',
+//                    'updated_at',
 
                     [
                         'class' => ActionColumn::className(),

@@ -117,9 +117,9 @@ class Product extends UfuActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'status' => Yii::t('common', 'Status'),
-            'currency_id' => Yii::t('common', 'Currency ID'),
-            'seller_id' => Yii::t('common', 'Seller ID'),
-            'image_src' => Yii::t('common', 'Image Src'),
+            'currency_id' => Yii::t('common', 'Currency'),
+            'seller_id' => Yii::t('common', 'Seller'),
+            'image_src' => Yii::t('common', 'Image'),
             'price' => Yii::t('common', 'Price'),
             'viewed_count' => Yii::t('common', 'Viewed Count'),
             'viewed_date' => Yii::t('common', 'Viewed Date'),
