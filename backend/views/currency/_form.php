@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         &nbsp;
         <div class="box-tools pull-right">

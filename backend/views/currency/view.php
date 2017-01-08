@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Currencies'),
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         <?php if (Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
             <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

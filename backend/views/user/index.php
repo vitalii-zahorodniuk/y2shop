@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         <?= Html::a(Yii::t('admin-side', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
         <div class="box-tools pull-right">

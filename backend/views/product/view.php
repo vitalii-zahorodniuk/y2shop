@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Products'), '
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         <?php if (Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)): ?>
             <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
 //                    'status',
 //                    'seller_id',
+                    'name',
                     'image_src',
                     'price',
                     'currency.name',

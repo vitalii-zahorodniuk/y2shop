@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 /* @var $changePasswordModel \backend\models\forms\ChangeUserPasswordForm */
 ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         &nbsp;
         <div class="box-tools pull-right">

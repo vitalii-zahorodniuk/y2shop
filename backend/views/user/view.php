@@ -20,7 +20,7 @@ foreach ($model->rolesArray as $role) {
 }
 ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         <?php if ($model->youCanEdit): ?>
             <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

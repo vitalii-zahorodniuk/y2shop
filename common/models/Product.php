@@ -5,6 +5,7 @@ namespace common\models;
 use xz1mefx\ufu\models\UfuActiveRecord;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%product}}".
@@ -22,17 +23,29 @@ use yii\behaviors\TimestampBehavior;
  * @property integer            $created_at
  * @property integer            $updated_at
  *
+ * @property string             $name
+ * @property string             $description
+ *
+ * @property bool               $canDelete
+ * @property integer            $relationsCount
+ *
+ * @property array              $translates
+ *
  * @property User               $updatedBy
  * @property User               $createdBy
  * @property Currency           $currency
  * @property User               $seller
  * @property ProductImage[]     $productImages
  * @property ProductTranslate[] $productTranslates
+ * @property ProductTranslate   $productTranslate
  */
 class Product extends UfuActiveRecord
 {
 
     const TYPE_ID = 1;
+
+    private $_translates;
+    private $_canDelete;
 
     /**
      * @inheritdoc
@@ -60,6 +73,64 @@ class Product extends UfuActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeValidate()
+    {
+        // validate translate fields in their models
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            if (isset($this->_translates[$lang['id']])) {
+                $translateModel = new ProductTranslate();
+                $translateModel->setAttributes($this->_translates[$lang['id']]);
+                if (!$translateModel->validate(array_keys($this->_translates[$lang['id']]))) {
+                    foreach ($translateModel->errors as $field => $error) {
+                        $this->addError("translates[{$lang['id']}][{$field}]", $error);
+                    }
+                }
+            }
+        }
+        return parent::beforeValidate();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            if ($this->canDelete) {
+                return TRUE;
+            }
+            Yii::$app->session->setFlash('error', Yii::t('admin-side', 'You cannot delete this product'));
+        }
+        return FALSE;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        // save or update translates
+        /* @var $indexedTranslates ProductTranslate[] */
+        $indexedTranslates = ArrayHelper::index($this->productTranslates, 'language_id');
+        foreach ($this->translates as $langId => $fields) {
+            if (isset($indexedTranslates[$langId])) { // update translate
+                $indexedTranslates[$langId]->setAttributes($fields);
+                $indexedTranslates[$langId]->save();
+            } else { // insert new translate
+                $translateModel = new ProductTranslate();
+                $translateModel->product_id = $this->id;
+                $translateModel->language_id = $langId;
+                $translateModel->setAttributes($fields);
+                $translateModel->save();
+            }
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -79,6 +150,8 @@ class Product extends UfuActiveRecord
             ['categories', 'required'],
             ['url', 'required'],
             ['url', 'validateUfuUrl'],
+            // virtual multilang fields
+            ['translates', 'safe'],
         ];
     }
 
@@ -110,6 +183,75 @@ class Product extends UfuActiveRecord
     }
 
     /**
+     * @return int
+     */
+    public function getRelationsCount()
+    {
+        return $this->isNewRecord ? 0 : 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCanDelete()
+    {
+        if (isset($this->_canDelete)) {
+            return $this->_canDelete;
+        }
+        return $this->_canDelete = $this->relationsCount == 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslates()
+    {
+        if (isset($this->_translates)) {
+            return $this->_translates;
+        }
+        $this->_translates = [];
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            $this->_translates[$lang['id']] = [
+                'name' => NULL,
+                'description' => NULL,
+            ];
+        }
+        foreach ($this->productTranslates as $productTranslate) {
+            if (isset($this->_translates[$productTranslate->language_id])) {
+                $this->_translates[$productTranslate->language_id] = [
+                    'name' => $productTranslate->name,
+                    'description' => $productTranslate->description,
+                ];
+            }
+        }
+        return $this->_translates;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setTranslates($value)
+    {
+        $this->_translates = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return empty($this->productTranslate->name) ? Yii::t('common', '<i>(has no translation)</i>') : $this->productTranslate->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return empty($this->productTranslate->description) ? Yii::t('common', '<i>(has no translation)</i>') : $this->productTranslate->description;
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -127,6 +269,10 @@ class Product extends UfuActiveRecord
             'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
+            'name' => Yii::t('common', 'Name'),
+            'description' => Yii::t('common', 'Description'),
+            'currency.code' => Yii::t('common', 'Currency'),
+            'currency.name' => Yii::t('common', 'Currency'),
         ];
     }
 
@@ -176,6 +322,16 @@ class Product extends UfuActiveRecord
     public function getProductTranslates()
     {
         return $this->hasMany(ProductTranslate::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductTranslate()
+    {
+        return $this
+            ->hasOne(ProductTranslate::className(), ['product_id' => 'id'])
+            ->andOnCondition(['language_id' => Yii::$app->lang->id]);
     }
 
     /**

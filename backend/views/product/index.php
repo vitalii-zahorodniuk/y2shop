@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<div class="box">
+<div class="box box-primary">
     <div class="box-header">
         <?= Html::a(Yii::t('admin-side', 'Create product'), ['create'], ['class' => 'btn btn-success']) ?>
         <div class="box-tools pull-right">
@@ -34,14 +34,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute' => 'id',
-                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
-                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-xs-1 col-sm-1'],
                     ],
 //                    'status',
-                    'currency.code',
+                    'name:raw',
+                    [
+                        'attribute' => 'price',
+                        'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-right col-xs-1 col-sm-1'],
+                    ],
+                    [
+                        'attribute' => 'currency.code',
+                        'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-left col-xs-1 col-sm-1'],
+                    ],
 //                    'seller_id',
 //                    'image_src',
-//                    'price',
 //                    'viewed_count',
 //                    'viewed_date',
 //                    'created_by',
