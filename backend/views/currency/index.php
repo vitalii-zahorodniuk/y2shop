@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -60,9 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
                         'template' => '{view} {update} {delete}',
                         'visibleButtons' => [
+                            'update' => function ($model, $key, $index) {
+                                /* @var $model \common\models\Currency */
+                                return Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE);
+                            },
                             'delete' => function ($model, $key, $index) {
                                 /* @var $model \common\models\Currency */
-                                return $model->canDelete;
+                                return Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && $model->canDelete;
                             },
                         ],
                     ],

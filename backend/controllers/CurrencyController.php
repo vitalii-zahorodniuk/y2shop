@@ -28,6 +28,16 @@ class CurrencyController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_CURRENCY_CAN_VIEW_LIST],
+                    ],
+                    [
+                        'actions' => ['create', 'update', 'delete'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_CURRENCY_CAN_UPDATE],
+                    ],
                     ['allow' => FALSE], // default rule
                 ],
             ],

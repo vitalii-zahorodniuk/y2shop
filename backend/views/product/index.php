@@ -1,5 +1,7 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
@@ -45,7 +47,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'created_at',
                     // 'updated_at',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+
+                    [
+                        'class' => ActionColumn::className(),
+                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'template' => '{view} {update} {delete}',
+                        'visibleButtons' => [
+                            'update' => function ($model, $key, $index) {
+                                /* @var $model \common\models\Product */
+                                return Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE);
+                            },
+                            'delete' => function ($model, $key, $index) {
+                                /* @var $model \common\models\Product */
+                                return Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE);
+                            },
+                        ],
+                    ],
                 ],
             ]); ?>
             <?php Pjax::end(); ?>
