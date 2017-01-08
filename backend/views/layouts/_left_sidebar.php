@@ -57,16 +57,6 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'iconOptions' => ['prefix' => 'fa fa-'],
                 ],
                 [
-                    'label' => Yii::t('admin-side', 'Currencies'),
-                    'url' => ['currency/index'],
-                    'visible' => Yii::$app->user->can([
-                        User::ROLE_ROOT,
-                        User::PERM_CURRENCY_CAN_VIEW_LIST,
-                    ]),
-                    'icon' => 'dollar',
-                    'iconOptions' => ['prefix' => 'fa fa-'],
-                ],
-                [
                     'label' => Yii::t('admin-side', 'Users'),
                     'url' => ['user/index'],
                     'visible' => Yii::$app->user->can([
@@ -86,6 +76,16 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                     'icon' => 'cogs',
                     'iconOptions' => ['prefix' => 'fa fa-'],
                     'items' => [
+                        [
+                            'label' => Yii::t('admin-side', 'Currencies'),
+                            'url' => ['currency/index'],
+                            'visible' => Yii::$app->user->can([
+                                User::ROLE_ROOT,
+                                User::PERM_CURRENCY_CAN_VIEW_LIST,
+                            ]),
+                            'icon' => 'dollar',
+                            'iconOptions' => ['prefix' => 'fa fa-'],
+                        ],
                         [
                             'label' => Yii::t('admin-side', 'Languages'),
                             'visible' => Yii::$app->user->can([
