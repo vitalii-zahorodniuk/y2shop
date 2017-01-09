@@ -4,6 +4,7 @@ use dosamigos\fileupload\FileUploadUI;
 use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\ufu\widgets\UfuWidget;
 use xz1mefx\widgets\wysihtml5\Wysihtml5;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -44,45 +45,43 @@ CSS
             'categoryMultiselect' => TRUE,
         ]) ?>
 
-        <div class="row">
-            <div class="col-md-6">
-                <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
-                <?/*= FileUploadUI::widget([
-                    'model' => $model,
-                    'attribute' => 'mainImage',
-                    'url' => ['main-image-upload'],
-                    'gallery' => FALSE,
-                    'load' => TRUE,
-                    'fieldOptions' => [
-                        'accept' => 'image/*',
-                    ],
-                    'clientOptions' => [
-                        'maxNumberOfFiles' => 1,
-                        'maxFileSize' => 2000000,
-                    ],
-                    // ...
-                    'clientEvents' => [
-                        'fileuploaddone' => 'function(e, data) {
+        <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
+        <?= FileUploadUI::widget([
+            'model' => $model,
+            'attribute' => 'mainImage',
+            'url' => [
+                'main-image-upload',
+                't' => Yii::$app->request->get('t'),
+                'p' => ArrayHelper::getValue($model, 'id'),
+            ],
+            'gallery' => FALSE,
+            'load' => TRUE,
+            'fieldOptions' => [
+                'accept' => 'image/*',
+            ],
+            'clientOptions' => [
+                'maxNumberOfFiles' => 1,
+                'maxFileSize' => 2000000,
+            ],
+            // ...
+            'clientEvents' => [
+                'fileuploaddone' => 'function(e, data) {
                                     console.log(e);
                                     console.log(data);
                                 }',
-                        'fileuploadfail' => 'function(e, data) {
+                'fileuploadfail' => 'function(e, data) {
                                     console.log(e);
                                     console.log(data);
                                 }',
-                    ],
-                ]);
-                */?>
-            </div>
-            <div class="col-md-6">
-                <label class="control-label"><?= $model->getAttributeLabel('name') ?></label>
-                <div class="panel panel-default" style="background-color: #f6f8fa;">
-                    <div class="panel-body">
-                        <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                            <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput()->label($lang['name']) ?>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
+            ],
+        ]); ?>
+
+        <label class="control-label"><?= $model->getAttributeLabel('name') ?></label>
+        <div class="panel panel-default" style="background-color: #f6f8fa;">
+            <div class="panel-body">
+                <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                    <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput()->label($lang['name']) ?>
+                <?php endforeach; ?>
             </div>
         </div>
 

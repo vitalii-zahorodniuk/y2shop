@@ -102,6 +102,10 @@ class ProductController extends BaseController
      */
     public function actionCreate()
     {
+        if (!Yii::$app->request->get('t')) {
+            return $this->redirect(['create', 't' => Yii::$app->security->generateRandomString()]);
+        }
+
         $model = new Product();
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -159,10 +163,9 @@ class ProductController extends BaseController
     public function actionMainImageUpload()
     {
         if (Yii::$app->request->post()) {
-            $model = new Product();
-            return $model->uploadMainTmpImage();
+            return Product::uploadTmpImage('mainImage');
         }
-        return Product::getMainTmpImage();
+        return Product::getImage('mainImage');
     }
 
     /**
@@ -172,6 +175,6 @@ class ProductController extends BaseController
      */
     public function actionMainImageDelete($name)
     {
-        return Product::deleteTmpImageByName($name);
+        return Product::deleteImageByName('mainImage', $name);
     }
 }

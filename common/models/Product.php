@@ -350,19 +350,4 @@ class Product extends UfuActiveRecord
         return $this->getUfuCategoryRelationsByType(self::TYPE_ID);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    public function getProductUploadPath($path = '/')
-    {
-        $p = realpath(Yii::$app->basePath . '/../frontend/web') . "/uploads/img/product/{$this->id}";
-        if (!file_exists($p)) {
-            mkdir($p, 0755, TRUE);
-        }
-
-        return rtrim($p, '/') . '/' . trim($path, '/');
-    }
-
 }

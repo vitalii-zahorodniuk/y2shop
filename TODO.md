@@ -1,0 +1,2 @@
+- Make cron deletion old tmp images
+- Make uploader for product gallery images
