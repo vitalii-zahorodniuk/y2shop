@@ -1,9 +1,9 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\Product;
 use backend\models\search\ProductSearch;
 use backend\models\User;
-use common\models\Product;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
@@ -34,7 +34,7 @@ class ProductController extends BaseController
                         'roles' => [User::PERM_PRODUCT_CAN_VIEW_LIST],
                     ],
                     [
-                        'actions' => ['create', 'update', 'delete'],
+                        'actions' => ['create', 'update', 'delete', 'main-image-upload', 'main-image-delete'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_UPDATE],
                     ],
@@ -49,6 +49,8 @@ class ProductController extends BaseController
                     'create' => ['get', 'post'],
                     'update' => ['get', 'put', 'post'],
                     'delete' => ['post', 'delete'],
+                    'main-image-upload' => ['get', 'post'],
+                    'main-image-delete' => ['post'],
                 ],
             ],
         ];
@@ -149,5 +151,27 @@ class ProductController extends BaseController
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionMainImageUpload()
+    {
+        if (Yii::$app->request->post()) {
+            $model = new Product();
+            return $model->uploadMainTmpImage();
+        }
+        return Product::getMainTmpImage();
+    }
+
+    /**
+     * @param $name string
+     *
+     * @return string
+     */
+    public function actionMainImageDelete($name)
+    {
+        return Product::deleteTmpImageByName($name);
     }
 }
