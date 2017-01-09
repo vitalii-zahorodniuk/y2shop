@@ -43,7 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    'status',
 //                    'seller_id',
                     'name',
-                    'image_src',
+                    [
+                        'attribute' => 'image_src',
+                        'format' => 'raw',
+                        'value' => $model->image_src ? Html::img("/img/product/$model->id/mainImage/{$model->image_src}", ['style' => 'max-width: 400px; max-height: 400px;']) : '',
+                        'visible' => !empty($model->image_src),
+                    ],
                     'price',
                     'currency.name',
                     'viewed_count',
