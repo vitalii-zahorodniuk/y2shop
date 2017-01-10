@@ -17,10 +17,10 @@ return [
             'class' => \yii\caching\FileCache::className(),
         ],
         'formatter' => [
-            'dateFormat' => 'yyyy-MM-dd',
-            'timeFormat' => 'H:i:ss',
-            'datetimeFormat' => 'yyyy-MM-dd H:i:ss',
-            'nullDisplay' => '',
+            'dateFormat' => 'php:Y-m-d',
+            'timeFormat' => 'php:H:i:s',
+            'datetimeFormat' => 'php:Y-m-d H:i:s',
+            'nullDisplay' => '&nbsp;',
         ],
         'security' => [
             'passwordHashCost' => 5,
