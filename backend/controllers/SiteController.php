@@ -59,6 +59,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
+        $this->redirect(['product/index']);
         return $this->render('index');
     }
 
