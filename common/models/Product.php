@@ -273,6 +273,7 @@ class Product extends UfuActiveRecord
             'description' => Yii::t('common', 'Description'),
             'currency.code' => Yii::t('common', 'Currency'),
             'currency.name' => Yii::t('common', 'Currency'),
+            'mainImage' => Yii::t('common', 'Main image'),
         ];
     }
 
