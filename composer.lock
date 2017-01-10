@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "7c4c7d67db63fc343ef50bcd96ccd1a7d9574aae"
+                "reference": "888ef671947c2917b43475441d58ebae27a28302"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/7c4c7d67db63fc343ef50bcd96ccd1a7d9574aae",
-                "reference": "7c4c7d67db63fc343ef50bcd96ccd1a7d9574aae",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/888ef671947c2917b43475441d58ebae27a28302",
+                "reference": "888ef671947c2917b43475441d58ebae27a28302",
                 "shasum": ""
             },
             "require": {
@@ -838,7 +838,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2016-12-28 09:52:33"
+            "time": "2017-01-10 12:16:46"
         },
         {
             "name": "xz1mefx/yii2-ufu",
@@ -846,12 +846,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "46979a2d11acbc0b552ee4b0bf0d9a7d5e87d0a9"
+                "reference": "634bd28f4c1043c1e5c7d3d9f471119ef3efad65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/46979a2d11acbc0b552ee4b0bf0d9a7d5e87d0a9",
-                "reference": "46979a2d11acbc0b552ee4b0bf0d9a7d5e87d0a9",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/634bd28f4c1043c1e5c7d3d9f471119ef3efad65",
+                "reference": "634bd28f4c1043c1e5c7d3d9f471119ef3efad65",
                 "shasum": ""
             },
             "require": {
@@ -882,7 +882,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-08 16:36:27"
+            "time": "2017-01-10 15:14:06"
         },
         {
             "name": "xz1mefx/yii2-widgets",
