@@ -72,6 +72,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                         User::ROLE_ROOT,
                         User::PERM_LANGUAGE_CAN_VIEW_LIST,
                         User::PERM_TRANSLATE_CAN_VIEW_LIST,
+                        User::PERM_CURRENCY_CAN_VIEW_LIST,
                     ]),
                     'icon' => 'cogs',
                     'iconOptions' => ['prefix' => 'fa fa-'],
