@@ -278,6 +278,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
             // virtual
+            'roles' => Yii::t('common', 'Roles'),
             'rolesArray' => Yii::t('common', 'Roles'),
         ];
     }
