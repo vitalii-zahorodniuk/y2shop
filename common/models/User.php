@@ -249,6 +249,11 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
      */
     public function beforeSave($insert)
     {
+        if (!$this->youCanEdit) {
+            Yii::$app->session->setFlash('danger', Yii::t('common', 'You do not have permission to edit this user'));
+            return FALSE;
+        }
+
         if ($insert) {
             $this->created_by = Yii::$app->user->id;
         } else {

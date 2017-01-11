@@ -2,6 +2,7 @@
 namespace backend\models\search;
 
 use backend\models\User;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -44,7 +45,9 @@ class UserSearch extends User
     {
         $query = User::find()->joinWith('authAssignments');
 
-        // add conditions that should always apply here
+        if (Yii::$app->user->cannot(self::ROLE_ROOT)) {
+            $query->andWhere(['!=', 'auth_assignment.item_name', self::ROLE_ROOT]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

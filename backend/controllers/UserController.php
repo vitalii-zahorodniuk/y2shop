@@ -127,6 +127,11 @@ class UserController extends BaseController
     {
         $model = $this->findModel($id);
 
+        if (!$model->youCanEdit) {
+            Yii::$app->session->setFlash('danger', Yii::t('common', 'You do not have permission to edit this user'));
+            return $this->redirect(['index']);
+        }
+
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
