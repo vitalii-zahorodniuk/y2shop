@@ -3,7 +3,7 @@ use common\models\Currency;
 use dosamigos\fileupload\FileUploadUI;
 use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\ufu\widgets\UfuWidget;
-use xz1mefx\widgets\wysihtml5\Wysihtml5;
+use xz1mefx\wysihtml5\Wysihtml5;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
