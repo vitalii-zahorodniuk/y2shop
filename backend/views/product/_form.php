@@ -80,13 +80,13 @@ CSS
         <div class="panel panel-default" style="background-color: #f6f8fa;">
             <div class="panel-body">
                 <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                    <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput()->label($lang['name']) ?>
+                    <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter a name...', [], $lang['locale'])])->label($lang['name']) ?>
                 <?php endforeach; ?>
             </div>
         </div>
 
         <div class="row">
-            <?= $form->field($model, 'price', ['options' => ['class' => 'col-md-6']])->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'price', ['options' => ['class' => 'col-md-6']])->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a price...')]) ?>
             <?= $form->field($model, 'currency_id', ['options' => ['class' => 'col-md-6']])->dropDownList(Currency::getDrDownList()) ?>
         </div>
 
@@ -103,7 +103,7 @@ CSS
                         'options' => [
                             'class' => 'col-md-12',
                             'style' => 'margin-bottom: 20px; height: 250px;',
-                            'placeholder' => "Placeholder text ...",
+                            'placeholder' => Yii::t('admin-side', 'Enter a description...', [], $lang['locale']),
                         ],
                     ])->label($lang['name']) ?>
                 <?php endforeach; ?>

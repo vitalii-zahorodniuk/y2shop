@@ -5,6 +5,7 @@ namespace backend\models\forms;
 use backend\models\User;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ChangeUserPasswordForm
@@ -54,10 +55,10 @@ class ChangeUserPasswordForm extends Model
      */
     public function attributeLabels()
     {
-        return [
+        return ArrayHelper::merge(parent::attributeLabels(), [
             'newPassword' => Yii::t('admin-side', 'Password'),
             'newPasswordConfirm' => Yii::t('admin-side', 'Confirm password'),
-        ];
+        ]);
     }
 
     /**

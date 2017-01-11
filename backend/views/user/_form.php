@@ -24,24 +24,24 @@ use yii\widgets\ActiveForm;
         <div class="box-body-overflow">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
-            <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
+            <?= $form->field($model, 'status')->dropDownList($model::statusesLabels(), ['options' => [$model::STATUS_ON_HOLD => ["selected" => TRUE]]]) ?>
 
             <?php /*
             <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
             */ ?>
 
-            <?= $form->field($model, 'email')->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a email...')]) ?>
 
-            <?= $form->field($model, 'name')->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a name...')]) ?>
 
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a phone...')]) ?>
 
             <?php if ($model->isNewRecord): ?>
                 <hr>
 
-                <?= $form->field($model, 'newPassword')->passwordInput() ?>
+                <?= $form->field($model, 'newPassword')->passwordInput(['placeholder' => Yii::t('admin-side', 'Enter a password...')]) ?>
 
-                <?= $form->field($model, 'newPasswordConfirm')->passwordInput() ?>
+                <?= $form->field($model, 'newPasswordConfirm')->passwordInput(['placeholder' => Yii::t('admin-side', 'Confirm password...')]) ?>
 
                 <br>
             <?php endif; ?>
@@ -74,11 +74,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'enableAjaxValidation' => TRUE,
         'validateOnType' => TRUE,
-        'action' => Url::toRoute(['user/update-password/', 'id' => $model->id]),
+        'action' => Url::toRoute(['user/update-password', 'id' => $model->id]),
         'options' => ['role' => 'form'],
     ]); ?>
-    <?= $form->field($changePasswordModel, 'newPassword')->passwordInput() ?>
-    <?= $form->field($changePasswordModel, 'newPasswordConfirm')->passwordInput() ?>
+    <?= $form->field($changePasswordModel, 'newPassword')->passwordInput(['placeholder' => Yii::t('admin-side', 'Enter a password...')]) ?>
+    <?= $form->field($changePasswordModel, 'newPasswordConfirm')->passwordInput(['placeholder' => Yii::t('admin-side', 'Confirm password...')]) ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('admin-side', 'Update'), ['class' => 'btn btn-danger']) ?>
     </div>

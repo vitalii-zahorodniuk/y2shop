@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
         <div class="<!--box-body-overflow-->">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
-            <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE]) ?>
+            <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a code...')]) ?>
 
             <div class="row">
                 <div class="col-md-6">
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
                     <div class="panel panel-default" style="background-color: #f6f8fa;">
                         <div class="panel-body">
                             <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                                <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput()->label($lang['name']) ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter a name...', [], $lang['locale'])])->label($lang['name']) ?>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
                     <div class="panel panel-default" style="background-color: #f6f8fa;">
                         <div class="panel-body">
                             <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                                <?= $form->field($model, "translates[{$lang['id']}][symbol_left]")->textInput()->label($lang['name']) ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][symbol_left]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter left symbol...', [], $lang['locale'])])->label($lang['name']) ?>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
                     <div class="panel panel-default" style="background-color: #f6f8fa;">
                         <div class="panel-body">
                             <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                                <?= $form->field($model, "translates[{$lang['id']}][symbol_right]")->textInput()->label($lang['name']) ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][symbol_right]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter a right symbol...', [], $lang['locale'])])->label($lang['name']) ?>
                             <?php endforeach; ?>
                         </div>
                     </div>

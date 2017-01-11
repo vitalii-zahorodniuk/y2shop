@@ -39,10 +39,10 @@ class CreateUserForm extends User
      */
     public function attributeLabels()
     {
-        return [
+        return ArrayHelper::merge(parent::attributeLabels(), [
             'newPassword' => Yii::t('admin-side', 'Password'),
             'newPasswordConfirm' => Yii::t('admin-side', 'Confirm password'),
-        ];
+        ]);
     }
 
     /**

@@ -19,53 +19,6 @@ class Product extends \common\models\Product
     public $galleryImage;
 
     /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return ArrayHelper::merge(parent::rules(), [
-            [['mainImage', 'galleryImage'], 'string'],
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-
-        self::saveMainImage($insert);
-    }
-
-    public function saveMainImage($insert)
-    {
-        if ($insert) {
-            $uniqueId = Yii::$app->request->get('t');
-            if (empty($uniqueId)) {
-                return;
-            }
-        } else {
-            $uniqueId = $this->id;
-        }
-
-        $directoryTmp = Yii::getAlias('@frontend/web') . "/img/tmp/product/$uniqueId/mainImage/";
-        $directoryNew = Yii::getAlias('@frontend/web') . "/img/product/$this->id/mainImage/";
-
-        if (is_dir($directoryTmp)) {
-            $files = FileHelper::findFiles($directoryTmp);
-            foreach ($files as $file) {
-                if (!is_dir($directoryNew)) {
-                    mkdir($directoryNew, 0777, TRUE);
-                }
-                rename($directoryTmp . basename($file), $directoryNew . basename($file));
-                $this->image_src = basename($file);
-                $this->save(FALSE); // disable validation for
-            }
-        }
-    }
-
-    /**
      * @param $attribute
      *
      * @return string
@@ -121,6 +74,54 @@ class Product extends \common\models\Product
             ]);
         }
         return '';
+    }
+
+    /**
+     * @param $attribute string
+     * @param $name      string
+     *
+     * @return string
+     */
+    public static function deleteImageByName($attribute, $name)
+    {
+        if (empty($attribute) || empty($name)) {
+            return '';
+        }
+
+        $model = NULL;
+        if (Yii::$app->request->get('p')) {
+            $model = self::findOne(Yii::$app->request->get('p'));
+            if ($model === NULL) {
+                return '';
+            }
+            $uniqueId = $model->id;
+        } else {
+            $uniqueId = Yii::$app->request->get('t');
+            if (empty($uniqueId)) {
+                return '';
+            }
+        }
+
+        $directoryUrl = "/img/product/$uniqueId/$attribute/";
+        $directoryPath = Yii::getAlias('@frontend/web') . $directoryUrl;
+        if (is_file($directoryPath . $name)) {
+            unlink($directoryPath . $name);
+        }
+
+        $directoryUrl = "/img/tmp/product/$uniqueId/$attribute/";
+        $directoryPath = Yii::getAlias('@frontend/web') . $directoryUrl;
+        if (is_file($directoryPath . $name)) {
+            unlink($directoryPath . $name);
+        }
+
+        if ($model) {
+            if ($attribute == 'mainImage') {
+                $model->image_src = NULL;
+                $model->save(FALSE);
+            }
+        }
+
+        return self::getImage($attribute);
     }
 
     /**
@@ -198,51 +199,50 @@ class Product extends \common\models\Product
     }
 
     /**
-     * @param $attribute string
-     * @param $name      string
-     *
-     * @return string
+     * @inheritdoc
      */
-    public static function deleteImageByName($attribute, $name)
+    public function rules()
     {
-        if (empty($attribute) || empty($name)) {
-            return '';
-        }
+        return ArrayHelper::merge(parent::rules(), [
+            [['mainImage', 'galleryImage'], 'string'],
+        ]);
+    }
 
-        $model = NULL;
-        if (Yii::$app->request->get('p')) {
-            $model = self::findOne(Yii::$app->request->get('p'));
-            if ($model === NULL) {
-                return '';
-            }
-            $uniqueId = $model->id;
-        } else {
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        self::saveMainImage($insert);
+    }
+
+    public function saveMainImage($insert)
+    {
+        if ($insert) {
             $uniqueId = Yii::$app->request->get('t');
             if (empty($uniqueId)) {
-                return '';
+                return;
+            }
+        } else {
+            $uniqueId = $this->id;
+        }
+
+        $directoryTmp = Yii::getAlias('@frontend/web') . "/img/tmp/product/$uniqueId/mainImage/";
+        $directoryNew = Yii::getAlias('@frontend/web') . "/img/product/$this->id/mainImage/";
+
+        if (is_dir($directoryTmp)) {
+            $files = FileHelper::findFiles($directoryTmp);
+            foreach ($files as $file) {
+                if (!is_dir($directoryNew)) {
+                    mkdir($directoryNew, 0777, TRUE);
+                }
+                rename($directoryTmp . basename($file), $directoryNew . basename($file));
+                $this->image_src = basename($file);
+                $this->save(FALSE); // disable validation for
             }
         }
-
-        $directoryUrl = "/img/product/$uniqueId/$attribute/";
-        $directoryPath = Yii::getAlias('@frontend/web') . $directoryUrl;
-        if (is_file($directoryPath . $name)) {
-            unlink($directoryPath . $name);
-        }
-
-        $directoryUrl = "/img/tmp/product/$uniqueId/$attribute/";
-        $directoryPath = Yii::getAlias('@frontend/web') . $directoryUrl;
-        if (is_file($directoryPath . $name)) {
-            unlink($directoryPath . $name);
-        }
-
-        if ($model) {
-            if ($attribute == 'mainImage') {
-                $model->image_src = NULL;
-                $model->save(FALSE);
-            }
-        }
-
-        return self::getImage($attribute);
     }
 
 }
