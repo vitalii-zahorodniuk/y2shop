@@ -604,21 +604,21 @@
         },
         {
             "name": "rmrevin/yii2-fontawesome",
-            "version": "2.17.0",
+            "version": "2.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rmrevin/yii2-fontawesome.git",
-                "reference": "470202eace1868f1f627bf8c4ce21a17b0548c4a"
+                "reference": "65ce306da864f4d558348aeba040ed7876878090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/470202eace1868f1f627bf8c4ce21a17b0548c4a",
-                "reference": "470202eace1868f1f627bf8c4ce21a17b0548c4a",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/65ce306da864f4d558348aeba040ed7876878090",
+                "reference": "65ce306da864f4d558348aeba040ed7876878090",
                 "shasum": ""
             },
             "require": {
                 "fortawesome/font-awesome": "~4.7",
-                "php": ">=5.5.0",
+                "php": ">=5.4.0",
                 "yiisoft/yii2": "2.0.*"
             },
             "type": "yii2-extension",
@@ -652,7 +652,7 @@
                 "font",
                 "yii"
             ],
-            "time": "2016-10-25 15:14:55"
+            "time": "2017-01-11 14:05:47"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -846,12 +846,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "84718a2af18e55126abacf64d9aa0b58cdf1f2c0"
+                "reference": "248a2c3fa54c52a9b1b110c3e2f7655f1c010fff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/84718a2af18e55126abacf64d9aa0b58cdf1f2c0",
-                "reference": "84718a2af18e55126abacf64d9aa0b58cdf1f2c0",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/248a2c3fa54c52a9b1b110c3e2f7655f1c010fff",
+                "reference": "248a2c3fa54c52a9b1b110c3e2f7655f1c010fff",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-11 12:21:28"
+            "time": "2017-01-12 12:45:47"
         },
         {
             "name": "xz1mefx/yii2-wysihtml5",
