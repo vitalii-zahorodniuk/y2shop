@@ -75,11 +75,13 @@ class CategoryController extends BaseController
                 'class' => CreateAction::className(),
                 'theme' => CreateAction::THEME_ADMINLTE,
 //                'type' => NULL,
+                'canSetSection' => Yii::$app->user->can(User::ROLE_ROOT),
             ],
             'update' => [
                 'class' => UpdateAction::className(),
                 'theme' => UpdateAction::THEME_ADMINLTE,
 //                'type' => NULL,
+                'canSetSection' => Yii::$app->user->can(User::ROLE_ROOT),
             ],
             'delete' => [
                 'class' => DeleteAction::className(),

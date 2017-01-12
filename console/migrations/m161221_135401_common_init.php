@@ -751,7 +751,8 @@ INSERT INTO $sourceMessageTable (`id`, `category`, `message`, `created_at`, `upd
     (300, 'multilang-tools', 'Enter a locale...', $time, $time),
     (301, 'multilang-tools', 'Enter a name...', $time, $time),
     (302, 'multilang-tools', 'Enter a translate...', $time, $time),
-    (303, 'common', 'You do not have permission to edit this user', $time, $time);
+    (303, 'common', 'You do not have permission to edit this user', $time, $time),
+    (304, 'ufu-tools', 'Is Section', $time, $time);
 SQL
         );
 
@@ -1660,7 +1661,10 @@ INSERT INTO $messageTable (`id`, `language`, `translation`, `created_at`, `updat
     (302, 'uk-UA', 'Введіть переклад...', $time, $time),
     (303, 'ru-RU', 'У Вас не достаточно прав для редактирования этого пользователя', $time, $time),
     (303, 'uk-UA', 'У Вас недостатньо прав для редагування цього користувача', $time, $time),
-    (303, 'en-US', 'You do not have permission to edit this user', $time, $time);
+    (303, 'en-US', 'You do not have permission to edit this user', $time, $time),
+    (304, 'ru-RU', 'Раздел сайта', $time, $time),
+    (304, 'uk-UA', 'Розділ сайту', $time, $time),
+    (304, 'en-US', 'Site section', $time, $time);
 SQL
         );
     }
