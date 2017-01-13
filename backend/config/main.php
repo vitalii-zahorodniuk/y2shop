@@ -18,7 +18,7 @@ return [
             'baseUrl' => '/admin',
         ],
         'user' => [
-            'identityClass' => 'backend\models\User',
+            'identityClass' => \backend\models\User::className(),
             'enableAutoLogin' => TRUE,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => TRUE],
             'loginUrl' => ['auth/login'],

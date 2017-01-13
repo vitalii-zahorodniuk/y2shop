@@ -409,8 +409,7 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     /**
      * @param string[] $value
      */
-    public function setRolesArray(/*array*/
-        $value)
+    public function setRolesArray($value)
     {
         $this->_rolesArray = $value;
     }

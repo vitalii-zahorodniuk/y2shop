@@ -62,6 +62,7 @@ class CategoryController extends BaseController
             User::ROLE_ROOT,
             User::PERM_CATEGORY_CAN_UPDATE,
         ]);
+        $canSetSection = Yii::$app->user->can(User::ROLE_ROOT);
         return [
             'index' => [
                 'class' => IndexAction::className(),
@@ -70,18 +71,19 @@ class CategoryController extends BaseController
                 'canAdd' => $canEdit,
                 'canUpdate' => $canEdit,
                 'canDelete' => $canEdit,
+                'canSetSection' => $canSetSection,
             ],
             'create' => [
                 'class' => CreateAction::className(),
                 'theme' => CreateAction::THEME_ADMINLTE,
 //                'type' => NULL,
-                'canSetSection' => Yii::$app->user->can(User::ROLE_ROOT),
+                'canSetSection' => $canSetSection,
             ],
             'update' => [
                 'class' => UpdateAction::className(),
                 'theme' => UpdateAction::THEME_ADMINLTE,
 //                'type' => NULL,
-                'canSetSection' => Yii::$app->user->can(User::ROLE_ROOT),
+                'canSetSection' => $canSetSection,
             ],
             'delete' => [
                 'class' => DeleteAction::className(),
@@ -94,6 +96,7 @@ class CategoryController extends BaseController
 //                'type' => NULL,
                 'canUpdate' => $canEdit,
                 'canDelete' => $canEdit,
+                'canSetSection' => $canSetSection,
             ],
         ];
     }
