@@ -752,7 +752,14 @@ INSERT INTO $sourceMessageTable (`id`, `category`, `message`, `created_at`, `upd
     (301, 'multilang-tools', 'Enter a name...', $time, $time),
     (302, 'multilang-tools', 'Enter a translate...', $time, $time),
     (303, 'common', 'You do not have permission to edit this user', $time, $time),
-    (304, 'ufu-tools', 'Is Section', $time, $time);
+    (304, 'ufu-tools', 'Is Section', $time, $time),
+    (305, 'ufu-tools', 'The root of the site', $time, $time),
+    (306, 'common', 'Categories', $time, $time),
+    (307, 'ufu-tools', 'In current category type simple categories already exists!', $time, $time),
+    (308, 'ufu-tools', 'You cannot save parent category because current category type have category sections!', $time, $time),
+    (309, 'ufu-tools', 'Type of parent category is different!', $time, $time),
+    (310, 'ufu-tools', 'Parent category is not exist', $time, $time),
+    (311, 'ufu-tools', 'You have insufficient privileges!', $time, $time);
 SQL
         );
 
@@ -1664,7 +1671,28 @@ INSERT INTO $messageTable (`id`, `language`, `translation`, `created_at`, `updat
     (303, 'en-US', 'You do not have permission to edit this user', $time, $time),
     (304, 'ru-RU', 'Это раздел сайта', $time, $time),
     (304, 'uk-UA', 'Це розділ сайту', $time, $time),
-    (304, 'en-US', 'This is site section', $time, $time);
+    (304, 'en-US', 'This is site section', $time, $time),
+    (305, 'ru-RU', 'Корень сайта', $time, $time),
+    (305, 'uk-UA', 'Корінь сайту', $time, $time),
+    (305, 'en-US', 'The root of the site', $time, $time),
+    (306, 'ru-RU', 'Категории', $time, $time),
+    (306, 'uk-UA', 'Категорії', $time, $time),
+    (306, 'en-US', 'Categories', $time, $time),
+    (307, 'ru-RU', 'В текущем типе категорий простые категории уже существуют!', $time, $time),
+    (307, 'uk-UA', 'У поточному типі категорії прості категорії вже існують!', $time, $time),
+    (307, 'en-US', 'In current category type simple categories already exists!', $time, $time),
+    (308, 'ru-RU', 'Вы не можете сохранить родительскую категорию, поскольку для этого типа уже существуют подразделы сайта!', $time, $time),
+    (308, 'uk-UA', 'Ви не можете зберегти батьківську категорію, оскільки для цього типу вже існують підрозділи сайту!', $time, $time),
+    (308, 'en-US', 'You cannot save parent category because current category type have category sections!', $time, $time),
+    (309, 'ru-RU', 'Тип родительской категории отличается!', $time, $time),
+    (309, 'uk-UA', 'Тип батьківської категорії відрізняється!', $time, $time),
+    (309, 'en-US', 'Type of parent category is different!', $time, $time),
+    (310, 'ru-RU', 'Родительская категория не существует', $time, $time),
+    (310, 'uk-UA', 'Батьківська категорія не існує', $time, $time),
+    (310, 'en-US', 'Parent category is not exist', $time, $time),
+    (311, 'ru-RU', 'У вас недостаточно прав!', $time, $time),
+    (311, 'uk-UA', 'У вас недостатньо прав!', $time, $time),
+    (311, 'en-US', 'You have insufficient privileges!', $time, $time);
 SQL
         );
     }
