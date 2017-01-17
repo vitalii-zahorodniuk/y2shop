@@ -34,13 +34,7 @@ return [
             'showScriptName' => FALSE,
             'suffix' => '/',
             'normalizer' => FALSE,
-            'rules' => [
-                '' => 'site/index',
-                '<controller:\w+(-\w+)*>' => '<controller>/index',
-                '<controller:\w+(-\w+)*>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+(-\w+)*>/<action:\w+(-\w+)*>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+(-\w+)*>/<action:\w+(-\w+)*>' => '<controller>/<action>',
-            ],
+            'rules' => [],
         ],
         'request' => [
             'class' => \xz1mefx\multilang\web\Request::className(),

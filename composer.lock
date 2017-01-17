@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "83fed2de85befb34332d6045b180bc4a3b3ceeb2"
+                "reference": "b50135130c1ee38a26fcd8891f4806ef032a72c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/83fed2de85befb34332d6045b180bc4a3b3ceeb2",
-                "reference": "83fed2de85befb34332d6045b180bc4a3b3ceeb2",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/b50135130c1ee38a26fcd8891f4806ef032a72c7",
+                "reference": "b50135130c1ee38a26fcd8891f4806ef032a72c7",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-16 11:20:32"
+            "time": "2017-01-16 12:05:49"
         },
         {
             "name": "xz1mefx/yii2-wysihtml5",
@@ -1544,16 +1544,16 @@
         },
         {
             "name": "iiifx-production/yii2-autocomplete-helper",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iiifx-production/yii2-autocomplete-helper.git",
-                "reference": "cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd"
+                "reference": "fe2a9c5a535a6c4c749d3defe137bedf5a902c67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iiifx-production/yii2-autocomplete-helper/zipball/cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd",
-                "reference": "cdd8ff9330ccb19c0b8d4dd9223b8c711010ccdd",
+                "url": "https://api.github.com/repos/iiifx-production/yii2-autocomplete-helper/zipball/fe2a9c5a535a6c4c749d3defe137bedf5a902c67",
+                "reference": "fe2a9c5a535a6c4c749d3defe137bedf5a902c67",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1594,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-12-31T14:50:20+00:00"
+            "time": "2017-01-17T07:12:01+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
