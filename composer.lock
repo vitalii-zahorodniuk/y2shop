@@ -759,12 +759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-base.git",
-                "reference": "88793e38f7b5bb6c0cbacf12c98c894e4d5312a5"
+                "reference": "f6633c08ccccb7eb5ac000dfae0db26cb2e0a76a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/88793e38f7b5bb6c0cbacf12c98c894e4d5312a5",
-                "reference": "88793e38f7b5bb6c0cbacf12c98c894e4d5312a5",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-base/zipball/f6633c08ccccb7eb5ac000dfae0db26cb2e0a76a",
+                "reference": "f6633c08ccccb7eb5ac000dfae0db26cb2e0a76a",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-03 10:58:32"
+            "time": "2017-01-17 12:26:29"
         },
         {
             "name": "xz1mefx/yii2-multilang",
@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "b50135130c1ee38a26fcd8891f4806ef032a72c7"
+                "reference": "3913bda42d4e18dafe71473a1bec58f03751f180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/b50135130c1ee38a26fcd8891f4806ef032a72c7",
-                "reference": "b50135130c1ee38a26fcd8891f4806ef032a72c7",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/3913bda42d4e18dafe71473a1bec58f03751f180",
+                "reference": "3913bda42d4e18dafe71473a1bec58f03751f180",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-16 12:05:49"
+            "time": "2017-01-17 15:50:14"
         },
         {
             "name": "xz1mefx/yii2-wysihtml5",
