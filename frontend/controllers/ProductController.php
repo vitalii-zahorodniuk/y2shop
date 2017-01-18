@@ -38,19 +38,23 @@ class ProductController extends Controller
     }
 
     /**
+     * @param $id
+     *
      * @return string
      */
     public function actionItemView($id)
     {
-        return $this->render('index');
+        return $this->render('item-view');
     }
 
     /**
+     * @param $id
+     *
      * @return string
      */
     public function actionCategoryView($id)
     {
-        return $this->render('index');
+        return $this->render('category-view');
     }
 
 }
