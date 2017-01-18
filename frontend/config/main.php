@@ -41,7 +41,6 @@ return [
             'rules' => [
                 [
                     'class' => \xz1mefx\ufu\web\UfuUrlRule::className(),
-//                    'categoryRoute' => 'category/view',
                 ],
             ],
         ],

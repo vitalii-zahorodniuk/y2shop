@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "cf7e832bc8ff11bed2f27f5707f8a5d476d7f662"
+                "reference": "67dfc4082277b9ec9445bb298e69405ffae35689"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/cf7e832bc8ff11bed2f27f5707f8a5d476d7f662",
-                "reference": "cf7e832bc8ff11bed2f27f5707f8a5d476d7f662",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/67dfc4082277b9ec9445bb298e69405ffae35689",
+                "reference": "67dfc4082277b9ec9445bb298e69405ffae35689",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-18 12:41:57"
+            "time": "2017-01-18 16:26:25"
         },
         {
             "name": "xz1mefx/yii2-wysihtml5",
