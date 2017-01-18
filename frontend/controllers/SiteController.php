@@ -1,23 +1,24 @@
 <?php
 namespace frontend\controllers;
 
-use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
+use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -30,12 +31,12 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'actions' => ['signup'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout'],
-                        'allow' => true,
+                        'allow' => TRUE,
                         'roles' => ['@'],
                     ],
                 ],
@@ -60,7 +61,7 @@ class SiteController extends Controller
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : NULL,
             ],
         ];
     }
@@ -189,6 +190,7 @@ class SiteController extends Controller
      * Resets password.
      *
      * @param string $token
+     *
      * @return mixed
      * @throws BadRequestHttpException
      */

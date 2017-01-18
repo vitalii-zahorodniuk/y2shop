@@ -51,10 +51,14 @@ return [
                 [
                     'id' => \common\models\Product::TYPE_ID,
                     'name' => 'Product',
+                    'itemRoute' => 'product/item-view',
+                    'categoryRoute' => 'product/category-view',
                 ],
                 [
                     'id' => 2,
                     'name' => 'Blog',
+                    'itemRoute' => 'blog/item-view',
+                    'categoryRoute' => 'blog/category-view',
                 ],
             ],
         ],
