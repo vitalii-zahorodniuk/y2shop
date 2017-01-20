@@ -511,20 +511,23 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2"
+                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/a1c09b09e398687deeb8e309a6305def4b43439b",
+                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -551,7 +554,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2016-07-16T12:58:58+00:00"
+            "time": "2017-01-13T12:31:37+00:00"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -802,12 +805,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-multilang.git",
-                "reference": "2e73abe15c3b28ecf7b7f121c19537ac3f1073be"
+                "reference": "6dd8598364d4f116fd01121a2a8d46852093fba6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/2e73abe15c3b28ecf7b7f121c19537ac3f1073be",
-                "reference": "2e73abe15c3b28ecf7b7f121c19537ac3f1073be",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-multilang/zipball/6dd8598364d4f116fd01121a2a8d46852093fba6",
+                "reference": "6dd8598364d4f116fd01121a2a8d46852093fba6",
                 "shasum": ""
             },
             "require": {
@@ -837,7 +840,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-13 09:57:29"
+            "time": "2017-01-20 09:59:19"
         },
         {
             "name": "xz1mefx/yii2-ufu",
@@ -845,12 +848,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xZ1mEFx/yii2-ufu.git",
-                "reference": "67dfc4082277b9ec9445bb298e69405ffae35689"
+                "reference": "6384030cbeaad118bdda679b11eb7eb926fbe7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/67dfc4082277b9ec9445bb298e69405ffae35689",
-                "reference": "67dfc4082277b9ec9445bb298e69405ffae35689",
+                "url": "https://api.github.com/repos/xZ1mEFx/yii2-ufu/zipball/6384030cbeaad118bdda679b11eb7eb926fbe7f1",
+                "reference": "6384030cbeaad118bdda679b11eb7eb926fbe7f1",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +883,7 @@
                 "xZ1mEFx",
                 "yii2"
             ],
-            "time": "2017-01-18 16:26:25"
+            "time": "2017-01-20 09:59:40"
         },
         {
             "name": "xz1mefx/yii2-wysihtml5",
@@ -1258,16 +1261,16 @@
         },
         {
             "name": "codeception/base",
-            "version": "2.2.7",
+            "version": "2.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/base.git",
-                "reference": "74f2c1aa2cf7ce78b41a5caacc63fafc636193eb"
+                "reference": "cd71c312909aa2998e931d04c9057995bcf49185"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/base/zipball/74f2c1aa2cf7ce78b41a5caacc63fafc636193eb",
-                "reference": "74f2c1aa2cf7ce78b41a5caacc63fafc636193eb",
+                "url": "https://api.github.com/repos/Codeception/base/zipball/cd71c312909aa2998e931d04c9057995bcf49185",
+                "reference": "cd71c312909aa2998e931d04c9057995bcf49185",
                 "shasum": ""
             },
             "require": {
@@ -1344,7 +1347,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2016-12-05T04:22:42+00:00"
+            "time": "2017-01-20T01:01:44+00:00"
         },
         {
             "name": "codeception/verify",
