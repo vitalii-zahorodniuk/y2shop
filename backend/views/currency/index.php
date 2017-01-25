@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-primary">
     <div class="box-header">
-        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can([User::ROLE_ROOT, User::PERM_CURRENCY_CAN_UPDATE])): ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
             <?= Html::a(Yii::t('admin-side', 'Create currency'), ['create'], ['class' => 'btn btn-success']) ?>
         <?php else: ?>
             &nbsp;
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="box-body">
-        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can([User::ROLE_ROOT, User::PERM_CURRENCY_CAN_UPDATE])): ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
             <p class="text-info">
                 <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Warning:') ?></strong>
                 <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>

@@ -31,12 +31,19 @@ class UserController extends BaseController
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'actions' => ['index'],
+                        'actions' => [
+                            'index',
+                            'view',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_USER_CAN_VIEW_LIST],
                     ],
                     [
-                        'actions' => ['view', 'create', 'update', 'delete'],
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_USER_CAN_UPDATE],
                         'matchCallback' => function ($rule, $action) {

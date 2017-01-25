@@ -25,7 +25,10 @@ class SiteController extends BaseController
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'actions' => ['error', 'index'],
+                        'actions' => [
+                            'error',
+                            'index',
+                        ],
                         'allow' => TRUE,
                         'roles' => ['@'],
                     ],

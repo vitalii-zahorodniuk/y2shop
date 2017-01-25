@@ -18,7 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-primary">
     <div class="box-header">
-        <?= Html::a(Yii::t('admin-side', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can([User::PERM_PRODUCT_CAN_UPDATE])): ?>
+            <?= Html::a(Yii::t('admin-side', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php else: ?>
+            &nbsp;
+        <?php endif; ?>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <?= Html::icon('minus', ['prefix' => 'fa fa-']) ?>
@@ -86,10 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'visibleButtons' => [
                             'update' => function ($model, $key, $index) {
                                 /* @var $model User */
-                                return
-                                    in_array($model->status, [User::STATUS_ACTIVE, User::STATUS_ON_HOLD])
-                                    && $model->youCanEdit;
-                                // TODO: ?!?!?!?!?
+                                return $model->youCanEdit;
                             },
                         ],
                     ],

@@ -34,7 +34,10 @@ class LanguageController extends BaseController
                         'roles' => [User::PERM_LANGUAGE_CAN_VIEW_LIST],
                     ],
                     [
-                        'actions' => ['create', 'update', 'delete'],
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_LANGUAGE_CAN_UPDATE],
                         'matchCallback' => function ($rule, $action) {

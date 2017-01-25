@@ -372,6 +372,9 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
         if (isset($this->_youCanEdit)) {
             return $this->_youCanEdit;
         }
+        if (!Yii::$app->user->identity->userActivated) {
+            return $this->_youCanEdit = FALSE;
+        }
         if (!Yii::$app->user->isGuest) {
             foreach ($this->getCurrentUserRoles() as $role) {
                 if (!Yii::$app->user->can($role)) {

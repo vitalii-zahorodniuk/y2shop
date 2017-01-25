@@ -25,7 +25,10 @@ class AuthController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'logout'],
+                        'actions' => [
+                            'login',
+                            'logout',
+                        ],
                         'allow' => TRUE,
                     ],
                     ['allow' => FALSE], // default rule
