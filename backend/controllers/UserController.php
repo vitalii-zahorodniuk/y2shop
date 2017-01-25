@@ -29,7 +29,6 @@ class UserController extends BaseController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
                         'actions' => [
                             'index',

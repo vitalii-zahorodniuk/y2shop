@@ -1,7 +1,6 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\User;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ErrorAction;
@@ -23,7 +22,6 @@ class SiteController extends BaseController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
                         'actions' => [
                             'error',

@@ -23,7 +23,7 @@ class BaseController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]],
+//                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]],
                     ['allow' => FALSE],
                 ],
             ],

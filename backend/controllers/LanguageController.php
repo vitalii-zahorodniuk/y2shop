@@ -27,7 +27,6 @@ class LanguageController extends BaseController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
                         'actions' => ['index'],
                         'allow' => TRUE,
@@ -67,10 +66,10 @@ class LanguageController extends BaseController
      */
     public function actions()
     {
-        $canEdit = Yii::$app->user->can([
-            User::ROLE_ROOT,
-            User::PERM_LANGUAGE_CAN_UPDATE,
-        ]);
+        $canEdit = Yii::$app->user->identity->userActivated && Yii::$app->user->can([
+                User::ROLE_ROOT,
+                User::PERM_LANGUAGE_CAN_UPDATE,
+            ]);
         return [
             'index' => [
                 'class' => IndexAction::className(),
