@@ -41,6 +41,14 @@ AdminLteAsset::register($this);
             <?= $this->render('@app/views/layouts/_left_sidebar') ?>
 
             <div class="content-wrapper">
+                <?php if (Yii::$app->user->identity->userOnHold): ?>
+                    <div class="alert alert-warning" style="border-radius: 0;">
+                        <?= Html::icon('info-sign') ?>
+                        <strong><?= Yii::t('admin-side', 'Warning:') ?></strong>
+                        <?= Yii::t('admin-side', 'Your account is waiting for confirmation!') ?>
+                    </div>
+                <?php endif; ?>
+
                 <?= ContentHeader::widget([
                     'title' => ArrayHelper::getValue($this->params, 'title', 'Y2 Shop'),
                     'titleSmall' => ArrayHelper::getValue($this->params, 'titleSmall', ''),

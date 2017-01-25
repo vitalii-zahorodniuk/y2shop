@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-primary">
     <div class="box-header">
-        <?php if (Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE)): ?>
             <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?php if ($model->canDelete): ?>
                 <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="box-body">
-        <?php if (Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && !$model->canDelete): ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && !$model->canDelete): ?>
             <p class="text-info">
                 <strong><?= Html::icon('info-sign') ?> <?= Yii::t('admin-side', 'Warning:') ?></strong>
                 <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>

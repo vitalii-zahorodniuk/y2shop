@@ -8,6 +8,7 @@ use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -29,14 +30,29 @@ class ProductController extends BaseController
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => [
+                            'index',
+                            'view',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_VIEW_LIST],
                     ],
                     [
-                        'actions' => ['create', 'update', 'delete', 'main-image-upload', 'main-image-delete'],
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete',
+                            'main-image-upload',
+                            'main-image-delete',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],
@@ -98,7 +114,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * @return string|\yii\web\Response
+     * @return array|string|Response
      */
     public function actionCreate()
     {

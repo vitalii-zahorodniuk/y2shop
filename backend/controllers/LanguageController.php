@@ -9,6 +9,7 @@ use xz1mefx\multilang\actions\language\UpdateAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Class LanguageController
@@ -36,6 +37,12 @@ class LanguageController extends BaseController
                         'actions' => ['create', 'update', 'delete'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_LANGUAGE_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],

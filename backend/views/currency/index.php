@@ -18,7 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-primary">
     <div class="box-header">
-        <?= Html::a(Yii::t('admin-side', 'Create currency'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can([User::ROLE_ROOT, User::PERM_CURRENCY_CAN_UPDATE])): ?>
+            <?= Html::a(Yii::t('admin-side', 'Create currency'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php else: ?>
+            &nbsp;
+        <?php endif; ?>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <?= Html::icon('minus', ['prefix' => 'fa fa-']) ?>
@@ -26,10 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="box-body">
-        <p class="text-info">
-            <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Warning:') ?></strong>
-            <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>
-        </p>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can([User::ROLE_ROOT, User::PERM_CURRENCY_CAN_UPDATE])): ?>
+            <p class="text-info">
+                <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Warning:') ?></strong>
+                <?= Yii::t('admin-side', 'You can delete the currency only without relations') ?>
+            </p>
+        <?php endif; ?>
         <div class="box-body-overflow">
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
@@ -64,11 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'visibleButtons' => [
                             'update' => function ($model, $key, $index) {
                                 /* @var $model \common\models\Currency */
-                                return Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE);
+                                return Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE);
                             },
                             'delete' => function ($model, $key, $index) {
                                 /* @var $model \common\models\Currency */
-                                return Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && $model->canDelete;
+                                return Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_CURRENCY_CAN_UPDATE) && $model->canDelete;
                             },
                         ],
                     ],

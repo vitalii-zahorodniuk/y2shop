@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-primary">
     <div class="box-header">
-        <?php if (Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)): ?>
+        <?php if (Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)): ?>
             <?= Html::a(Yii::t('admin-side', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('admin-side', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',

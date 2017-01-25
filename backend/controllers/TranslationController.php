@@ -7,6 +7,7 @@ use xz1mefx\multilang\actions\translation\UpdateAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Class TranslationController
@@ -34,6 +35,12 @@ class TranslationController extends BaseController
                         'actions' => ['update'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_TRANSLATE_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],
@@ -57,10 +64,10 @@ class TranslationController extends BaseController
             'index' => [
                 'class' => IndexAction::className(),
                 'theme' => IndexAction::THEME_ADMINLTE,
-                'canUpdate' => Yii::$app->user->can([
-                    User::ROLE_ROOT,
-                    User::PERM_TRANSLATE_CAN_UPDATE,
-                ]),
+                'canUpdate' => Yii::$app->user->identity->userActivated && Yii::$app->user->can([
+                        User::ROLE_ROOT,
+                        User::PERM_TRANSLATE_CAN_UPDATE,
+                    ]),
             ],
             'update' => [
                 'class' => UpdateAction::className(),

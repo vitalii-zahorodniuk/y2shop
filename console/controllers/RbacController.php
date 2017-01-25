@@ -105,12 +105,12 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_LANGUAGE_CAN_UPDATE});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_TRANSLATE_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_TRANSLATE_CAN_UPDATE});
-//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CATEGORY_CAN_UPDATE});
-//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_UPDATE});
-//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
-//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_UPDATE});
 
         // manager
         ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);

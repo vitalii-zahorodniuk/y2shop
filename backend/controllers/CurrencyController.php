@@ -8,6 +8,7 @@ use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -29,14 +30,27 @@ class CurrencyController extends BaseController
                 'rules' => [
                     ['allow' => TRUE, 'roles' => [User::ROLE_ROOT]], // default rule
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => [
+                            'index',
+                            'view',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_CURRENCY_CAN_VIEW_LIST],
                     ],
                     [
-                        'actions' => ['create', 'update', 'delete'],
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_CURRENCY_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],

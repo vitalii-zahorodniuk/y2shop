@@ -26,6 +26,10 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property boolean $userDeleted
+ * @property boolean $userActivated
+ * @property boolean $userOnHold
+ *
  * @property User    $updatedBy
  * @property User    $createdBy
  * @property array   $rolesArray
@@ -490,5 +494,29 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     public function getAuthAssignments()
     {
         return $this->hasMany(AuthAssignment::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUserDeleted()
+    {
+        return $this->status == self::STATUS_DELETED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUserActivated()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUserOnHold()
+    {
+        return $this->status == self::STATUS_ON_HOLD;
     }
 }

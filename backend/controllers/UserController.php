@@ -39,6 +39,12 @@ class UserController extends BaseController
                         'actions' => ['view', 'create', 'update', 'delete'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_USER_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],

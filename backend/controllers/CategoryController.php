@@ -10,6 +10,7 @@ use xz1mefx\ufu\actions\category\ViewAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Class CategoryController
@@ -37,6 +38,12 @@ class CategoryController extends BaseController
                         'actions' => ['create', 'update', 'delete'],
                         'allow' => TRUE,
                         'roles' => [User::PERM_CATEGORY_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
                     ],
                     ['allow' => FALSE], // default rule
                 ],
@@ -58,11 +65,16 @@ class CategoryController extends BaseController
      */
     public function actions()
     {
-        $canEdit = Yii::$app->user->can([
-            User::ROLE_ROOT,
-            User::PERM_CATEGORY_CAN_UPDATE,
-        ]);
-        $canSetSection = Yii::$app->user->can(User::ROLE_ROOT);
+        $canEdit = FALSE;
+        $canSetSection = FALSE;
+        if (Yii::$app->user->identity->userActivated) {
+            $canEdit = Yii::$app->user->can([
+                User::ROLE_ROOT,
+                User::PERM_CATEGORY_CAN_UPDATE,
+            ]);
+            $canSetSection = Yii::$app->user->can(User::ROLE_ROOT);
+        }
+
         return [
             'index' => [
                 'class' => IndexAction::className(),
