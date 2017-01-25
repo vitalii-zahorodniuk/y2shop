@@ -44,6 +44,10 @@ class Product extends UfuActiveRecord
 
     const TYPE_ID = 1;
 
+    const STATUS_DELETED = -1;
+    const STATUS_ON_HOLD = 0;
+    const STATUS_ACTIVE = 1;
+
     private $_translates;
     private $_canDelete;
 
@@ -165,6 +169,9 @@ class Product extends UfuActiveRecord
         } else {
             $this->updated_by = Yii::$app->user->id;
         }
+
+        $this->status = self::STATUS_ACTIVE; // TODO: Add status dropdown to product form
+
         return parent::beforeSave($insert);
     }
 
