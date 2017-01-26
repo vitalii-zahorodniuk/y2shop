@@ -2,6 +2,7 @@
 namespace backend\models;
 
 use common\models\ProductImage;
+use xz1mefx\adminlte\helpers\Html;
 use xz1mefx\base\helpers\Url;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -10,8 +11,8 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 
 /**
- * Class Product
- * @package backend\models
+ * @inheritdoc
+ * @property string $statusHtmlLabel
  */
 class Product extends \common\models\Product
 {
@@ -264,6 +265,32 @@ class Product extends \common\models\Product
                 }
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusHtmlLabel()
+    {
+        return Html::infoLabel(self::statusCssClass($this->status), self::statusesLabels($this->status));
+    }
+
+    /**
+     * @param $status string
+     *
+     * @return string
+     */
+    public static function statusCssClass($status)
+    {
+        switch ($status) {
+            case self::STATUS_DELETED:
+                return 'bg-red-gradient';
+            case self::STATUS_ON_HOLD:
+                return 'bg-aqua-gradient';
+            case self::STATUS_ACTIVE:
+                return 'bg-green-gradient';
+        }
+        return 'label-default';
     }
 
 }

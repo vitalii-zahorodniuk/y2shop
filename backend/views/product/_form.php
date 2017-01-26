@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use common\models\Currency;
 use dosamigos\fileupload\FileUploadUI;
 use xz1mefx\adminlte\helpers\Html;
@@ -64,6 +65,10 @@ CSS
                         'type' => $model::TYPE_ID,
                         'categoryMultiselect' => TRUE,
                     ]) ?>
+
+                    <?php if (Yii::$app->user->can(User::ROLE_MANAGER)): ?>
+                        <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
+                    <?php endif; ?>
 
                     <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
                     <?= FileUploadUI::widget([
@@ -142,7 +147,7 @@ CSS
                             't' => Yii::$app->request->get('t'),
                             'p' => ArrayHelper::getValue($model, 'id'),
                         ],
-                        'gallery' => true,
+                        'gallery' => TRUE,
                         'load' => TRUE,
                         'fieldOptions' => [
                             'accept' => 'image/*',

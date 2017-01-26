@@ -1,4 +1,5 @@
 <?php
+use backend\models\Product;
 use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
@@ -42,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
                         'contentOptions' => ['class' => 'col-xs-1 col-sm-1'],
                     ],
-//                    'status',
                     'name:raw',
                     [
                         'attribute' => 'price',
@@ -54,15 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
                         'contentOptions' => ['class' => 'text-left col-xs-1 col-sm-1'],
                     ],
-//                    'seller_id',
-//                    'image_src',
-//                    'viewed_count',
-//                    'viewed_date',
-//                    'created_by',
-//                    'updated_by',
-//                    'created_at',
-//                    'updated_at',
-
+                    [
+                        'attribute' => 'status',
+                        'filter' => Product::statusesLabels(),
+                        'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'content' => function ($model) {
+                            /* @var $model User */
+                            return $model->statusHtmlLabel;
+                        },
+                    ],
                     [
                         'class' => ActionColumn::className(),
                         'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
@@ -70,12 +71,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view} {update} {delete}',
                         'visibleButtons' => [
                             'update' => function ($model, $key, $index) {
-                                /* @var $model \common\models\Product */
-                                return Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE);
+                                /* @var $model Product */
+                                return Yii::$app->user->identity->userActivated
+                                    && Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)
+                                    && (
+                                        Yii::$app->user->can(User::ROLE_MANAGER)
+                                        || $model->status != Product::STATUS_DELETED
+                                    );
                             },
                             'delete' => function ($model, $key, $index) {
-                                /* @var $model \common\models\Product */
-                                return Yii::$app->user->identity->userActivated && Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE);
+                                /* @var $model Product */
+                                return Yii::$app->user->identity->userActivated
+                                    && Yii::$app->user->can(User::PERM_PRODUCT_CAN_UPDATE)
+                                    && $model->status != Product::STATUS_DELETED;
                             },
                         ],
                     ],

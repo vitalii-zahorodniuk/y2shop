@@ -81,6 +81,9 @@ class ProductController extends BaseController
     public function actionIndex()
     {
         $searchModel = new ProductSearch();
+        if (Yii::$app->user->cannot(User::ROLE_MANAGER)) {
+            $searchModel->seller_id = Yii::$app->user->id;
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -93,6 +96,7 @@ class ProductController extends BaseController
      * @param $id
      *
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -110,10 +114,12 @@ class ProductController extends BaseController
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== NULL) {
+            if (Yii::$app->user->cannot(User::ROLE_MANAGER) && $model->seller_id != Yii::$app->user->id) {
+                throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+            }
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
     }
 
     /**
@@ -145,17 +151,23 @@ class ProductController extends BaseController
      * @param $id
      *
      * @return array|string|Response
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        if ($model->status == Product::STATUS_DELETED && Yii::$app->user->cannot(User::ROLE_MANAGER)) {
+            throw new ForbiddenHttpException(Yii::t('admin-side', 'You have no rights to edit deleted product!'));
+        }
+
+        $postData = Yii::$app->request->post();
+        if (Yii::$app->request->isAjax && $model->load($postData)) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load($postData) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -168,12 +180,16 @@ class ProductController extends BaseController
      * @param $id
      *
      * @return Response
+     * @throws NotFoundHttpException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if ($model = $this->findModel($id)) {
+            $model->status = Product::STATUS_DELETED;
+            $model->save();
+            return $this->redirect(['index']);
+        }
+        throw new NotFoundHttpException();
     }
 
     /**
