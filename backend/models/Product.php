@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\ProductImage;
 use xz1mefx\base\helpers\Url;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -64,7 +65,7 @@ class Product extends \common\models\Product
                     "url" => $directoryUrl . $fileName,
                     "thumbnailUrl" => $directoryUrl . $fileName,
                     "deleteUrl" => Url::to([
-                        'main-image-delete',
+                        $attribute == 'mainImage' ? 'main-image-delete' : 'gallery-image-delete',
                         'name' => $fileName,
                         't' => Yii::$app->request->get('t'),
                         'p' => ArrayHelper::getValue($model, 'id'),
@@ -115,9 +116,17 @@ class Product extends \common\models\Product
         }
 
         if ($model) {
-            if ($attribute == 'mainImage') {
-                $model->image_src = NULL;
-                $model->save(FALSE);
+            switch ($attribute) {
+                case 'mainImage':
+                    $model->image_src = NULL;
+                    $model->save(FALSE);
+                    break;
+                case 'galleryImage':
+                    ProductImage::deleteAll([
+                        'product_id' => $model->id,
+                        'image_src' => $name,
+                    ]);
+                    break;
             }
         }
 
@@ -163,7 +172,7 @@ class Product extends \common\models\Product
                     "url" => $directoryUrl . $fileBaseName,
                     "thumbnailUrl" => $directoryUrl . $fileBaseName,
                     "deleteUrl" => Url::to([
-                        'main-image-delete',
+                        $attribute == 'mainImage' ? 'main-image-delete' : 'gallery-image-delete',
                         'name' => $fileBaseName,
                         't' => Yii::$app->request->get('t'),
                         'p' => ArrayHelper::getValue($model, 'id'),
@@ -185,7 +194,7 @@ class Product extends \common\models\Product
                     "url" => $directoryUrl . $fileBaseName,
                     "thumbnailUrl" => $directoryUrl . $fileBaseName,
                     "deleteUrl" => Url::to([
-                        'main-image-delete',
+                        $attribute == 'mainImage' ? 'main-image-delete' : 'gallery-image-delete',
                         'name' => $fileBaseName,
                         't' => Yii::$app->request->get('t'),
                         'p' => ArrayHelper::getValue($model, 'id'),
@@ -215,10 +224,10 @@ class Product extends \common\models\Product
     {
         parent::afterSave($insert, $changedAttributes);
 
-        self::saveMainImage($insert);
+        self::saveImages($insert);
     }
 
-    public function saveMainImage($insert)
+    public function saveImages($insert)
     {
         if ($insert) {
             $uniqueId = Yii::$app->request->get('t');
@@ -229,18 +238,30 @@ class Product extends \common\models\Product
             $uniqueId = $this->id;
         }
 
-        $directoryTmp = Yii::getAlias('@frontend/web') . "/img/tmp/product/$uniqueId/mainImage/";
-        $directoryNew = Yii::getAlias('@frontend/web') . "/img/product/$this->id/mainImage/";
+        foreach (['mainImage', 'galleryImage'] as $folder) {
+            $directoryTmp = Yii::getAlias('@frontend/web') . "/img/tmp/product/$uniqueId/$folder/";
+            $directoryNew = Yii::getAlias('@frontend/web') . "/img/product/$this->id/$folder/";
 
-        if (is_dir($directoryTmp)) {
-            $files = FileHelper::findFiles($directoryTmp);
-            foreach ($files as $file) {
-                if (!is_dir($directoryNew)) {
-                    mkdir($directoryNew, 0777, TRUE);
+            if (is_dir($directoryTmp)) {
+                $files = FileHelper::findFiles($directoryTmp);
+                foreach ($files as $file) {
+                    if (!is_dir($directoryNew)) {
+                        mkdir($directoryNew, 0777, TRUE);
+                    }
+                    rename($directoryTmp . basename($file), $directoryNew . basename($file));
+                    switch ($folder) {
+                        case 'mainImage':
+                            $this->image_src = basename($file);
+                            $this->save(FALSE); // disable validation for
+                            break;
+                        case 'galleryImage':
+                            $pi = new ProductImage();
+                            $pi->product_id = $this->id;
+                            $pi->image_src = basename($file);
+                            $pi->save();
+                            break;
+                    }
                 }
-                rename($directoryTmp . basename($file), $directoryNew . basename($file));
-                $this->image_src = basename($file);
-                $this->save(FALSE); // disable validation for
             }
         }
     }

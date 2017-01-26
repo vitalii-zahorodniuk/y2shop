@@ -38,75 +38,131 @@ CSS
             'validateOnType' => TRUE,
         ]); ?>
 
-        <?= UfuWidget::widget([
-            'model' => $model,
-            'form' => $form,
-            'type' => $model::TYPE_ID,
-            'categoryMultiselect' => TRUE,
-        ]) ?>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab_1" data-toggle="tab" aria-expanded="true">
+                        <?= Yii::t('admin-side', 'Product common info') ?>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#tab_2" data-toggle="tab" aria-expanded="false">
+                        <?= Yii::t('admin-side', 'Product description') ?>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#tab_3" data-toggle="tab" aria-expanded="false">
+                        <?= Yii::t('admin-side', 'Product images') ?>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <?= UfuWidget::widget([
+                        'model' => $model,
+                        'form' => $form,
+                        'type' => $model::TYPE_ID,
+                        'categoryMultiselect' => TRUE,
+                    ]) ?>
 
-        <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
-        <?= FileUploadUI::widget([
-            'model' => $model,
-            'attribute' => 'mainImage',
-            'url' => [
-                'main-image-upload',
-                't' => Yii::$app->request->get('t'),
-                'p' => ArrayHelper::getValue($model, 'id'),
-            ],
-            'gallery' => FALSE,
-            'load' => TRUE,
-            'fieldOptions' => [
-                'accept' => 'image/*',
-            ],
-            'clientOptions' => [
-                'maxNumberOfFiles' => 1,
-                'maxFileSize' => 2000000,
-            ],
-            // ...
-            'clientEvents' => [
-                'fileuploaddone' => 'function(e, data) {
+                    <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
+                    <?= FileUploadUI::widget([
+                        'model' => $model,
+                        'attribute' => 'mainImage',
+                        'url' => [
+                            'main-image-upload',
+                            't' => Yii::$app->request->get('t'),
+                            'p' => ArrayHelper::getValue($model, 'id'),
+                        ],
+                        'gallery' => FALSE,
+                        'load' => TRUE,
+                        'fieldOptions' => [
+                            'accept' => 'image/*',
+                        ],
+                        'clientOptions' => [
+                            'maxNumberOfFiles' => 1,
+                            'maxFileSize' => 2000000,
+                        ],
+                        // ...
+                        'clientEvents' => [
+                            'fileuploaddone' => 'function(e, data) {
                                     console.log(e);
                                     console.log(data);
                                 }',
-                'fileuploadfail' => 'function(e, data) {
+                            'fileuploadfail' => 'function(e, data) {
                                     console.log(e);
                                     console.log(data);
                                 }',
-            ],
-        ]); ?>
-
-        <label class="control-label"><?= $model->getAttributeLabel('name') ?></label>
-        <div class="panel panel-default" style="background-color: #f6f8fa;">
-            <div class="panel-body">
-                <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                    <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter a name...', [], $lang['locale'])])->label($lang['name']) ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <div class="row">
-            <?= $form->field($model, 'price', ['options' => ['class' => 'col-md-6']])->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a price...')]) ?>
-            <?= $form->field($model, 'currency_id', ['options' => ['class' => 'col-md-6']])->dropDownList(Currency::getDrDownList()) ?>
-        </div>
-
-
-        <h5><strong><?= $model->getAttributeLabel('description') ?></strong></h5>
-        <div class="panel panel-default" style="background-color: #f6f8fa;">
-            <div class="panel-body">
-                <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
-                    <?= $form->field($model, "translates[{$lang['id']}][description]")->widget(Wysihtml5::className(), [
-                        'widgetToolbar' => [
-                            'fa' => TRUE,
-                            'image' => FALSE,
                         ],
-                        'options' => [
-                            'class' => 'col-md-12',
-                            'style' => 'margin-bottom: 20px; height: 250px;',
-                            'placeholder' => Yii::t('admin-side', 'Enter a description...', [], $lang['locale']),
+                    ]); ?>
+
+                    <label class="control-label"><?= $model->getAttributeLabel('name') ?></label>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter a name...', [], $lang['locale'])])->label($lang['name']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <?= $form->field($model, 'price', ['options' => ['class' => 'col-md-6']])->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a price...')]) ?>
+                        <?= $form->field($model, 'currency_id', ['options' => ['class' => 'col-md-6']])->dropDownList(Currency::getDrDownList()) ?>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2">
+                    <h5><strong><?= $model->getAttributeLabel('description') ?></strong></h5>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                                <?= $form->field($model, "translates[{$lang['id']}][description]")->widget(Wysihtml5::className(), [
+                                    'widgetToolbar' => [
+                                        'fa' => TRUE,
+                                        'image' => FALSE,
+                                    ],
+                                    'options' => [
+                                        'class' => 'col-md-12',
+                                        'style' => 'margin-bottom: 20px; height: 250px;',
+                                        'placeholder' => Yii::t('admin-side', 'Enter a description...', [], $lang['locale']),
+                                    ],
+                                ])->label($lang['name']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_3">
+                    <label class="control-label"><?= $model->getAttributeLabel('mainImage') ?></label>
+                    <?= FileUploadUI::widget([
+                        'model' => $model,
+                        'attribute' => 'galleryImage',
+                        'url' => [
+                            'gallery-image-upload',
+                            't' => Yii::$app->request->get('t'),
+                            'p' => ArrayHelper::getValue($model, 'id'),
                         ],
-                    ])->label($lang['name']) ?>
-                <?php endforeach; ?>
+                        'gallery' => true,
+                        'load' => TRUE,
+                        'fieldOptions' => [
+                            'accept' => 'image/*',
+                        ],
+                        'clientOptions' => [
+                            'maxFileSize' => 2000000,
+                        ],
+                        // ...
+                        'clientEvents' => [
+                            'fileuploaddone' => 'function(e, data) {
+                                    console.log(e);
+                                    console.log(data);
+                                }',
+                            'fileuploadfail' => 'function(e, data) {
+                                    console.log(e);
+                                    console.log(data);
+                                }',
+                        ],
+                    ]); ?>
+                </div>
             </div>
         </div>
 

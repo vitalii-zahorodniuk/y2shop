@@ -43,6 +43,8 @@ class ProductController extends BaseController
                             'delete',
                             'main-image-upload',
                             'main-image-delete',
+                            'gallery-image-upload',
+                            'gallery-image-delete',
                         ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_UPDATE],
@@ -66,6 +68,8 @@ class ProductController extends BaseController
                     'delete' => ['post', 'delete'],
                     'main-image-upload' => ['get', 'post'],
                     'main-image-delete' => ['post'],
+                    'gallery-image-upload' => ['get', 'post'],
+                    'gallery-image-delete' => ['post'],
                 ],
             ],
         ];
@@ -191,5 +195,26 @@ class ProductController extends BaseController
     public function actionMainImageDelete($name)
     {
         return Product::deleteImageByName('mainImage', $name);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGalleryImageUpload()
+    {
+        if (Yii::$app->request->post()) {
+            return Product::uploadTmpImage('galleryImage');
+        }
+        return Product::getImage('galleryImage');
+    }
+
+    /**
+     * @param $name string
+     *
+     * @return string
+     */
+    public function actionGalleryImageDelete($name)
+    {
+        return Product::deleteImageByName('galleryImage', $name);
     }
 }
