@@ -143,8 +143,12 @@ class Product extends UfuActiveRecord
             ['status', 'default', 'value' => self::STATUS_ON_HOLD],
             ['status', 'in', 'range' => array_keys(self::statusesLabels())],
             ['status', function ($attribute, $params) {
-                if ($this->status == self::STATUS_ACTIVE && Yii::$app->user->cannot(User::ROLE_MANAGER)) {
-                    $this->addError($attribute, Yii::t('admin-side', 'You have no rights to set active product status'));
+                if (
+                    $this->status == self::STATUS_ACTIVE
+                    && $this->status != $this->oldAttributes['status']
+                    && Yii::$app->user->cannot(User::ROLE_MANAGER)
+                ) {
+                    $this->addError($attribute, Yii::t('admin-side', 'You have no rights to set `active` product status'));
                 }
             }],
             // other rules
@@ -168,6 +172,25 @@ class Product extends UfuActiveRecord
             // virtual multilang fields
             ['translates', 'safe'],
         ];
+    }
+
+    /**
+     * @param null|string $status
+     *
+     * @return array|string
+     */
+    public static function statusesLabels($status = NULL)
+    {
+        $statuses = [
+            self::STATUS_DELETED => Yii::t('common', 'Product deleted'),
+            self::STATUS_ON_HOLD => Yii::t('common', 'Product on hold'),
+            self::STATUS_ACTIVE => Yii::t('common', 'Product active'),
+        ];
+        if ($status === NULL) {
+            return $statuses;
+        }
+
+        return isset($statuses[$status]) ? $statuses[$status] : '';
     }
 
     /**
@@ -196,25 +219,6 @@ class Product extends UfuActiveRecord
             $ufuCategoryRelation->delete();
         }
         parent::afterDelete();
-    }
-
-    /**
-     * @param null|string $status
-     *
-     * @return array|string
-     */
-    public static function statusesLabels($status = NULL)
-    {
-        $statuses = [
-            self::STATUS_DELETED => Yii::t('common', 'Product deleted'),
-            self::STATUS_ON_HOLD => Yii::t('common', 'Product on hold'),
-            self::STATUS_ACTIVE => Yii::t('common', 'Product active'),
-        ];
-        if ($status === NULL) {
-            return $statuses;
-        }
-
-        return isset($statuses[$status]) ? $statuses[$status] : '';
     }
 
     /**
@@ -309,6 +313,7 @@ class Product extends UfuActiveRecord
             'currency.code' => Yii::t('common', 'Currency'),
             'currency.name' => Yii::t('common', 'Currency'),
             'mainImage' => Yii::t('common', 'Main image'),
+            'productImages.image_src' => Yii::t('common', 'Product images'),
             'categories' => Yii::t('common', 'Categories'),
         ];
     }

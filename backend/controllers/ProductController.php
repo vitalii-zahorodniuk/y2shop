@@ -55,6 +55,19 @@ class ProductController extends BaseController
                             return TRUE;
                         },
                     ],
+                    [
+                        'actions' => [
+                            'activate',
+                        ],
+                        'allow' => TRUE,
+                        'roles' => [User::ROLE_MANAGER],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
+                    ],
                     ['allow' => FALSE], // default rule
                 ],
             ],
@@ -70,6 +83,7 @@ class ProductController extends BaseController
                     'main-image-delete' => ['post'],
                     'gallery-image-upload' => ['get', 'post'],
                     'gallery-image-delete' => ['post'],
+                    'activate' => ['post'],
                 ],
             ],
         ];
@@ -174,6 +188,26 @@ class ProductController extends BaseController
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return Response
+     * @throws ForbiddenHttpException
+     */
+    public function actionActivate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->status == Product::STATUS_DELETED && Yii::$app->user->cannot(User::ROLE_MANAGER)) {
+            throw new ForbiddenHttpException(Yii::t('admin-side', 'You have no rights to edit deleted product!'));
+        }
+
+        $model->status = Product::STATUS_ACTIVE;
+        $model->save();
+
+        return $this->redirect(['index']);
     }
 
     /**

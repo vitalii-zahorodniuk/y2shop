@@ -53,7 +53,7 @@ CSS
                 </li>
                 <li class="">
                     <a href="#tab_3" data-toggle="tab" aria-expanded="false">
-                        <?= Yii::t('admin-side', 'Product images') ?>
+                        <?= Yii::t('common', 'Product images') ?>
                     </a>
                 </li>
             </ul>
