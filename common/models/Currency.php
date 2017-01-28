@@ -298,4 +298,12 @@ class Currency extends ActiveRecord
         return $this->hasMany(Product::className(), ['currency_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrencyRates()
+    {
+        return $this->hasMany(CurrencyRate::className(), ['currency_from_id' => 'id']);
+    }
+
 }
