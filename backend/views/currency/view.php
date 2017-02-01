@@ -6,12 +6,22 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Currency */
 
-$this->title = $model->id;
+$this->title = $model->name;
 
 $this->params['title'] = $this->title;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Currencies'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$currencyRates = '';
+foreach ($model->currencyRates as $currencyRate) {
+    $currencyRates .= strtr("<strong>{currencyFrom}&nbsp;{arrow}&nbsp;{currencyTo}</strong>&nbsp;&nbsp;{coefficient}<br>", [
+        '{currencyFrom}' => $model->code,
+        '{arrow}' => Html::icon('arrow-right'),
+        '{currencyTo}' => $currencyRate->currencyTo->code,
+        '{coefficient}' => $currencyRate->coefficient,
+    ]);
+}
 ?>
 
 <div class="box box-primary">
@@ -48,6 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'code',
+                    [
+                        'attribute' => 'rates',
+                        'format' => 'raw',
+                        'value' => $currencyRates,
+                        'visible' => !empty($currencyRates),
+                    ],
                     [
                         'attribute' => 'name',
                         'format' => 'raw',

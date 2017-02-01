@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property bool                $canDelete
  * @property integer             $relationsCount
  *
+ * @property array               $rates
  * @property array               $translates
  *
  * @property string              $name
@@ -32,12 +33,15 @@ use yii\helpers\ArrayHelper;
  * @property CurrencyTranslate[] $currencyTranslates
  * @property CurrencyTranslate   $currencyTranslate
  * @property Product[]           $products
+ * @property CurrencyRate[]      $currencyRates
  */
 class Currency extends ActiveRecord
 {
 
     private $_translates;
+    private $_rates;
     private $_canDelete;
+    private static $_all;
 
     /**
      * @inheritdoc
@@ -75,6 +79,21 @@ class Currency extends ActiveRecord
      */
     public function beforeValidate()
     {
+        // validate rates fields in their models
+        foreach (self::getAll($this->id) as $currency) {
+            if (isset($this->_rates[$currency->id])) {
+                $currencyRateModel = new CurrencyRate();
+                $currencyRateModel->currency_from_id = $this->id;
+                $currencyRateModel->currency_to_id = $currency->id;
+                $currencyRateModel->coefficient = $this->_rates[$currency->id];
+                if (!$currencyRateModel->validate(['coefficient'])) {
+                    foreach ($currencyRateModel->errors as $error) {
+                        $this->addError("rates[{$currency->id}]", $error);
+                    }
+                }
+            }
+        }
+
         // validate translate fields in their models
         foreach (Yii::$app->lang->getLangList() as $lang) {
             if (isset($this->_translates[$lang['id']])) {
@@ -87,6 +106,7 @@ class Currency extends ActiveRecord
                 }
             }
         }
+
         return parent::beforeValidate();
     }
 
@@ -110,6 +130,22 @@ class Currency extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+
+        // save or update translates
+        /* @var $indexedRates CurrencyRate[] */
+        $indexedRates = ArrayHelper::index($this->currencyRates, 'currency_to_id');
+        foreach ($this->rates as $currencyToId => $coefficient) {
+            if (isset($indexedRates[$currencyToId])) { // update translate
+                $indexedRates[$currencyToId]->coefficient = $coefficient;
+                $indexedRates[$currencyToId]->save();
+            } else { // insert new translate
+                $currencyRateModel = new CurrencyRate();
+                $currencyRateModel->currency_from_id = $this->id;
+                $currencyRateModel->currency_to_id = $currencyToId;
+                $currencyRateModel->coefficient = $coefficient;
+                $currencyRateModel->save();
+            }
+        }
 
         // save or update translates
         /* @var $indexedTranslates CurrencyTranslate[] */
@@ -140,7 +176,7 @@ class Currency extends ActiveRecord
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             // virtual multilang fields
-            ['translates', 'safe'],
+            [['rates', 'translates'], 'safe'],
         ];
     }
 
@@ -173,6 +209,7 @@ class Currency extends ActiveRecord
             'name' => Yii::t('common', 'Name'),
             'symbol_left' => Yii::t('common', 'Symbol Left'),
             'symbol_right' => Yii::t('common', 'Symbol Right'),
+            'rates' => Yii::t('common', 'Rates coefficients'),
             'relationsCount' => Yii::t('common', 'Product relations count'),
         ];
     }
@@ -230,6 +267,56 @@ class Currency extends ActiveRecord
     public function setTranslates($value)
     {
         $this->_translates = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRates()
+    {
+        if (isset($this->_rates)) {
+            return $this->_rates;
+        }
+        $this->_rates = [];
+        foreach (self::getAll($this->id) as $currency) {
+            $this->_rates[$currency->id] = NULL;
+        }
+        foreach ($this->currencyRates as $currencyRate) {
+            if (is_null($this->_rates[$currencyRate->currency_to_id]) || isset($this->_rates[$currencyRate->currency_to_id])) {
+                $this->_rates[$currencyRate->currency_to_id] = $currencyRate->coefficient;
+            }
+        }
+        return $this->_rates;
+    }
+
+    /**
+     * @param null|integer $ignoreId
+     *
+     * @return self[]
+     */
+    public static function getAll($ignoreId = NULL)
+    {
+        if (empty(self::$_all)) {
+            self::$_all = self::find()->indexBy('id')->all();
+        }
+
+        if ($ignoreId == NULL) {
+            return self::$_all;
+        }
+
+        $res = self::$_all;
+        if (isset($res[$ignoreId])) {
+            unset($res[$ignoreId]);
+        }
+        return $res;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setRates($value)
+    {
+        $this->_rates = $value;
     }
 
     /**

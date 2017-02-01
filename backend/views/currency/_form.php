@@ -22,6 +22,26 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a code...')]) ?>
 
+            <div class="">
+                <h5><strong><?= $model->getAttributeLabel('rates') ?></strong></h5>
+                <div class="panel panel-default" style="background-color: #f6f8fa;">
+                    <div class="panel-body">
+                        <?php foreach ($model::getAll($model->id) as $currency): ?>
+                            <?= $form
+                                ->field($model, "rates[{$currency->id}]")
+                                ->textInput([
+                                    'placeholder' => Yii::t(
+                                        'admin-side',
+                                        'Enter a coefficient to convert {from} to {to}...',
+                                        ['from' => $model->code, 'to' => $currency->code,]
+                                    ),
+                                ])
+                                ->label($model->code . ' ' . Html::icon('arrow-right') . ' ' . $currency->code) ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>

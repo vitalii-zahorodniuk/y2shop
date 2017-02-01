@@ -57,7 +57,7 @@ class CurrencyRate extends ActiveRecord
         return [
             [['currency_from_id', 'currency_to_id', 'coefficient'], 'required'],
             [['currency_from_id', 'currency_to_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['coefficient'], 'number'],
+            ['coefficient', 'number', 'min' => 0.0001, 'max' => 999999999.999999],
             [['currency_from_id', 'currency_to_id'], 'unique', 'targetAttribute' => ['currency_from_id', 'currency_to_id'], 'message' => 'The combination of Currency From ID and Currency To ID has already been taken.'],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],

@@ -4,7 +4,7 @@
 
 $this->title = Yii::t('admin-side', 'Update {modelClass}: ', [
         'modelClass' => 'Currency',
-    ]) . $model->id;
+    ]) . ' ' . $model->name;
 
 $this->params['title'] = $this->title;
 

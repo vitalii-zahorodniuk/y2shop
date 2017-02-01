@@ -7,13 +7,13 @@ class m170128_120042_add_currency_rate extends Migration
 
     public function up()
     {
-        $this->down();
-
         $tableOptions = NULL;
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
+
+        $this->addColumn('{{%currency}}', 'is_default', $this->smallInteger(1)->defaultValue(0)->after('id'));
 
         $this->createTable('{{%currency_rate}}', [
             'id' => $this->primaryKey()->unsigned(),
@@ -43,6 +43,8 @@ class m170128_120042_add_currency_rate extends Migration
         if (Yii::$app->db->schema->getTableSchema('{{%currency_rate}}') !== NULL) {
             $this->dropTable('{{%currency_rate}}');
         }
+
+        $this->dropColumn('{{%currency}}', 'is_default');
     }
 
 }
