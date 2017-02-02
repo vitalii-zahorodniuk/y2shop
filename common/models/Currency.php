@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "{{%currency}}".
  *
  * @property integer             $id
+ * @property integer             $is_default
  * @property integer             $status
  * @property string              $code
  * @property integer             $created_by
@@ -22,6 +23,7 @@ use yii\helpers\ArrayHelper;
  * @property integer             $relationsCount
  *
  * @property array               $rates
+ * @property array               $inverseRates
  * @property array               $translates
  *
  * @property string              $name
@@ -38,10 +40,11 @@ use yii\helpers\ArrayHelper;
 class Currency extends ActiveRecord
 {
 
+    private static $_all;
     private $_translates;
     private $_rates;
+    private $_inverseRates;
     private $_canDelete;
-    private static $_all;
 
     /**
      * @inheritdoc
@@ -83,12 +86,27 @@ class Currency extends ActiveRecord
         foreach (self::getAll($this->id) as $currency) {
             if (isset($this->_rates[$currency->id])) {
                 $currencyRateModel = new CurrencyRate();
-                $currencyRateModel->currency_from_id = $this->id;
                 $currencyRateModel->currency_to_id = $currency->id;
                 $currencyRateModel->coefficient = $this->_rates[$currency->id];
-                if (!$currencyRateModel->validate(['coefficient'])) {
+                if (!$currencyRateModel->validate(['currency_to_id', 'coefficient'])) {
                     foreach ($currencyRateModel->errors as $error) {
                         $this->addError("rates[{$currency->id}]", $error);
+                    }
+                }
+            }
+        }
+
+        if ($this->isNewRecord) {
+            // validate inverse rates fields in their models
+            foreach (self::getAll($this->id) as $currency) {
+                if (isset($this->_rates[$currency->id])) {
+                    $currencyRateModel = new CurrencyRate();
+                    $currencyRateModel->currency_from_id = $currency->id;
+                    $currencyRateModel->coefficient = $this->_inverseRates[$currency->id];
+                    if (!$currencyRateModel->validate(['currency_from_id', 'coefficient'])) {
+                        foreach ($currencyRateModel->errors as $error) {
+                            $this->addError("inverseRates[{$currency->id}]", $error);
+                        }
                     }
                 }
             }
@@ -111,6 +129,28 @@ class Currency extends ActiveRecord
     }
 
     /**
+     * @param null|integer $ignoreId
+     *
+     * @return self[]
+     */
+    public static function getAll($ignoreId = NULL)
+    {
+        if (empty(self::$_all)) {
+            self::$_all = self::find()->indexBy('id')->all();
+        }
+
+        if ($ignoreId == NULL) {
+            return self::$_all;
+        }
+
+        $res = self::$_all;
+        if (isset($res[$ignoreId])) {
+            unset($res[$ignoreId]);
+        }
+        return $res;
+    }
+
+    /**
      * @inheritdoc
      */
     public function beforeDelete()
@@ -127,11 +167,28 @@ class Currency extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->created_by = Yii::$app->user->id;
+        } else {
+            $this->updated_by = Yii::$app->user->id;
+        }
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
 
-        // save or update translates
+        if ($this->is_default) {
+            self::updateAll(['is_default' => 0], ['!=', 'id', $this->id]);
+        }
+
+        // save or update rates
         /* @var $indexedRates CurrencyRate[] */
         $indexedRates = ArrayHelper::index($this->currencyRates, 'currency_to_id');
         foreach ($this->rates as $currencyToId => $coefficient) {
@@ -142,6 +199,18 @@ class Currency extends ActiveRecord
                 $currencyRateModel = new CurrencyRate();
                 $currencyRateModel->currency_from_id = $this->id;
                 $currencyRateModel->currency_to_id = $currencyToId;
+                $currencyRateModel->coefficient = $coefficient;
+                $currencyRateModel->save();
+            }
+        }
+
+        if ($insert) {
+            // save or update inverse rates
+            /* @var $indexedRates CurrencyRate[] */
+            foreach ($this->inverseRates as $currencyFromId => $coefficient) {
+                $currencyRateModel = new CurrencyRate();
+                $currencyRateModel->currency_from_id = $currencyFromId;
+                $currencyRateModel->currency_to_id = $this->id;
                 $currencyRateModel->coefficient = $coefficient;
                 $currencyRateModel->save();
             }
@@ -170,27 +239,16 @@ class Currency extends ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['is_default', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            ['is_default', 'in', 'range' => [0, 1]],
+            ['is_default', 'default', 'value' => 0],
             [['code'], 'required'],
             [['code'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             // virtual multilang fields
-            [['rates', 'translates'], 'safe'],
+            [['rates', 'inverseRates', 'translates'], 'safe'],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        if ($insert) {
-            $this->created_by = Yii::$app->user->id;
-        } else {
-            $this->updated_by = Yii::$app->user->id;
-        }
-        return parent::beforeSave($insert);
     }
 
     /**
@@ -200,6 +258,7 @@ class Currency extends ActiveRecord
     {
         return [
             'id' => Yii::t('common', 'ID'),
+            'is_default' => Yii::t('common', 'Is default currency'),
             'status' => Yii::t('common', 'Status'),
             'code' => Yii::t('common', 'Code (ISO 4217)'),
             'created_by' => Yii::t('common', 'Created By'),
@@ -210,6 +269,7 @@ class Currency extends ActiveRecord
             'symbol_left' => Yii::t('common', 'Symbol Left'),
             'symbol_right' => Yii::t('common', 'Symbol Right'),
             'rates' => Yii::t('common', 'Rates coefficients'),
+            'inverce_rates' => Yii::t('common', 'Inverse rates coefficients'),
             'relationsCount' => Yii::t('common', 'Product relations count'),
         ];
     }
@@ -290,33 +350,34 @@ class Currency extends ActiveRecord
     }
 
     /**
-     * @param null|integer $ignoreId
-     *
-     * @return self[]
-     */
-    public static function getAll($ignoreId = NULL)
-    {
-        if (empty(self::$_all)) {
-            self::$_all = self::find()->indexBy('id')->all();
-        }
-
-        if ($ignoreId == NULL) {
-            return self::$_all;
-        }
-
-        $res = self::$_all;
-        if (isset($res[$ignoreId])) {
-            unset($res[$ignoreId]);
-        }
-        return $res;
-    }
-
-    /**
      * @param $value array
      */
     public function setRates($value)
     {
         $this->_rates = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInverseRates()
+    {
+        if (isset($this->_inverseRates)) {
+            return $this->_inverseRates;
+        }
+        $this->_inverseRates = [];
+        foreach (self::getAll($this->id) as $currency) {
+            $this->_inverseRates[$currency->id] = NULL;
+        }
+        return $this->_inverseRates;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setInverseRates($value)
+    {
+        $this->_inverseRates = $value;
     }
 
     /**
@@ -390,7 +451,7 @@ class Currency extends ActiveRecord
      */
     public function getCurrencyRates()
     {
-        return $this->hasMany(CurrencyRate::className(), ['currency_from_id' => 'id']);
+        return $this->hasMany(CurrencyRate::className(), ['currency_from_id' => 'id'])->with(['currencyTo']);
     }
 
 }

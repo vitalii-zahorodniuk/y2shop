@@ -15,11 +15,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $currencyRates = '';
 foreach ($model->currencyRates as $currencyRate) {
-    $currencyRates .= strtr("<strong>{currencyFrom}&nbsp;{arrow}&nbsp;{currencyTo}</strong>&nbsp;&nbsp;{coefficient}<br>", [
+    $currencyRates .= strtr("<strong style=\"opacity: 0.8\">{currencyFrom}&nbsp;{arrow}&nbsp;{currencyTo}:</strong>&nbsp;&nbsp;{coefficient}<br>", [
         '{currencyFrom}' => $model->code,
         '{arrow}' => Html::icon('arrow-right'),
         '{currencyTo}' => $currencyRate->currencyTo->code,
         '{coefficient}' => $currencyRate->coefficient,
+    ]);
+}
+if (count($model->currencyRates) < count($model::getAll($model->id))) {
+    $currencyRates .= strtr("<p class=\"text-danger\"><strong>{icon} {title}</strong> {msg}</p><br>", [
+        '{icon}' => Html::icon('exclamation-sign'),
+        '{title}' => Yii::t('admin-side', 'Warning:'),
+        '{msg}' => Yii::t('admin-side', 'Not all currency rates are filled!'),
     ]);
 }
 ?>
@@ -57,6 +64,11 @@ foreach ($model->currencyRates as $currencyRate) {
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
+                    [
+                        'attribute' => 'is_default',
+                        'format' => 'raw',
+                        'value' => Html::icon($model->is_default ? 'ok' : 'remove', ['class' => $model->is_default ? 'text-success' : 'text-danger']),
+                    ],
                     'code',
                     [
                         'attribute' => 'rates',

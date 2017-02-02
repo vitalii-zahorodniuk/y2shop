@@ -15,13 +15,15 @@ class m170128_120042_add_currency_rate extends Migration
 
         $this->addColumn('{{%currency}}', 'is_default', $this->smallInteger(1)->defaultValue(0)->after('id'));
 
+        $this->update('{{%currency}}', ['is_default' => 1], ['id' => 1]);
+
         $this->createTable('{{%currency_rate}}', [
             'id' => $this->primaryKey()->unsigned(),
 
             'currency_from_id' => $this->integer()->unsigned()->notNull(),
             'currency_to_id' => $this->integer()->unsigned()->notNull(),
 
-            'coefficient' => $this->decimal(15, 6)->notNull(),
+            'coefficient' => $this->decimal(15, 6)->notNull()->defaultValue(1),
 
             'created_by' => $this->integer()->unsigned()->null(),
             'updated_by' => $this->integer()->unsigned()->null(),
@@ -36,6 +38,43 @@ class m170128_120042_add_currency_rate extends Migration
         $this->addForeignKey('currency_rate_currency_to_id_fk', '{{%currency_rate}}', 'currency_to_id', '{{%currency}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('currency_rate_created_by_fk', '{{%currency_rate}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
         $this->addForeignKey('currency_rate_updated_by_fk', '{{%currency_rate}}', 'updated_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
+
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 1,
+            'currency_to_id' => 2,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 1,
+            'currency_to_id' => 3,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 2,
+            'currency_to_id' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 2,
+            'currency_to_id' => 3,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 3,
+            'currency_to_id' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $this->insert('{{%currency_rate}}', [
+            'currency_from_id' => 3,
+            'currency_to_id' => 2,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
     }
 
     public function down()

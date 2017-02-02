@@ -43,12 +43,46 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
+                    [
+                        'attribute' => 'is_default',
+                        'headerOptions' => ['class' => 'col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'format' => 'raw',
+//                        'filter' => FALSE,
+                        'content' => function ($model) {
+                            /* @var $model \common\models\Currency */
+                            return $model->is_default ? Html::icon('ok', ['class' => 'text-success']) : '';
+                        },
+                    ],
                     'code',
                     [
                         'attribute' => 'name',
                         'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'rates',
+                        'format' => 'raw',
+                        'filter' => FALSE,
+                        'content' => function ($model) {
+                            /* @var $model \common\models\Currency */
+                            $currencyRates = '';
+                            foreach ($model->currencyRates as $currencyRate) {
+                                $currencyRates .= strtr("<strong style=\"opacity: 0.8\">{currencyFrom}&nbsp;{arrow}&nbsp;{currencyTo}:</strong>&nbsp;&nbsp;{coefficient}<br>", [
+                                    '{currencyFrom}' => $model->code,
+                                    '{arrow}' => Html::icon('arrow-right'),
+                                    '{currencyTo}' => $currencyRate->currencyTo->code,
+                                    '{coefficient}' => $currencyRate->coefficient,
+                                ]);
+                            }
+                            if (count($model->currencyRates) < count($model::getAll($model->id))) {
+                                $currencyRates .= strtr("<p class=\"text-danger\"><strong>{icon} {title}</strong> {msg}</p><br>", [
+                                    '{icon}' => Html::icon('exclamation-sign'),
+                                    '{title}' => Yii::t('admin-side', 'Warning:'),
+                                    '{msg}' => Yii::t('admin-side', 'Not all currency rates are filled!'),
+                                ]);
+                            }
+                            return $currencyRates;
+                        },
                     ],
                     [
                         'attribute' => 'updated_at',
@@ -84,3 +118,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?php
+$this->registerJs(<<<JS
+$('.grid-view td .text-danger').closest('tr').css('background-color', '#f2dede');
+JS
+);
+?>

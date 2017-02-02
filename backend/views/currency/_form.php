@@ -20,7 +20,26 @@ use yii\widgets\ActiveForm;
         <div class="<!--box-body-overflow-->">
             <?php $form = ActiveForm::begin(['enableAjaxValidation' => TRUE, 'validateOnType' => TRUE]); ?>
 
+            <?php if ($model->is_default): ?>
+                <p class="text-info">
+                    <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Warning:') ?></strong>
+                    <?= Yii::t('admin-side', 'This is default currency!') ?>
+                </p>
+            <?php endif; ?>
+
             <?= $form->field($model, 'code')->textInput(['maxlength' => TRUE, 'placeholder' => Yii::t('admin-side', 'Enter a code...')]) ?>
+
+            <?php if (!$model->is_default): ?>
+                <?= $form->field($model, 'is_default')->checkbox() ?>
+
+                <p id="isDefaultCheckBoxMsg" class="text-warning" style="margin-top: -20px; display: none;">
+                    <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Be careful:') ?></strong>
+                    <?= Yii::t('admin-side', 'This flag will be reset for all other currencies!') ?>
+                    <br>
+                    <strong><?= Html::icon('info-sign') ?> <?= Yii::t('ufu-tools', 'Be careful:') ?></strong>
+                    <?= Yii::t('admin-side', 'Sales will be conducted in this currency!') ?>
+                </p>
+            <?php endif; ?>
 
             <div class="">
                 <h5><strong><?= $model->getAttributeLabel('rates') ?></strong></h5>
@@ -33,7 +52,10 @@ use yii\widgets\ActiveForm;
                                     'placeholder' => Yii::t(
                                         'admin-side',
                                         'Enter a coefficient to convert {from} to {to}...',
-                                        ['from' => $model->code, 'to' => $currency->code,]
+                                        [
+                                            'from' => $model->code ?: Yii::t('admin-side', 'your currency'),
+                                            'to' => $currency->code,
+                                        ]
                                     ),
                                 ])
                                 ->label($model->code . ' ' . Html::icon('arrow-right') . ' ' . $currency->code) ?>
@@ -41,6 +63,31 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
             </div>
+
+            <?php if ($model->isNewRecord): ?>
+                <div class="">
+                    <h5><strong><?= $model->getAttributeLabel('inverseRates') ?></strong></h5>
+                    <div class="panel panel-default" style="background-color: #f6f8fa;">
+                        <div class="panel-body">
+                            <?php foreach ($model::getAll($model->id) as $currency): ?>
+                                <?= $form
+                                    ->field($model, "inverseRates[{$currency->id}]")
+                                    ->textInput([
+                                        'placeholder' => Yii::t(
+                                            'admin-side',
+                                            'Enter a coefficient to convert from {from} to {to}...',
+                                            [
+                                                'from' => $currency->code,
+                                                'to' => $model->code ?: Yii::t('admin-side', 'your currency'),
+                                            ]
+                                        ),
+                                    ])
+                                    ->label($currency->code . ' ' . Html::icon('arrow-right') . ' ' . $model->code) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="row">
                 <div class="col-md-6">
@@ -88,3 +135,20 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </div>
+
+<?php
+$this->registerJs(<<<JS
+var currencyIsDefault = $('#currency-is_default');
+var isDefaultCheckBoxMsg = $('#isDefaultCheckBoxMsg');
+
+currencyIsDefault.on('click', function () {
+    if ($(this).is(':checked')) {
+        isDefaultCheckBoxMsg.stop(true).slideDown();
+    }
+    else {
+        isDefaultCheckBoxMsg.stop(true).slideUp();
+    }
+});
+JS
+);
+?>
