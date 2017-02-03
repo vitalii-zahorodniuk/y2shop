@@ -145,7 +145,12 @@ class Product extends UfuActiveRecord
             ['status', function ($attribute, $params) {
                 if (
                     $this->status == self::STATUS_ACTIVE
-                    && $this->status != $this->oldAttributes['status']
+                    &&
+                    (
+                        $this->isNewRecord
+                        ||
+                        $this->status != ArrayHelper::getValue($this->oldAttributes, 'status')
+                    )
                     && Yii::$app->user->cannot(User::ROLE_MANAGER)
                 ) {
                     $this->addError($attribute, Yii::t('admin-side', 'You have no rights to set `active` product status'));

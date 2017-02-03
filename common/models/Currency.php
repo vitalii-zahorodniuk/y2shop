@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\web\Cookie;
 
 /**
  * This is the model class for table "{{%currency}}".
@@ -40,11 +41,13 @@ use yii\helpers\ArrayHelper;
 class Currency extends ActiveRecord
 {
 
-    private static $_all;
     private $_translates;
     private $_rates;
     private $_inverseRates;
     private $_canDelete;
+
+    private static $_all;
+    private static $_currentCurrency;
 
     /**
      * @inheritdoc
@@ -454,15 +457,58 @@ class Currency extends ActiveRecord
         return $this->hasMany(CurrencyRate::className(), ['currency_from_id' => 'id'])->with(['currencyTo']);
     }
 
-
     /**
-     * @param $currencyCode
+     * @param $currencyId
      *
      * @return bool
      */
-    public static function checkCurrency($currencyCode)
+    public static function checkCurrency($currencyId)
     {
-        return self::find()->where(['code' => $currencyCode])->exists();
+        if (empty($currencyId)) {
+            return FALSE;
+        }
+        return self::find()->where(['id' => $currencyId])->exists();
+    }
+
+    /**
+     * @return self
+     */
+    public static function getDefaultCurrency()
+    {
+        return self::findOne(['is_default' => 1]);
+    }
+
+    /**
+     * @return self
+     */
+    public static function getCurrentCurrency()
+    {
+        if (self::$_currentCurrency) {
+            return self::$_currentCurrency;
+        }
+        // try to get currency from cookies
+        if (self::$_currentCurrency = self::findOne(Yii::$app->request->cookies->getValue('currency'))) {
+            return self::$_currentCurrency;
+        }
+        // try to get currency from session
+        if (self::$_currentCurrency = self::findOne(Yii::$app->session->get('currency'))) {
+            return self::$_currentCurrency;
+        }
+        // get default currency
+        return self::$_currentCurrency = self::getDefaultCurrency();
+    }
+
+    /**
+     * @param int $currencyId
+     */
+    public static function setCurrency($currencyId)
+    {
+        Yii::$app->session->set('currency', $currencyId);
+        Yii::$app->response->cookies->add(new Cookie([
+            'name' => 'currency',
+            'value' => $currencyId,
+            'expire' => time() + 60 * 60 * 24 * 90, // 3 month
+        ]));
     }
 
 }
