@@ -454,4 +454,15 @@ class Currency extends ActiveRecord
         return $this->hasMany(CurrencyRate::className(), ['currency_from_id' => 'id'])->with(['currencyTo']);
     }
 
+
+    /**
+     * @param $currencyCode
+     *
+     * @return bool
+     */
+    public static function checkCurrency($currencyCode)
+    {
+        return self::find()->where(['code' => $currencyCode])->exists();
+    }
+
 }
