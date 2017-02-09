@@ -239,7 +239,7 @@ class Attribute extends ActiveRecord
      */
     public function getAttributeTranslate()
     {
-        return $this->hasMany(AttributeTranslate::className(), ['attribute_id' => 'id'])
+        return $this->hasOne(AttributeTranslate::className(), ['attribute_id' => 'id'])
             ->andOnCondition(['language_id' => Yii::$app->lang->id]);
     }
 

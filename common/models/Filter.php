@@ -244,7 +244,7 @@ class Filter extends ActiveRecord
      */
     public function getFilterTranslate()
     {
-        return $this->hasMany(FilterTranslate::className(), ['filter_id' => 'id'])
+        return $this->hasOne(FilterTranslate::className(), ['filter_id' => 'id'])
             ->andOnCondition(['language_id' => Yii::$app->lang->id]);
     }
 
