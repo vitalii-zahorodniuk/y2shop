@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model common\models\Filter */
 
 $this->title = Yii::t('admin-side', 'Update {modelClass}: ', [
-    'modelClass' => 'Filter',
-]) . $model->id;
+        'modelClass' => 'Filter',
+    ]) . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Filters'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('admin-side', 'Update');

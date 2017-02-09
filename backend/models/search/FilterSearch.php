@@ -2,16 +2,16 @@
 
 namespace backend\models\search;
 
-use Yii;
+use common\models\Filter;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Filter;
 
 /**
  * FilterSearch represents the model behind the search form about `common\models\Filter`.
  */
 class FilterSearch extends Filter
 {
+
     /**
      * @inheritdoc
      */

@@ -25,6 +25,10 @@ use yii\behaviors\TimestampBehavior;
 class Filter extends ActiveRecord
 {
 
+    const STATUS_DELETED = -1;
+    const STATUS_ON_HOLD = 0;
+    const STATUS_ACTIVE = 1;
+
     /**
      * @inheritdoc
      */
@@ -54,10 +58,34 @@ class Filter extends ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            // status
+            ['status', 'integer'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => array_keys(self::statusesLabels())],
+            // others
+            [['created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
         ];
+    }
+
+    /**
+     * @param null|string $status
+     *
+     * @return array|string
+     */
+    public static function statusesLabels($status = NULL)
+    {
+        $statuses = [
+            self::STATUS_DELETED => Yii::t('common', 'Filter deleted'),
+            self::STATUS_ON_HOLD => Yii::t('common', 'Filter on hold'),
+            self::STATUS_ACTIVE => Yii::t('common', 'Filter active'),
+        ];
+        if ($status === NULL) {
+            return $statuses;
+        }
+
+        return isset($statuses[$status]) ? $statuses[$status] : '';
     }
 
     /**
