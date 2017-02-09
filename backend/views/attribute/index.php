@@ -8,6 +8,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('admin-side', 'Attributes');
+$this->params['title'] = $this->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

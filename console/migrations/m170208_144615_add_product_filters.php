@@ -19,6 +19,7 @@ class m170208_144615_add_product_filters extends Migration
 
         $this->createTable('{{%filter}}', [
             'id' => $this->primaryKey()->unsigned(),
+            'parent_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment("If set to 0 - it is the name of the filter, if more than 0 - it is the filter value"),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
             'created_by' => $this->integer()->unsigned()->null(),
@@ -27,6 +28,7 @@ class m170208_144615_add_product_filters extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
+        $this->createIndex('filter_parent_id', '{{%filter}}', 'parent_id');
         $this->createIndex('filter_created_by', '{{%filter}}', 'created_by');
         $this->createIndex('filter_updated_by', '{{%filter}}', 'updated_by');
         $this->addForeignKey('filter_created_by_fk', '{{%filter}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
@@ -39,7 +41,6 @@ class m170208_144615_add_product_filters extends Migration
             'language_id' => $this->integer()->unsigned()->notNull(),
 
             'name' => $this->string()->notNull(),
-            'value' => $this->string()->notNull(),
 
             'created_by' => $this->integer()->unsigned()->null(),
             'updated_by' => $this->integer()->unsigned()->null(),

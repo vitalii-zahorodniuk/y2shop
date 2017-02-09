@@ -18,7 +18,7 @@ class FilterSearch extends Filter
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -59,6 +59,7 @@ class FilterSearch extends Filter
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'parent_id' => 0,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,

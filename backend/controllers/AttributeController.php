@@ -3,13 +3,17 @@
 namespace backend\controllers;
 
 use backend\models\search\AttributeSearch;
+use backend\models\User;
 use common\models\Attribute;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * AttributeController implements the CRUD actions for Attribute model.
+ * Class AttributeController
+ * @package backend\controllers
  */
 class AttributeController extends BaseController
 {
@@ -20,10 +24,38 @@ class AttributeController extends BaseController
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_ATTRIBUTE_CAN_VIEW_LIST],
+                    ],
+                    [
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_ATTRIBUTE_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
+                    ],
+                    ['allow' => FALSE], // default rule
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'index' => ['get'],
+                    'create' => ['get', 'post'],
+                    'update' => ['get', 'put', 'post'],
+                    'delete' => ['post', 'delete'],
                 ],
             ],
         ];

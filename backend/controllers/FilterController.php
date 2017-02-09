@@ -3,13 +3,17 @@
 namespace backend\controllers;
 
 use backend\models\search\FilterSearch;
+use backend\models\User;
 use common\models\Filter;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * FilterController implements the CRUD actions for Filter model.
+ * Class FilterController
+ * @package backend\controllers
  */
 class FilterController extends BaseController
 {
@@ -20,10 +24,38 @@ class FilterController extends BaseController
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_FILTER_CAN_VIEW_LIST],
+                    ],
+                    [
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete'],
+                        'allow' => TRUE,
+                        'roles' => [User::PERM_FILTER_CAN_UPDATE],
+                        'matchCallback' => function ($rule, $action) {
+                            if (Yii::$app->user->identity->userOnHold) {
+                                throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
+                            }
+                            return TRUE;
+                        },
+                    ],
+                    ['allow' => FALSE], // default rule
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'index' => ['get'],
+                    'create' => ['get', 'post'],
+                    'update' => ['get', 'put', 'post'],
+                    'delete' => ['post', 'delete'],
                 ],
             ],
         ];

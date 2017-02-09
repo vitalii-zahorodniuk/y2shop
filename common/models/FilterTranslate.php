@@ -14,7 +14,6 @@ use yii\behaviors\TimestampBehavior;
  * @property integer  $filter_id
  * @property integer  $language_id
  * @property string   $name
- * @property string   $value
  * @property integer  $created_by
  * @property integer  $updated_by
  * @property integer  $created_at
@@ -57,9 +56,9 @@ class FilterTranslate extends ActiveRecord
     public function rules()
     {
         return [
-            [['filter_id', 'language_id', 'name', 'value'], 'required'],
+            [['filter_id', 'language_id', 'name'], 'required'],
             [['filter_id', 'language_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'value'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['filter_id'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Filter::className(), 'targetAttribute' => ['filter_id' => 'id']],
@@ -90,7 +89,6 @@ class FilterTranslate extends ActiveRecord
             'filter_id' => Yii::t('common', 'Filter ID'),
             'language_id' => Yii::t('common', 'Language ID'),
             'name' => Yii::t('common', 'Name'),
-            'value' => Yii::t('common', 'Value'),
             'created_by' => Yii::t('common', 'Created By'),
             'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),

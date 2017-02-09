@@ -10,6 +10,7 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "{{%filter}}".
  *
  * @property integer           $id
+ * @property integer           $parent_id
  * @property integer           $status
  * @property integer           $created_by
  * @property integer           $updated_by
@@ -58,6 +59,9 @@ class Filter extends ActiveRecord
     public function rules()
     {
         return [
+            // parent_id
+            ['parent_id', 'integer'],
+            ['parent_id', 'default', 'value' => 0],
             // status
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -108,6 +112,7 @@ class Filter extends ActiveRecord
     {
         return [
             'id' => Yii::t('common', 'ID'),
+            'parent_id' => Yii::t('common', 'Parent ID'),
             'status' => Yii::t('common', 'Status'),
             'created_by' => Yii::t('common', 'Created By'),
             'updated_by' => Yii::t('common', 'Updated By'),

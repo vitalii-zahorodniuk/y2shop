@@ -84,6 +84,22 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_PRODUCT_CAN_UPDATE});
         $auth->addChild(${self::PERM_PRODUCT_CAN_UPDATE}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
 
+        // attribute
+        ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_ATTRIBUTE_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+
+        ${self::PERM_ATTRIBUTE_CAN_UPDATE} = $auth->createPermission(self::PERM_ATTRIBUTE_CAN_UPDATE);
+        $auth->add(${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::PERM_ATTRIBUTE_CAN_UPDATE}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+
+        // filter
+        ${self::PERM_FILTER_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_FILTER_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_FILTER_CAN_VIEW_LIST});
+
+        ${self::PERM_FILTER_CAN_UPDATE} = $auth->createPermission(self::PERM_FILTER_CAN_UPDATE);
+        $auth->add(${self::PERM_FILTER_CAN_UPDATE});
+        $auth->addChild(${self::PERM_FILTER_CAN_UPDATE}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+
 
         /*
          * Roles
@@ -111,6 +127,10 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_CURRENCY_CAN_UPDATE});
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_CAN_UPDATE});
 
         // manager
         ${self::ROLE_MANAGER} = $auth->createRole(self::ROLE_MANAGER);
@@ -130,6 +150,10 @@ class RbacController extends Controller implements UserInterface
 //        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_CURRENCY_CAN_UPDATE});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_CAN_UPDATE});
 
         // admin
         ${self::ROLE_ADMIN} = $auth->createRole(self::ROLE_ADMIN);
@@ -149,6 +173,10 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_CURRENCY_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_CAN_UPDATE});
 
         // root
         ${self::ROLE_ROOT} = $auth->createRole(self::ROLE_ROOT);
@@ -170,6 +198,10 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_CURRENCY_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_PRODUCT_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_PRODUCT_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_CAN_UPDATE});
     }
 
 }
