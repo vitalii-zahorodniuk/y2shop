@@ -5,6 +5,7 @@ namespace common\models;
 use xz1mefx\base\db\ActiveRecord;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%filter}}".
@@ -17,9 +18,13 @@ use yii\behaviors\TimestampBehavior;
  * @property integer           $created_at
  * @property integer           $updated_at
  *
+ * @property array             $translates
+ * @property string            $name
+ *
  * @property User              $updatedBy
  * @property User              $createdBy
  * @property FilterTranslate[] $filterTranslates
+ * @property FilterTranslate   $filterTranslate
  * @property ProductFilter[]   $productFilters
  * @property Product[]         $products
  */
@@ -29,6 +34,8 @@ class Filter extends ActiveRecord
     const STATUS_DELETED = -1;
     const STATUS_ON_HOLD = 0;
     const STATUS_ACTIVE = 1;
+
+    private $_translates;
 
     /**
      * @inheritdoc
@@ -56,6 +63,51 @@ class Filter extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeValidate()
+    {
+        // validate translate fields in their models
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            if (isset($this->_translates[$lang['id']])) {
+                $translateModel = new FilterTranslate();
+                $translateModel->setAttributes($this->_translates[$lang['id']]);
+                if (!$translateModel->validate(array_keys($this->_translates[$lang['id']]))) {
+                    foreach ($translateModel->errors as $field => $error) {
+                        $this->addError("translates[{$lang['id']}][{$field}]", $error);
+                    }
+                }
+            }
+        }
+
+        return parent::beforeValidate();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedFilters)
+    {
+        parent::afterSave($insert, $changedFilters);
+
+        // save or update translates
+        /* @var $indexedTranslates FilterTranslate[] */
+        $indexedTranslates = ArrayHelper::index($this->filterTranslates, 'language_id');
+        foreach ($this->translates as $langId => $fields) {
+            if (isset($indexedTranslates[$langId])) { // update translate
+                $indexedTranslates[$langId]->setAttributes($fields);
+                $indexedTranslates[$langId]->save();
+            } else { // insert new translate
+                $translateModel = new FilterTranslate();
+                $translateModel->filter_id = $this->id;
+                $translateModel->language_id = $langId;
+                $translateModel->setAttributes($fields);
+                $translateModel->save();
+            }
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -70,6 +122,8 @@ class Filter extends ActiveRecord
             [['created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            // virtual multilang fields
+            [['translates'], 'safe'],
         ];
     }
 
@@ -122,6 +176,46 @@ class Filter extends ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return empty($this->filterTranslate->name) ? Yii::t('common', '<i>(has no translation)</i>') : $this->filterTranslate->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslates()
+    {
+        if (isset($this->_translates)) {
+            return $this->_translates;
+        }
+        $this->_translates = [];
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            $this->_translates[$lang['id']] = [
+                'name' => NULL,
+            ];
+        }
+        foreach ($this->filterTranslates as $filterTranslate) {
+            if (isset($this->_translates[$filterTranslate->language_id])) {
+                $this->_translates[$filterTranslate->language_id] = [
+                    'name' => $filterTranslate->name,
+                ];
+            }
+        }
+        return $this->_translates;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setTranslates($value)
+    {
+        $this->_translates = $value;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getUpdatedBy()
@@ -143,6 +237,15 @@ class Filter extends ActiveRecord
     public function getFilterTranslates()
     {
         return $this->hasMany(FilterTranslate::className(), ['filter_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFilterTranslate()
+    {
+        return $this->hasMany(FilterTranslate::className(), ['filter_id' => 'id'])
+            ->andOnCondition(['language_id' => Yii::$app->lang->id]);
     }
 
     /**

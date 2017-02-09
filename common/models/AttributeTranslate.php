@@ -107,10 +107,10 @@ class AttributeTranslate extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttribute()
-    {
-        return $this->hasOne(Attribute::className(), ['id' => 'attribute_id']);
-    }
+//    public function getAttribute()
+//    {
+//        return $this->hasOne(Attribute::className(), ['id' => 'attribute_id']);
+//    }
 
     /**
      * @return \yii\db\ActiveQuery

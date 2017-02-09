@@ -17,7 +17,13 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="box-body">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin([
+            'options' => [
+                'enctype' => 'multipart/form-data',
+            ],
+            'enableAjaxValidation' => TRUE,
+            'validateOnType' => TRUE,
+        ]); ?>
 
         <?= $form->field($model, 'status')->textInput() ?>
 

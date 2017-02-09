@@ -74,7 +74,7 @@ foreach ($model->productImages as $productImage) {
                         'value' => $model->statusHtmlLabel,
                     ],
 //                    'seller_id',
-                    'name',
+                    'name:raw',
                     [
                         'attribute' => 'image_src',
                         'format' => 'raw',

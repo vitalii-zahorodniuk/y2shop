@@ -5,11 +5,13 @@ namespace backend\controllers;
 use backend\models\search\FilterSearch;
 use backend\models\User;
 use common\models\Filter;
+use xz1mefx\adminlte\widgets\ActiveForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * Class FilterController
@@ -28,7 +30,10 @@ class FilterController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => [
+                            'index',
+                            'view',
+                        ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_FILTER_CAN_VIEW_LIST],
                     ],
@@ -117,6 +122,11 @@ class FilterController extends BaseController
     {
         $model = new Filter();
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -137,6 +147,11 @@ class FilterController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

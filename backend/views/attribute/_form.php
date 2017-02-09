@@ -1,4 +1,5 @@
 <?php
+use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,17 +18,28 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="box-body">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin([
+            'options' => [
+                'enctype' => 'multipart/form-data',
+            ],
+            'enableAjaxValidation' => TRUE,
+            'validateOnType' => TRUE,
+        ]); ?>
 
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?php if (Yii::$app->user->can(User::ROLE_MANAGER)): ?>
+            <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
+        <?php endif; ?>
 
-        <?= $form->field($model, 'created_by')->textInput() ?>
-
-        <?= $form->field($model, 'updated_by')->textInput() ?>
-
-        <?= $form->field($model, 'created_at')->textInput() ?>
-
-        <?= $form->field($model, 'updated_at')->textInput() ?>
+        <div class="">
+            <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>
+            <div class="panel panel-default" style="background-color: #f6f8fa;">
+                <div class="panel-body">
+                    <?php foreach (Yii::$app->lang->getLangList() as $lang): ?>
+                        <?= $form->field($model, "translates[{$lang['id']}][name]")->textInput(['placeholder' => Yii::t('admin-side', 'Enter name...', [], $lang['locale'])])->label($lang['name']) ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
 
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('admin-side', 'Create') : Yii::t('admin-side', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
