@@ -62,6 +62,7 @@ if (count($model->currencyRates) < count($model::getAll($model->id))) {
         <?php endif; ?>
         <div class="box-body-overflow">
             <?= DetailView::widget([
+                'options' => ['class' => 'table table-striped table-bordered table-hover'],
                 'model' => $model,
                 'attributes' => [
                     [

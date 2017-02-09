@@ -44,6 +44,7 @@ foreach ($model->rolesArray as $role) {
     <div class="box-body">
         <div class="box-body-overflow">
             <?= DetailView::widget([
+                'options' => ['class' => 'table table-striped table-bordered table-hover'],
                 'model' => $model,
                 'attributes' => [
                     'id',
