@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\models\search\FilterSearch;
+use backend\models\search\FilterGroupSearch;
 use backend\models\User;
 use common\models\Filter;
 use xz1mefx\adminlte\widgets\ActiveForm;
@@ -14,10 +14,10 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * Class FilterController
+ * Class FilterGroupController
  * @package backend\controllers
  */
-class FilterController extends BaseController
+class FilterGroupController extends BaseController
 {
 
     /**
@@ -72,7 +72,7 @@ class FilterController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new FilterSearch();
+        $searchModel = new FilterGroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -103,7 +103,7 @@ class FilterController extends BaseController
      */
     protected function findModel($id)
     {
-        $model = Filter::find()->where(['id' => $id])->andWhere(['!=', 'parent_id', 0])->one();
+        $model = Filter::find()->where(['id' => $id, 'parent_id' => 0])->one();
         if ($model !== NULL) {
             return $model;
         }
@@ -118,6 +118,7 @@ class FilterController extends BaseController
     public function actionCreate()
     {
         $model = new Filter();
+        $model->parent_id = 0;
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;

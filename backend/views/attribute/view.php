@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'table table-striped table-bordered table-hover'],
                 'model' => $model,
                 'attributes' => [
-                    'id',
 //                    'status',
                     'name:raw',
                     [

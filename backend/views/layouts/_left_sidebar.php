@@ -80,13 +80,34 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                         ],
                         [
                             'label' => Yii::t('admin-side', 'Filters'),
-                            'url' => ['filter/index'],
                             'visible' => Yii::$app->user->can([
                                 User::ROLE_ROOT,
                                 User::PERM_FILTER_CAN_VIEW_LIST,
                             ]),
                             'icon' => 'filter',
                             'iconOptions' => ['prefix' => 'fa fa-'],
+                            'items' => [
+                                [
+                                    'label' => Yii::t('admin-side', 'Filter groups'),
+                                    'url' => ['filter-group/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_FILTER_CAN_VIEW_LIST,
+                                    ]),
+                                    'icon' => 'th',
+                                    'iconOptions' => ['prefix' => 'fa fa-'],
+                                ],
+                                [
+                                    'label' => Yii::t('admin-side', 'Filters'),
+                                    'url' => ['filter/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_FILTER_CAN_VIEW_LIST,
+                                    ]),
+                                    'icon' => 'th-list',
+                                    'iconOptions' => ['prefix' => 'fa fa-'],
+                                ],
+                            ],
                         ],
                     ],
                 ],

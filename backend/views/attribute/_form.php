@@ -1,5 +1,4 @@
 <?php
-use backend\models\User;
 use xz1mefx\adminlte\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -26,9 +25,11 @@ use yii\widgets\ActiveForm;
             'validateOnType' => TRUE,
         ]); ?>
 
+        <?php /*
         <?php if (Yii::$app->user->can(User::ROLE_MANAGER)): ?>
             <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
         <?php endif; ?>
+        */ ?>
 
         <div class="">
             <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>

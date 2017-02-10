@@ -7,10 +7,10 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * Class FilterSearch
+ * Class FilterGroupSearch
  * @package backend\models\search
  */
-class FilterSearch extends Filter
+class FilterGroupSearch extends Filter
 {
 
     public $name;
@@ -44,19 +44,13 @@ class FilterSearch extends Filter
      */
     public function search($params)
     {
-        $query = Filter::find()->alias('f')->joinWith(['filterTranslate', 'parent', 'parentFilterTranslate']);
+        $query = Filter::find()->alias('f')->joinWith(['filterTranslate']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $dataProvider->sort->attributes['parent_id'] = [
-            'asc' => ['pft.name' => SORT_ASC],
-            'desc' => ['pft.name' => SORT_DESC],
-            'default' => SORT_ASC,
-        ];
 
         $dataProvider->sort->attributes['name'] = [
             'asc' => ['ft.name' => SORT_ASC],
@@ -74,10 +68,9 @@ class FilterSearch extends Filter
 
         // grid filtering conditions
         $query
-            ->andFilterWhere(['!=', 'f.parent_id', 0])
             ->andFilterWhere([
                 'f.id' => $this->id,
-                'p.id' => $this->parent_id,
+                'f.parent_id' => 0,
                 'f.status' => $this->status,
                 'f.created_by' => $this->created_by,
                 'f.updated_by' => $this->updated_by,

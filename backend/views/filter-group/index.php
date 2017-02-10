@@ -1,15 +1,14 @@
 <?php
-use common\models\Filter;
 use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\FilterSearch */
+/* @var $searchModel backend\models\search\FilterGroupSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('admin-side', 'Filters');
+$this->title = Yii::t('admin-side', 'Filter groups');
 $this->params['title'] = $this->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box box-primary">
     <div class="box-header">
         <?php if (Yii::$app->user->identity->userActivated): ?>
-            <?= Html::a(Yii::t('admin-side', 'Create filter'), ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('admin-side', 'Create filter group'), ['create'], ['class' => 'btn btn-success']) ?>
         <?php else: ?>
             &nbsp;
         <?php endif; ?>
@@ -35,17 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    [
-                        'attribute' => 'parent_id',
-                        'filter' => Filter::getGroupDrDownList(),
-                        'label' => $searchModel->getAttributeLabel('parentName'),
-                        'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
-                        'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
-                        'content' => function ($model) {
-                            /* @var $model Filter */
-                            return $model->parentName;
-                        },
-                    ],
                     'name:raw',
 //                    'status',
 //                    'created_by',

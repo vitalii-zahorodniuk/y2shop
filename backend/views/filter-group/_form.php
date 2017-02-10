@@ -31,8 +31,6 @@ use yii\widgets\ActiveForm;
         <?php endif; ?>
         */ ?>
 
-        <?= $form->field($model, 'parent_id')->dropDownList($model::getGroupDrDownList())->label($model->getAttributeLabel('parentName')) ?>
-
         <div class="">
             <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>
             <div class="panel panel-default" style="background-color: #f6f8fa;">

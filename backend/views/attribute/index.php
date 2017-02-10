@@ -1,5 +1,6 @@
 <?php
 use xz1mefx\adminlte\helpers\Html;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
@@ -33,16 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    'name:raw',
+//                    'status',
+//                    'created_by',
+//                    'updated_by',
+//                    'created_at',
+//                    'updated_at',
 
-                    'id',
-                    'status',
-                    'created_by',
-                    'updated_by',
-                    'created_at',
-                    // 'updated_at',
-
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => ActionColumn::className(),
+                        'headerOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'text-center col-xs-1 col-sm-1'],
+                    ],
                 ],
             ]); ?>
             <?php Pjax::end(); ?>

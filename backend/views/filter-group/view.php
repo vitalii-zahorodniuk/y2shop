@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Filter */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Filters'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('admin-side', 'Filter groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

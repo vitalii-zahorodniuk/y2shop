@@ -20,13 +20,16 @@ use yii\helpers\ArrayHelper;
  *
  * @property array             $translates
  * @property string            $name
+ * @property string            $parentName
  *
  * @property User              $updatedBy
  * @property User              $createdBy
  * @property FilterTranslate[] $filterTranslates
  * @property FilterTranslate   $filterTranslate
+ * @property FilterTranslate   $parentFilterTranslate
  * @property ProductFilter[]   $productFilters
  * @property Product[]         $products
+ * @property Filter            $parent
  */
 class Filter extends ActiveRecord
 {
@@ -43,6 +46,24 @@ class Filter extends ActiveRecord
     public static function tableName()
     {
         return '{{%filter}}';
+    }
+
+    /**
+     * @return array
+     */
+    public static function getGroupDrDownList()
+    {
+        return ArrayHelper::map(
+            self::find()
+                ->with('filterTranslate')
+                ->where([
+                    'status' => self::STATUS_ACTIVE,
+                    'parent_id' => 0,
+                ])
+                ->all(),
+            'id',
+            'name'
+        );
     }
 
     /**
@@ -172,6 +193,8 @@ class Filter extends ActiveRecord
             'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
+            'name' => Yii::t('common', 'Name'),
+            'parentName' => Yii::t('common', 'Filter group'),
         ];
     }
 
@@ -181,6 +204,17 @@ class Filter extends ActiveRecord
     public function getName()
     {
         return empty($this->filterTranslate->name) ? Yii::t('common', '<i>(has no translation)</i>') : $this->filterTranslate->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentName()
+    {
+        if ($this->parent_id == 0) {
+            return '';
+        }
+        return empty($this->parentFilterTranslate->name) ? Yii::t('common', '<i>(has no translation)</i>') : $this->parentFilterTranslate->name;
     }
 
     /**
@@ -244,8 +278,21 @@ class Filter extends ActiveRecord
      */
     public function getFilterTranslate()
     {
-        return $this->hasOne(FilterTranslate::className(), ['filter_id' => 'id'])
-            ->andOnCondition(['language_id' => Yii::$app->lang->id]);
+        return $this
+            ->hasOne(FilterTranslate::className(), ['filter_id' => 'id'])
+            ->from(['ft' => FilterTranslate::tableName()])
+            ->andOnCondition(['ft.language_id' => Yii::$app->lang->id]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParentFilterTranslate()
+    {
+        return $this
+            ->hasOne(FilterTranslate::className(), ['filter_id' => 'parent_id'])
+            ->from(['pft' => FilterTranslate::tableName()])
+            ->andOnCondition(['pft.language_id' => Yii::$app->lang->id]);
     }
 
     /**
@@ -262,5 +309,15 @@ class Filter extends ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])->viaTable('{{%product_filter}}', ['filter_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this
+            ->hasOne(self::className(), ['id' => 'parent_id'])
+            ->from(['p' => self::tableName()]);
     }
 }
