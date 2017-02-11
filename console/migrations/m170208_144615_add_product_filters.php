@@ -30,6 +30,7 @@ class m170208_144615_add_product_filters extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
+        $this->createIndex('filter_order', '{{%filter}}', 'order');
         $this->createIndex('filter_parent_id', '{{%filter}}', 'parent_id');
         $this->createIndex('filter_created_by', '{{%filter}}', 'created_by');
         $this->createIndex('filter_updated_by', '{{%filter}}', 'updated_by');

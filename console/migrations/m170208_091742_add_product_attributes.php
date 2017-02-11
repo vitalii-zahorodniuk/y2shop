@@ -29,6 +29,7 @@ class m170208_091742_add_product_attributes extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
 
+        $this->createIndex('attribute_order', '{{%attribute}}', 'order');
         $this->createIndex('attribute_created_by', '{{%attribute}}', 'created_by');
         $this->createIndex('attribute_updated_by', '{{%attribute}}', 'updated_by');
         $this->addForeignKey('attribute_created_by_fk', '{{%attribute}}', 'created_by', '{{%user}}', 'id', 'RESTRICT', 'RESTRICT');
