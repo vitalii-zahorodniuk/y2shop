@@ -35,6 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     'name:raw',
+                    [
+                        'attribute' => 'order',
+                        'filter' => FALSE,
+                        'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
+                    ],
 //                    'status',
 //                    'created_by',
 //                    'updated_by',

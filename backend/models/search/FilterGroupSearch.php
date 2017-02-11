@@ -21,7 +21,7 @@ class FilterGroupSearch extends Filter
     public function rules()
     {
         return [
-            [['id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'parent_id', 'status', 'order', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string'],
         ];
     }
@@ -72,6 +72,7 @@ class FilterGroupSearch extends Filter
                 'f.id' => $this->id,
                 'f.parent_id' => 0,
                 'f.status' => $this->status,
+                'f.order' => $this->order,
                 'f.created_by' => $this->created_by,
                 'f.updated_by' => $this->updated_by,
                 'f.created_at' => $this->created_at,

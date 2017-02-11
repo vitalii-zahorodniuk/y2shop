@@ -5,6 +5,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Attribute */
 /* @var $form yii\widgets\ActiveForm */
+
+if ($model->isNewRecord) {
+    $model->order = 0;
+}
 ?>
 
 <div class="box box-primary">
@@ -30,6 +34,8 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'status')->dropDownList($model::statusesLabels()) ?>
         <?php endif; ?>
         */ ?>
+
+        <?= $form->field($model, 'order')->textInput() ?>
 
         <div class="">
             <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>

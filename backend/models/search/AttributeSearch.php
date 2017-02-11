@@ -18,7 +18,7 @@ class AttributeSearch extends Attribute
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'order', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -60,6 +60,7 @@ class AttributeSearch extends Attribute
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
+            'order' => $this->order,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,

@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer              $id
  * @property integer              $status
+ * @property integer              $order
  * @property integer              $created_by
  * @property integer              $updated_by
  * @property integer              $created_at
@@ -113,6 +114,9 @@ class Attribute extends ActiveRecord
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statusesLabels())],
+            // order
+            ['order', 'integer'],
+            ['order', 'default', 'value' => 0],
             // others
             [['created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -162,6 +166,7 @@ class Attribute extends ActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'status' => Yii::t('common', 'Status'),
+            'order' => Yii::t('common', 'Order'),
             'created_by' => Yii::t('common', 'Created By'),
             'updated_by' => Yii::t('common', 'Updated By'),
             'created_at' => Yii::t('common', 'Created At'),
