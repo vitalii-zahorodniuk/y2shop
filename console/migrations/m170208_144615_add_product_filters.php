@@ -22,6 +22,8 @@ class m170208_144615_add_product_filters extends Migration
             'parent_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment("If set to 0 - it is the name of the filter, if more than 0 - it is the filter value"),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
+            'order' => $this->integer()->notNull()->defaultValue(0),
+
             'created_by' => $this->integer()->unsigned()->null(),
             'updated_by' => $this->integer()->unsigned()->null(),
             'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),

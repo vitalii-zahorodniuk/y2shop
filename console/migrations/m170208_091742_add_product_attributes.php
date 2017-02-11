@@ -21,6 +21,8 @@ class m170208_091742_add_product_attributes extends Migration
             'id' => $this->primaryKey()->unsigned(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(0),
 
+            'order' => $this->integer()->notNull()->defaultValue(0),
+
             'created_by' => $this->integer()->unsigned()->null(),
             'updated_by' => $this->integer()->unsigned()->null(),
             'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
