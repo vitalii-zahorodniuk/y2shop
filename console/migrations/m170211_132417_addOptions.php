@@ -76,6 +76,21 @@ class m170211_132417_addOptions extends Migration
 
         // Init rbac
         RbacController::initRbac();
+        $authManager = new \yii\rbac\DbManager();
+        //  root
+        $authManager->assign($authManager->getRole(RbacController::ROLE_ROOT), 1);
+
+        //  admin
+        $authManager->assign($authManager->getRole(RbacController::ROLE_ADMIN), 2);
+
+        //  manager
+        $authManager->assign($authManager->getRole(RbacController::ROLE_MANAGER), 3);
+
+        //  seller
+        $authManager->assign($authManager->getRole(RbacController::ROLE_SELLER), 4);
+
+        //  customer
+        $authManager->assign($authManager->getRole(RbacController::ROLE_CUSTOMER), 5);
     }
 
     public function safeDown()

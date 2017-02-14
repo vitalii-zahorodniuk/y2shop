@@ -8,7 +8,7 @@ use common\models\Option;
 use xz1mefx\adminlte\widgets\ActiveForm;
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbOption;
+use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -55,7 +55,7 @@ class OptionController extends BaseController
                 ],
             ],
             'verbs' => [
-                'class' => VerbOption::className(),
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
                     'create' => ['get', 'post'],

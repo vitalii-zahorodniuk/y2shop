@@ -1,5 +1,5 @@
 <?php
-use common\models\Filter;
+use common\models\Option;
 use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;

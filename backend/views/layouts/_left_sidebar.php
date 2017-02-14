@@ -116,7 +116,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                                 User::ROLE_ROOT,
                                 User::PERM_OPTION_CAN_VIEW_LIST,
                             ]),
-                            'icon' => 'option',
+                            'icon' => 'check-square-o',
                             'iconOptions' => ['prefix' => 'fa fa-'],
                             'items' => [
                                 [
