@@ -44,6 +44,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                         User::PERM_PRODUCT_CAN_VIEW_LIST,
                         User::PERM_ATTRIBUTE_CAN_VIEW_LIST,
                         User::PERM_FILTER_CAN_VIEW_LIST,
+                        User::PERM_OPTION_CAN_VIEW_LIST,
                     ]),
                     'icon' => 'tags',
                     'iconOptions' => ['prefix' => 'fa fa-'],
@@ -103,6 +104,37 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                                     'visible' => Yii::$app->user->can([
                                         User::ROLE_ROOT,
                                         User::PERM_FILTER_CAN_VIEW_LIST,
+                                    ]),
+                                    'icon' => 'th-list',
+                                    'iconOptions' => ['prefix' => 'fa fa-'],
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => Yii::t('admin-side', 'Options'),
+                            'visible' => Yii::$app->user->can([
+                                User::ROLE_ROOT,
+                                User::PERM_OPTION_CAN_VIEW_LIST,
+                            ]),
+                            'icon' => 'option',
+                            'iconOptions' => ['prefix' => 'fa fa-'],
+                            'items' => [
+                                [
+                                    'label' => Yii::t('admin-side', 'Option groups'),
+                                    'url' => ['option-group/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_OPTION_CAN_VIEW_LIST,
+                                    ]),
+                                    'icon' => 'th',
+                                    'iconOptions' => ['prefix' => 'fa fa-'],
+                                ],
+                                [
+                                    'label' => Yii::t('admin-side', 'Options'),
+                                    'url' => ['option/index'],
+                                    'visible' => Yii::$app->user->can([
+                                        User::ROLE_ROOT,
+                                        User::PERM_OPTION_CAN_VIEW_LIST,
                                     ]),
                                     'icon' => 'th-list',
                                     'iconOptions' => ['prefix' => 'fa fa-'],
