@@ -295,7 +295,8 @@ class ProductController extends BaseController
      */
     public function actionGetFilterTr()
     {
-        return $this->renderPartial('_filters_tr', [
+        $this->layout = 'select2ajax';
+        return $this->render('_filters_tr', [
             'isNew' => true,
             'model' => new Product(),
             'productFilter' => null,

@@ -17,7 +17,7 @@ $isNew = isset($isNew);
             'id'=>'fg-'.time(),
             'name' => 'groups[]',
             'data' => Filter::getGroupDrDownList(),
-            'theme' => Select2::THEME_KRAJEE,
+            'theme' => Select2::THEME_BOOTSTRAP,
             'options' => [
                 'placeholder' => Yii::t('admin-side', 'Select filter group...'),
             ],
