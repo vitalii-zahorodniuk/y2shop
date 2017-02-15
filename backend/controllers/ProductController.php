@@ -45,6 +45,9 @@ class ProductController extends BaseController
                             'main-image-delete',
                             'gallery-image-upload',
                             'gallery-image-delete',
+                            'get-option-tr',
+                            'get-attribute-tr',
+                            'get-filter-tr',
                         ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_UPDATE],
@@ -83,6 +86,9 @@ class ProductController extends BaseController
                     'main-image-delete' => ['post'],
                     'gallery-image-upload' => ['get', 'post'],
                     'gallery-image-delete' => ['post'],
+                    'get-option-tr' => ['post'],
+                    'get-attribute-tr' => ['post'],
+                    'get-filter-tr' => ['post'],
                     'activate' => ['post'],
                 ],
             ],
@@ -266,5 +272,34 @@ class ProductController extends BaseController
     public function actionGalleryImageDelete($name)
     {
         return Product::deleteImageByName('galleryImage', $name);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGetOptionTr()
+    {
+        return 'OK!';
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGetAttributeTr()
+    {
+        return 'OK!';
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGetFilterTr()
+    {
+        return $this->renderPartial('_filters_tr', [
+            'isNew' => true,
+            'model' => new Product(),
+            'productFilter' => null,
+            'form' => new ActiveForm(),
+        ]);
     }
 }
