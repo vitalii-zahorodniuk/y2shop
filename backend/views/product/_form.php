@@ -47,22 +47,22 @@ CSS
                 </li>
                 <li class="">
                     <a href="#tab_3" data-toggle="tab" aria-expanded="false">
-                        <?= Yii::t('common', 'Product images') ?>
+                        <?= Yii::t('admin-side', 'Product images') ?>
                     </a>
                 </li>
                 <li class="">
                     <a href="#tab_4" data-toggle="tab" aria-expanded="false">
-                        <?= Yii::t('common', 'Product options') ?>
+                        <?= Yii::t('admin-side', 'Product options') ?>
                     </a>
                 </li>
                 <li class="">
                     <a href="#tab_5" data-toggle="tab" aria-expanded="false">
-                        <?= Yii::t('common', 'Product attributes') ?>
+                        <?= Yii::t('admin-side', 'Product attributes') ?>
                     </a>
                 </li>
                 <li class="">
                     <a href="#tab_6" data-toggle="tab" aria-expanded="false">
-                        <?= Yii::t('common', 'Product filters') ?>
+                        <?= Yii::t('admin-side', 'Product filters') ?>
                     </a>
                 </li>
             </ul>
