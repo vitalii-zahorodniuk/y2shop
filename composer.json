@@ -28,7 +28,8 @@
     "xz1mefx/yii2-ufu": "dev-master",
     "xz1mefx/yii2-base": "@dev",
     "2amigos/yii2-file-upload-widget": "~1.0",
-    "xz1mefx/yii2-wysihtml5": "@dev"
+    "xz1mefx/yii2-wysihtml5": "@dev",
+    "kartik-v/yii2-widget-select2": "@dev"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

@@ -38,6 +38,9 @@ use yii\helpers\ArrayHelper;
  * @property ProductImage[]     $productImages
  * @property ProductTranslate[] $productTranslates
  * @property ProductTranslate   $productTranslate
+ * @property ProductOption[]    $productOptions
+ * @property ProductAttribute[] $productAttributes
+ * @property ProductFilter[]    $productFilters
  */
 class Product extends UfuActiveRecord
 {
@@ -49,6 +52,7 @@ class Product extends UfuActiveRecord
     const STATUS_ACTIVE = 1;
 
     private $_translates;
+    private $_filters;
     private $_canDelete;
 
     /**
@@ -280,6 +284,40 @@ class Product extends UfuActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        if (isset($this->_filters)) {
+            return $this->_filters;
+        }
+        $this->_filters = [];
+        foreach (Yii::$app->lang->getLangList() as $lang) {
+            $this->_filters[$lang['id']] = [
+                'name' => NULL,
+                'description' => NULL,
+            ];
+        }
+        foreach ($this->productTranslates as $productTranslate) {
+            if (isset($this->_filters[$productTranslate->language_id])) {
+                $this->_filters[$productTranslate->language_id] = [
+                    'name' => $productTranslate->name,
+                    'description' => $productTranslate->description,
+                ];
+            }
+        }
+        return $this->_filters;
+    }
+
+    /**
+     * @param $value array
+     */
+    public function setFilters($value)
+    {
+        $this->_filters = $value;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -395,6 +433,30 @@ class Product extends UfuActiveRecord
     public function getUfuCategoryRelations()
     {
         return $this->getUfuCategoryRelationsByType(self::TYPE_ID);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductOptions()
+    {
+        return $this->hasMany(ProductOption::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductAttributes()
+    {
+        return $this->hasMany(ProductAttribute::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductFilters()
+    {
+        return $this->hasMany(ProductFilter::className(), ['product_id' => 'id']);
     }
 
 }
