@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property array             $translates
  * @property string            $name
+ * @property string            $value
  * @property string            $parentName
  *
  * @property User              $updatedBy
@@ -140,6 +141,8 @@ class Option extends ActiveRecord
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statusesLabels())],
+            // value
+            [['value'], 'safe'],
             // order
             ['order', 'integer'],
             ['order', 'default', 'value' => 0],
@@ -199,6 +202,7 @@ class Option extends ActiveRecord
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
             'name' => Yii::t('common', 'Name'),
+            'value' => Yii::t('common', 'Value'),
             'parentName' => Yii::t('common', 'Option group'),
         ];
     }
