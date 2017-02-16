@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
                     ],
                     'value',
+//                  'status',
 //                    'created_by',
 //                    'updated_by',
 //                    'created_at',

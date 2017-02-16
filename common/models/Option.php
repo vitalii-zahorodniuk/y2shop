@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property integer           $id
  * @property integer           $parent_id
  * @property integer           $status
+ * @property integer           $type
  * @property integer           $order
  * @property integer           $created_by
  * @property integer           $updated_by
@@ -39,6 +40,9 @@ class Option extends ActiveRecord
     const STATUS_DELETED = -1;
     const STATUS_ON_HOLD = 0;
     const STATUS_ACTIVE = 1;
+
+    const TYPE_DROPDOWN = 1;
+    const TYPE_COLORBOX = 2;
 
     private $_translates;
 
@@ -134,6 +138,10 @@ class Option extends ActiveRecord
     public function rules()
     {
         return [
+            // type
+            ['type', 'integer'],
+            ['type', 'default', 'value' => self::TYPE_DROPDOWN],
+            ['type', 'in', 'range' => array_keys(self::typesLabels())],
             // parent_id
             ['parent_id', 'integer'],
             ['parent_id', 'default', 'value' => 0],
@@ -153,6 +161,24 @@ class Option extends ActiveRecord
             // virtual multilang fields
             [['translates'], 'safe'],
         ];
+    }
+
+    /**
+     * @param null|string $status
+     *
+     * @return array|string
+     */
+    public static function typesLabels($type = NULL)
+    {
+        $types = [
+            self::TYPE_COLORBOX => Yii::t('common', 'Option colorbox'),
+            self::TYPE_DROPDOWN => Yii::t('common', 'Option dropdown'),
+        ];
+        if ($type === NULL) {
+            return $types;
+        }
+
+        return isset($types[$type]) ? $types[$type] : '';
     }
 
     /**
