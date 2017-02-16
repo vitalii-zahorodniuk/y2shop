@@ -41,7 +41,6 @@ if ($model->isNewRecord) {
 
         <?= $form->field($model, 'value')->textInput() ?>
 
-        <?= $form->field($model, 'type')->dropDownList($model::typesLabels()) ?>
 
         <div class="">
             <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>

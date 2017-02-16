@@ -38,11 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value',
                     'order',
                     [
-                        'attribute' => 'type',
-                        'format' => 'raw',
-                        'value' => $model::typesLabels()[$model->type]
-                    ],
-                    [
                         'attribute' => 'created_by',
                         'format' => 'raw',
                         'value' => $model->createdBy ? Html::a($model->createdBy->name, ['user/view', 'id' => $model->createdBy->id]) : '',

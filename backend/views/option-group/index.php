@@ -3,6 +3,7 @@ use xz1mefx\adminlte\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\Option;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\OptionGroupSearch */
@@ -40,6 +41,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filter' => FALSE,
                         'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
                         'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
+                    ],
+                    [
+                        'attribute' => 'type',
+                        'filter' => Option::typesLabels(),
+                        'headerOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'contentOptions' => ['class' => 'col-md-1 col-sm-1'],
+                        'content' => function ($model) {
+                            /* @var $model User */
+                            return $model->typesLabels()[$model->type];
+                        },
                     ],
 //                    'status',
 //                    'created_by',
