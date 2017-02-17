@@ -1,4 +1,6 @@
 <?php
+use kartik\select2\Select2Asset;
+use kartik\select2\ThemeBootstrapAsset;
 use xz1mefx\adminlte\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,6 +15,9 @@ span.preview img {
 }
 CSS
 );
+
+Select2Asset::register($this)->addLanguage(Yii::$app->language, '', 'js/i18n');
+ThemeBootstrapAsset::register($this);
 ?>
 
 <div class="box box-primary">
