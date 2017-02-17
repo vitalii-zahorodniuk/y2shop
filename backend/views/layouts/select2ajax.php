@@ -9,9 +9,12 @@ AppAsset::register($this);
 $this->assetBundles = [];
 
 $this->beginPage();
+
 $this->beginBody();
 
 echo $content;
 
+$this->head();
 $this->endBody();
+
 $this->endPage();
