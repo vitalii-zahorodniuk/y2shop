@@ -4,10 +4,12 @@ namespace backend\controllers;
 use backend\models\Product;
 use backend\models\search\ProductSearch;
 use backend\models\User;
+use common\models\Filter;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -46,8 +48,11 @@ class ProductController extends BaseController
                             'gallery-image-upload',
                             'gallery-image-delete',
                             'get-option-tr',
+                            'get-options',
                             'get-attribute-tr',
+                            'get-attributes',
                             'get-filter-tr',
+                            'get-filters',
                         ],
                         'allow' => TRUE,
                         'roles' => [User::PERM_PRODUCT_CAN_UPDATE],
@@ -87,8 +92,11 @@ class ProductController extends BaseController
                     'gallery-image-upload' => ['get', 'post'],
                     'gallery-image-delete' => ['post'],
                     'get-option-tr' => ['post'],
+                    'get-options' => ['get'],
                     'get-attribute-tr' => ['post'],
+                    'get-attributes' => ['get'],
                     'get-filter-tr' => ['post'],
+                    'get-filters' => ['get'],
                     'activate' => ['post'],
                 ],
             ],
@@ -285,9 +293,25 @@ class ProductController extends BaseController
     /**
      * @return string
      */
+    public function actionGetOptions()
+    {
+
+    }
+
+    /**
+     * @return string
+     */
     public function actionGetAttributeTr()
     {
         return 'OK!';
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGetAttributes()
+    {
+
     }
 
     /**
@@ -297,10 +321,36 @@ class ProductController extends BaseController
     {
         $this->layout = 'select2ajax';
         return $this->render('_filters_tr', [
-            'isNew' => true,
+            'isNew' => TRUE,
             'model' => new Product(),
-            'productFilter' => null,
+            'productFilter' => NULL,
             'form' => new ActiveForm(),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionGetFilters()
+    {
+        $res = ['results' => []];
+        if (Yii::$app->request->get('p') !== NULL || Yii::$app->request->get('q') !== NULL) {
+            $filters = Filter::find()
+                ->joinWith('filterTranslate')
+                ->from(['f' => Filter::tableName()])
+                ->where([
+                    'f.status' => Filter::STATUS_ACTIVE,
+                    'f.parent_id' => Yii::$app->request->get('p'),
+                ])
+                ->andFilterWhere(['like', 'ft.name', Yii::$app->request->get('q')])
+                ->all();
+            foreach ($filters as $filter) {
+                $res['results'][] = [
+                    'id' => $filter->id,
+                    'text' => $filter->name,
+                ];
+            }
+        }
+        return Json::encode($res);
     }
 }

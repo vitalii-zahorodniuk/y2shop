@@ -10,8 +10,8 @@ use xz1mefx\base\helpers\Url;
 <table id="filtersTable" class="table table-striped table-bordered table-hover">
     <thead>
         <tr>
-            <th><?= Yii::t('admin-side', 'Filter group') ?></th>
-            <th colspan="2"><?= Yii::t('admin-side', 'Filter') ?></th>
+            <th class="col-md-4"><?= Yii::t('admin-side', 'Filter group') ?></th>
+            <th class="col-md-8" colspan="2"><?= Yii::t('admin-side', 'Filter') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@ use xz1mefx\base\helpers\Url;
                 ]) ?>
             <?php endforeach; ?>
         <?php else: ?>
-            <tr>
+            <tr class="ft-empty-text">
                 <td colspan="3" class="text-center">
                     <i><?= Yii::t('admin-side', 'No filters yet') ?></i>
                 </td>
@@ -49,7 +49,9 @@ addNewFilter.on('click', function (e) {
         "{$filtersTrUrl}",
         {},
         function (data) {
-            filtersTable.find('tbody').append(data);
+            $('.ft-empty-text').fadeOut(function(){
+                filtersTable.find('tbody').append(data);
+            });
         }
     );
 });
