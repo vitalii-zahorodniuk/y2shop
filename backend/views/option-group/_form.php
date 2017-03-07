@@ -37,6 +37,9 @@ if ($model->isNewRecord) {
 
         <?= $form->field($model, 'order')->textInput() ?>
 
+
+        <?= $form->field($model, 'type')->dropDownList($model::typesLabels()) ?>
+
         <div class="">
             <h5><strong><?= $model->getAttributeLabel('name') ?></strong></h5>
             <div class="panel panel-default" style="background-color: #f6f8fa;">

@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
 //                    'status',
                     'name:raw',
+                    'value',
                     'order',
                     [
                         'attribute' => 'created_by',

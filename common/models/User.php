@@ -79,6 +79,18 @@ class User extends ActiveRecord implements IdentityInterface, UserInterface
     }
 
     /**
+     * Finds user by phone
+     *
+     * @param string $phone
+     *
+     * @return static|null
+     */
+    public static function findByPhone($phone)
+    {
+        return static::findOne(['phone' => $phone]);
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
