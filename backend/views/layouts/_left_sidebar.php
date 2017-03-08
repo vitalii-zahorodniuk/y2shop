@@ -43,7 +43,9 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                         User::PERM_CATEGORY_CAN_VIEW_LIST,
                         User::PERM_PRODUCT_CAN_VIEW_LIST,
                         User::PERM_ATTRIBUTE_CAN_VIEW_LIST,
+                        User::PERM_FILTER_GROUP_CAN_VIEW_LIST,
                         User::PERM_FILTER_CAN_VIEW_LIST,
+                        User::PERM_OPTION_GROUP_CAN_VIEW_LIST,
                         User::PERM_OPTION_CAN_VIEW_LIST,
                     ]),
                     'icon' => 'tags',
@@ -83,6 +85,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                             'label' => Yii::t('admin-side', 'Filters'),
                             'visible' => Yii::$app->user->can([
                                 User::ROLE_ROOT,
+                                User::PERM_FILTER_GROUP_CAN_VIEW_LIST,
                                 User::PERM_FILTER_CAN_VIEW_LIST,
                             ]),
                             'icon' => 'filter',
@@ -93,7 +96,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                                     'url' => ['filter-group/index'],
                                     'visible' => Yii::$app->user->can([
                                         User::ROLE_ROOT,
-                                        User::PERM_FILTER_CAN_VIEW_LIST,
+                                        User::PERM_FILTER_GROUP_CAN_VIEW_LIST,
                                     ]),
                                     'icon' => 'th',
                                     'iconOptions' => ['prefix' => 'fa fa-'],
@@ -114,6 +117,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                             'label' => Yii::t('admin-side', 'Options'),
                             'visible' => Yii::$app->user->can([
                                 User::ROLE_ROOT,
+                                User::PERM_OPTION_GROUP_CAN_VIEW_LIST,
                                 User::PERM_OPTION_CAN_VIEW_LIST,
                             ]),
                             'icon' => 'check-square-o',
@@ -124,7 +128,7 @@ use xz1mefx\adminlte\widgets\SidebarMenu;
                                     'url' => ['option-group/index'],
                                     'visible' => Yii::$app->user->can([
                                         User::ROLE_ROOT,
-                                        User::PERM_OPTION_CAN_VIEW_LIST,
+                                        User::PERM_OPTION_GROUP_CAN_VIEW_LIST,
                                     ]),
                                     'icon' => 'th',
                                     'iconOptions' => ['prefix' => 'fa fa-'],

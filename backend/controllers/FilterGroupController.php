@@ -35,7 +35,7 @@ class FilterGroupController extends BaseController
                             'view',
                         ],
                         'allow' => TRUE,
-                        'roles' => [User::PERM_FILTER_CAN_VIEW_LIST],
+                        'roles' => [User::PERM_FILTER_GROUP_CAN_VIEW_LIST],
                     ],
                     [
                         'actions' => [
@@ -43,7 +43,7 @@ class FilterGroupController extends BaseController
                             'update',
                             'delete'],
                         'allow' => TRUE,
-                        'roles' => [User::PERM_FILTER_CAN_UPDATE],
+                        'roles' => [User::PERM_FILTER_GROUP_CAN_UPDATE],
                         'matchCallback' => function ($rule, $action) {
                             if (Yii::$app->user->identity->userOnHold) {
                                 throw new ForbiddenHttpException(Yii::t('admin-side', 'Your account is waiting for confirmation!'));
