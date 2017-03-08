@@ -23,9 +23,9 @@
     "yiisoft/yii2": "~2.0.6",
     "yiisoft/yii2-bootstrap": "~2.0.0",
     "yiisoft/yii2-swiftmailer": "~2.0.0",
-    "xz1mefx/yii2-adminlte": "dev-master",
-    "xz1mefx/yii2-multilang": "dev-master",
-    "xz1mefx/yii2-ufu": "dev-master",
+    "xz1mefx/yii2-adminlte": "@dev",
+    "xz1mefx/yii2-multilang": "@dev",
+    "xz1mefx/yii2-ufu": "@dev",
     "xz1mefx/yii2-base": "@dev",
     "2amigos/yii2-file-upload-widget": "~1.0",
     "xz1mefx/yii2-wysihtml5": "@dev",
@@ -37,7 +37,7 @@
     "yiisoft/yii2-faker": "~2.0.0",
     "codeception/base": "^2.2.3",
     "codeception/verify": "~0.3.1",
-    "iiifx-production/yii2-autocomplete-helper": "*"
+    "iiifx-production/yii2-autocomplete-helper": "@dev"
   },
   "config": {
     "process-timeout": 1800
