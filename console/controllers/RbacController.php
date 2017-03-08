@@ -92,6 +92,14 @@ class RbacController extends Controller implements UserInterface
         $auth->add(${self::PERM_ATTRIBUTE_CAN_UPDATE});
         $auth->addChild(${self::PERM_ATTRIBUTE_CAN_UPDATE}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
 
+        // filter group
+        ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_FILTER_GROUP_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+
+        ${self::PERM_FILTER_GROUP_CAN_UPDATE} = $auth->createPermission(self::PERM_FILTER_GROUP_CAN_UPDATE);
+        $auth->add(${self::PERM_FILTER_GROUP_CAN_UPDATE});
+        $auth->addChild(${self::PERM_FILTER_GROUP_CAN_UPDATE}, ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+
         // filter
         ${self::PERM_FILTER_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_FILTER_CAN_VIEW_LIST);
         $auth->add(${self::PERM_FILTER_CAN_VIEW_LIST});
@@ -99,6 +107,14 @@ class RbacController extends Controller implements UserInterface
         ${self::PERM_FILTER_CAN_UPDATE} = $auth->createPermission(self::PERM_FILTER_CAN_UPDATE);
         $auth->add(${self::PERM_FILTER_CAN_UPDATE});
         $auth->addChild(${self::PERM_FILTER_CAN_UPDATE}, ${self::PERM_FILTER_CAN_VIEW_LIST});
+
+        // option group
+        ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_OPTION_GROUP_CAN_VIEW_LIST);
+        $auth->add(${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
+
+        ${self::PERM_OPTION_GROUP_CAN_UPDATE} = $auth->createPermission(self::PERM_OPTION_GROUP_CAN_UPDATE);
+        $auth->add(${self::PERM_OPTION_GROUP_CAN_UPDATE});
+        $auth->addChild(${self::PERM_OPTION_GROUP_CAN_UPDATE}, ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
 
         // option
         ${self::PERM_OPTION_CAN_VIEW_LIST} = $auth->createPermission(self::PERM_OPTION_CAN_VIEW_LIST);
@@ -137,8 +153,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_PRODUCT_CAN_UPDATE});
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_FILTER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
+//        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_OPTION_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_OPTION_CAN_VIEW_LIST});
 //        $auth->addChild(${self::ROLE_SELLER}, ${self::PERM_OPTION_CAN_UPDATE});
 
@@ -162,8 +182,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_PRODUCT_CAN_UPDATE});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_FILTER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_OPTION_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_OPTION_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_MANAGER}, ${self::PERM_OPTION_CAN_UPDATE});
 
@@ -187,8 +211,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_PRODUCT_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_FILTER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_OPTION_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_OPTION_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ADMIN}, ${self::PERM_OPTION_CAN_UPDATE});
 
@@ -214,8 +242,12 @@ class RbacController extends Controller implements UserInterface
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_PRODUCT_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_ATTRIBUTE_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_ATTRIBUTE_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_FILTER_CAN_UPDATE});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_OPTION_GROUP_CAN_VIEW_LIST});
+        $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_OPTION_GROUP_CAN_UPDATE});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_OPTION_CAN_VIEW_LIST});
         $auth->addChild(${self::ROLE_ROOT}, ${self::PERM_OPTION_CAN_UPDATE});
     }
